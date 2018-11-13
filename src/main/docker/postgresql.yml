@@ -1,0 +1,11 @@
+version: '2'
+services:
+    mgearapp-postgresql:
+        image: postgres:10.4
+        # volumes:
+        #     - ~/volumes/jhipster/mgearapp/postgresql/:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=mgearapp
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432

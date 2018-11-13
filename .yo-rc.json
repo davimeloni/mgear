@@ -1,0 +1,32 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.mgearapp"
+    },
+    "jhipsterVersion": "5.4.1",
+    "applicationType": "monolith",
+    "baseName": "mgearapp",
+    "packageName": "com.mgearapp",
+    "packageFolder": "com/mgearapp",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "ZmI5NDdhNWYyZGYwYzI1NjFiNTJhZTYxOGVkY2IyMDkyYmI1YjdlNzg4NGY0ZDBlOGFhN2ZiNzQyMWJiYTU4ZjM3NDhlYTFlNzdhYjU2OTk2Mjk3MGEyZWM5NDg3NjE0ZjUzYmU2OGRlNTk0ZGU4NWIyMDVjNzBiMzgyNDJjNTM=",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "enableTranslation": false
+  }
+}
