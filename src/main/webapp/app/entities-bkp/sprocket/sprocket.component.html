@@ -1,0 +1,210 @@
+<div>
+    <h2 id="page-heading">
+        <span>Sprockets</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-sprocket" [routerLink]="['/sprocket/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Sprocket
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="sprockets">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Sku</span></th>
+            <th><span>Active</span></th>
+            <th><span>Au</span></th>
+            <th><span>De</span></th>
+            <th><span>Metal Gearvisibility</span></th>
+            <th><span>Bikematevisibility</span></th>
+            <th><span>Mgi Visibility</span></th>
+            <th><span>Status</span></th>
+            <th><span>Product Group 1</span></th>
+            <th><span>Product Group 2</span></th>
+            <th><span>Countries</span></th>
+            <th><span>Fitment</span></th>
+            <th><span>Description</span></th>
+            <th><span>Unit</span></th>
+            <th><span>Qty</span></th>
+            <th><span>Brand</span></th>
+            <th><span>Biketypes</span></th>
+            <th><span>Fits Makes</span></th>
+            <th><span>Modelsupto</span></th>
+            <th><span>G S 1 EAN</span></th>
+            <th><span>Our Notes</span></th>
+            <th><span>Customer Notes</span></th>
+            <th><span>Weightkg</span></th>
+            <th><span>Pack Type</span></th>
+            <th><span>Pack Length</span></th>
+            <th><span>Pack Width</span></th>
+            <th><span>Pack Height</span></th>
+            <th><span>Pack Cubic</span></th>
+            <th><span>Sprocket Chain Size</span></th>
+            <th><span>Sprocket Teeth</span></th>
+            <th><span>E SBHC</span></th>
+            <th><span>E SID</span></th>
+            <th><span>E SI Dinner Teeth</span></th>
+            <th><span>E SBH Qty</span></th>
+            <th><span>E SBH Size</span></th>
+            <th><span>E SBH Type</span></th>
+            <th><span>E S Width</span></th>
+            <th><span>Toliston Ebay</span></th>
+            <th><span>E Listing</span></th>
+            <th><span>Efor Make</span></th>
+            <th><span>Euploaded Neto</span></th>
+            <th><span>E Date</span></th>
+            <th><span>Echeck</span></th>
+            <th><span>Euploadede Bay</span></th>
+            <th><span>E Bayactive</span></th>
+            <th><span>E Photobucket</span></th>
+            <th><span>E Photo Main</span></th>
+            <th><span>E Photo Clear</span></th>
+            <th><span>E Photo Side</span></th>
+            <th><span>Sales Status</span></th>
+            <th><span>R RP</span></th>
+            <th><span>E Bay</span></th>
+            <th><span>Trade 1</span></th>
+            <th><span>Trade 2</span></th>
+            <th><span>Trade 3</span></th>
+            <th><span>Distributor NZAUD</span></th>
+            <th><span>Distributor USD</span></th>
+            <th><span>Distributor EUR</span></th>
+            <th><span>Bikemate AUD</span></th>
+            <th><span>Comp Metal Gear</span></th>
+            <th><span>Comp Mogema</span></th>
+            <th><span>Comp JT</span></th>
+            <th><span>J TBHC</span></th>
+            <th><span>J TID</span></th>
+            <th><span>J TI Dinner Teeth</span></th>
+            <th><span>J TBH Qty</span></th>
+            <th><span>J TBH Size</span></th>
+            <th><span>J TBH Type</span></th>
+            <th><span>J T Width</span></th>
+            <th><span>J T Note</span></th>
+            <th><span>Comp Esjot</span></th>
+            <th><span>Comp Super Sprox</span></th>
+            <th><span>Stock</span></th>
+            <th><span>Min Stock</span></th>
+            <th><span>Max Stock</span></th>
+            <th><span>Supplier</span></th>
+            <th><span>Supplier Code</span></th>
+            <th><span>Supplier Currency</span></th>
+            <th><span>Supplier Cost</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let sprocket of sprockets ;trackBy: trackId">
+                <td><a [routerLink]="['/sprocket', sprocket.id, 'view' ]">{{sprocket.id}}</a></td>
+                <td>{{sprocket.sku}}</td>
+                <td>{{sprocket.active}}</td>
+                <td>{{sprocket.au}}</td>
+                <td>{{sprocket.de}}</td>
+                <td>{{sprocket.metalGearvisibility}}</td>
+                <td>{{sprocket.bikematevisibility}}</td>
+                <td>{{sprocket.mgiVisibility}}</td>
+                <td>{{sprocket.status}}</td>
+                <td>{{sprocket.productGroup1}}</td>
+                <td>{{sprocket.productGroup2}}</td>
+                <td>{{sprocket.countries}}</td>
+                <td>{{sprocket.fitment}}</td>
+                <td>{{sprocket.description}}</td>
+                <td>{{sprocket.unit}}</td>
+                <td>{{sprocket.qty}}</td>
+                <td>{{sprocket.brand}}</td>
+                <td>{{sprocket.biketypes}}</td>
+                <td>{{sprocket.fitsMakes}}</td>
+                <td>{{sprocket.modelsupto}}</td>
+                <td>{{sprocket.gS1EAN}}</td>
+                <td>{{sprocket.ourNotes}}</td>
+                <td>{{sprocket.customerNotes}}</td>
+                <td>{{sprocket.weightkg}}</td>
+                <td>{{sprocket.packType}}</td>
+                <td>{{sprocket.packLength}}</td>
+                <td>{{sprocket.packWidth}}</td>
+                <td>{{sprocket.packHeight}}</td>
+                <td>{{sprocket.packCubic}}</td>
+                <td>{{sprocket.sprocketChainSize}}</td>
+                <td>{{sprocket.sprocketTeeth}}</td>
+                <td>{{sprocket.eSBHC}}</td>
+                <td>{{sprocket.eSID}}</td>
+                <td>{{sprocket.eSIDinnerTeeth}}</td>
+                <td>{{sprocket.eSBHQty}}</td>
+                <td>{{sprocket.eSBHSize}}</td>
+                <td>{{sprocket.eSBHType}}</td>
+                <td>{{sprocket.eSWidth}}</td>
+                <td>{{sprocket.tolistonEbay}}</td>
+                <td>{{sprocket.eListing}}</td>
+                <td>{{sprocket.eforMake}}</td>
+                <td>{{sprocket.euploadedNeto}}</td>
+                <td>{{sprocket.eDate | date:'mediumDate'}}</td>
+                <td>{{sprocket.echeck}}</td>
+                <td>{{sprocket.euploadedeBay}}</td>
+                <td>{{sprocket.eBayactive}}</td>
+                <td>{{sprocket.ePhotobucket}}</td>
+                <td>{{sprocket.ePhotoMain}}</td>
+                <td>{{sprocket.ePhotoClear}}</td>
+                <td>{{sprocket.ePhotoSide}}</td>
+                <td>{{sprocket.salesStatus}}</td>
+                <td>{{sprocket.rRP}}</td>
+                <td>{{sprocket.eBay}}</td>
+                <td>{{sprocket.trade1}}</td>
+                <td>{{sprocket.trade2}}</td>
+                <td>{{sprocket.trade3}}</td>
+                <td>{{sprocket.distributorNZAUD}}</td>
+                <td>{{sprocket.distributorUSD}}</td>
+                <td>{{sprocket.distributorEUR}}</td>
+                <td>{{sprocket.bikemateAUD}}</td>
+                <td>{{sprocket.compMetalGear}}</td>
+                <td>{{sprocket.compMogema}}</td>
+                <td>{{sprocket.compJT}}</td>
+                <td>{{sprocket.jTBHC}}</td>
+                <td>{{sprocket.jTID}}</td>
+                <td>{{sprocket.jTIDinnerTeeth}}</td>
+                <td>{{sprocket.jTBHQty}}</td>
+                <td>{{sprocket.jTBHSize}}</td>
+                <td>{{sprocket.jTBHType}}</td>
+                <td>{{sprocket.jTWidth}}</td>
+                <td>{{sprocket.jTNote}}</td>
+                <td>{{sprocket.compEsjot}}</td>
+                <td>{{sprocket.compSuperSprox}}</td>
+                <td>{{sprocket.stock}}</td>
+                <td>{{sprocket.minStock}}</td>
+                <td>{{sprocket.maxStock}}</td>
+                <td>{{sprocket.supplier}}</td>
+                <td>{{sprocket.supplierCode}}</td>
+                <td>{{sprocket.supplierCurrency}}</td>
+                <td>{{sprocket.supplierCost}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/sprocket', sprocket.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/sprocket', sprocket.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'sprocket/'+ sprocket.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

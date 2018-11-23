@@ -1,0 +1,170 @@
+<div>
+    <h2 id="page-heading">
+        <span>Chains</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-chain" [routerLink]="['/chain/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Chain
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="chains">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Sku</span></th>
+            <th><span>Active</span></th>
+            <th><span>Au</span></th>
+            <th><span>De</span></th>
+            <th><span>Metal Gearvisibility</span></th>
+            <th><span>Bikematevisibility</span></th>
+            <th><span>Mgi Visibility</span></th>
+            <th><span>Status</span></th>
+            <th><span>Product Group 1</span></th>
+            <th><span>Product Group 2</span></th>
+            <th><span>Description</span></th>
+            <th><span>Unit</span></th>
+            <th><span>Qty</span></th>
+            <th><span>Brand</span></th>
+            <th><span>Biketypes</span></th>
+            <th><span>G S 1 EAN</span></th>
+            <th><span>Our Notes</span></th>
+            <th><span>Customer Notes</span></th>
+            <th><span>Weightkg</span></th>
+            <th><span>Pack Type</span></th>
+            <th><span>Pack Length</span></th>
+            <th><span>Pack Height</span></th>
+            <th><span>Pack Width</span></th>
+            <th><span>Maxcc Dirt</span></th>
+            <th><span>Pack Cubic</span></th>
+            <th><span>Maxcc Street</span></th>
+            <th><span>Chain Size</span></th>
+            <th><span>Chain Type</span></th>
+            <th><span>Chain Links</span></th>
+            <th><span>Chain Tensile Strength N</span></th>
+            <th><span>Chain Colour</span></th>
+            <th><span>Comp RK</span></th>
+            <th><span>E Listing</span></th>
+            <th><span>Efor Make</span></th>
+            <th><span>Euploaded Neto</span></th>
+            <th><span>E Date</span></th>
+            <th><span>Echeck</span></th>
+            <th><span>Euploadede Bay</span></th>
+            <th><span>E Bayactive</span></th>
+            <th><span>E Photobucket</span></th>
+            <th><span>E Photo Main</span></th>
+            <th><span>E Photo Clear</span></th>
+            <th><span>E Photo Side</span></th>
+            <th><span>Sales Status</span></th>
+            <th><span>R RP</span></th>
+            <th><span>E Bay</span></th>
+            <th><span>Trade 1</span></th>
+            <th><span>Trade 2</span></th>
+            <th><span>Trade 3</span></th>
+            <th><span>Distributor NZAUD</span></th>
+            <th><span>Distributor USD</span></th>
+            <th><span>Distributor EUR</span></th>
+            <th><span>Total Stock</span></th>
+            <th><span>Min Stock</span></th>
+            <th><span>Max Stock</span></th>
+            <th><span>Supplier</span></th>
+            <th><span>Supplier Code</span></th>
+            <th><span>Supplier Currency</span></th>
+            <th><span>Supplier Cost</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let chain of chains ;trackBy: trackId">
+                <td><a [routerLink]="['/chain', chain.id, 'view' ]">{{chain.id}}</a></td>
+                <td>{{chain.sku}}</td>
+                <td>{{chain.active}}</td>
+                <td>{{chain.au}}</td>
+                <td>{{chain.de}}</td>
+                <td>{{chain.metalGearvisibility}}</td>
+                <td>{{chain.bikematevisibility}}</td>
+                <td>{{chain.mgiVisibility}}</td>
+                <td>{{chain.status}}</td>
+                <td>{{chain.productGroup1}}</td>
+                <td>{{chain.productGroup2}}</td>
+                <td>{{chain.description}}</td>
+                <td>{{chain.unit}}</td>
+                <td>{{chain.qty}}</td>
+                <td>{{chain.brand}}</td>
+                <td>{{chain.biketypes}}</td>
+                <td>{{chain.gS1EAN}}</td>
+                <td>{{chain.ourNotes}}</td>
+                <td>{{chain.customerNotes}}</td>
+                <td>{{chain.weightkg}}</td>
+                <td>{{chain.packType}}</td>
+                <td>{{chain.packLength}}</td>
+                <td>{{chain.packHeight}}</td>
+                <td>{{chain.packWidth}}</td>
+                <td>{{chain.maxccDirt}}</td>
+                <td>{{chain.packCubic}}</td>
+                <td>{{chain.maxccStreet}}</td>
+                <td>{{chain.chainSize}}</td>
+                <td>{{chain.chainType}}</td>
+                <td>{{chain.chainLinks}}</td>
+                <td>{{chain.chainTensileStrengthN}}</td>
+                <td>{{chain.chainColour}}</td>
+                <td>{{chain.compRK}}</td>
+                <td>{{chain.eListing}}</td>
+                <td>{{chain.eforMake}}</td>
+                <td>{{chain.euploadedNeto}}</td>
+                <td>{{chain.eDate | date:'mediumDate'}}</td>
+                <td>{{chain.echeck}}</td>
+                <td>{{chain.euploadedeBay}}</td>
+                <td>{{chain.eBayactive}}</td>
+                <td>{{chain.ePhotobucket}}</td>
+                <td>{{chain.ePhotoMain}}</td>
+                <td>{{chain.ePhotoClear}}</td>
+                <td>{{chain.ePhotoSide}}</td>
+                <td>{{chain.salesStatus}}</td>
+                <td>{{chain.rRP}}</td>
+                <td>{{chain.eBay}}</td>
+                <td>{{chain.trade1}}</td>
+                <td>{{chain.trade2}}</td>
+                <td>{{chain.trade3}}</td>
+                <td>{{chain.distributorNZAUD}}</td>
+                <td>{{chain.distributorUSD}}</td>
+                <td>{{chain.distributorEUR}}</td>
+                <td>{{chain.totalStock}}</td>
+                <td>{{chain.minStock}}</td>
+                <td>{{chain.maxStock}}</td>
+                <td>{{chain.supplier}}</td>
+                <td>{{chain.supplierCode}}</td>
+                <td>{{chain.supplierCurrency}}</td>
+                <td>{{chain.supplierCost}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/chain', chain.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/chain', chain.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'chain/'+ chain.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

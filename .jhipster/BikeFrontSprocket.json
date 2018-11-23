@@ -1,0 +1,28 @@
+{
+    "name": "BikeFrontSprocket",
+    "fields": [
+        {
+            "fieldName": "sku",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "bike",
+            "otherEntityName": "bike",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "bikeFrontSprocket"
+        }
+    ],
+    "changelogDate": "20181113204516",
+    "entityTableName": "bike_front_sprocket",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "enableEntityAudit": true
+}

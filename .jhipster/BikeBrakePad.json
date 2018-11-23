@@ -1,0 +1,28 @@
+{
+    "name": "BikeBrakePad",
+    "fields": [
+        {
+            "fieldName": "sku",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "bike",
+            "otherEntityName": "bike",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "bikeBrakePad"
+        }
+    ],
+    "changelogDate": "20181113204520",
+    "entityTableName": "bike_brake_pad",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "enableEntityAudit": true
+}

@@ -1,0 +1,1065 @@
+{
+    "name": "Bike",
+    "fields": [
+        {
+            "fieldName": "visibilityAU",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "visibilityEU",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "inactive",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemconfirmed",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oesource",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "epid",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "modeltype1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modeltype2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "manufacturer",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "strokes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "capacity",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "modelName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modelYearCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modelTypeCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "year",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "finalDriveType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "categoryPath",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modelNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modelNotes2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modelNotes3",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modelNotes4",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modelInfoHTML",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBrakeSystemType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBrakeDiscLeft",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBrakeDiscRight",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBrakeDiscBolts",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBDQTYPD",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "oemFrontBrakeDiscABSRing",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBrakeCaliper1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBrakeCaliper2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBrakeCaliperPin",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBrakePadsFrontL",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontBrakePadsFrontR",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontShoe",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemMidldleAxleBrakeDisc",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemMiddleAxleBrakePads",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearBrakeSystemType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oeamRearBrakeDisc",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oeamRearBrakeDiscBolts",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oeamRearBrakeDiscBQTYPD",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "oemRearBrakeCaliper",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearBrakeCaliperPin",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearBrakePads1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearBrakePads2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemShoeRear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemShoeRear2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemSlaveCylinder",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemChainNo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemChainSize",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oemChainLinks",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oemFrontSprocket",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontGearing",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "oemFrontGearingMin",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oemFrontGearingMax",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oemRearSprocket",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearGearing",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oemRearGearingMin",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oemRearGearingMax",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "finalDriveNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "chainConvSize",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "chainConvLinks",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oemFrontWheel",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontWheelType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontWheelFront",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oemFrontWheelTyreSize",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontHub",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontWheelbearing1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontWheelbearing2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemFrontWheelSeal",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearWheel",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearWheelSize",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oemRearWheelTyre",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearWheelBearing1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearWheelBearing2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemRearWheelSeal",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "frontPadsDiffCaliper",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "qtyBH",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "handbrakeParking",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "addNotesToBike",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateAndID",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "source",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tuvRequired",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tuvTypeCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "abekba",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tuvFrontDisc",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tuvRearDisc",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bremboBrakeDiscFrontRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ebcBrakeDiscFrontRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "trwBrakeDiscFrontRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakeDiscFrontLeftRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakeDiscFrontRightRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakeDiscFrontCheck",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakeDiscFrontLeftRef2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakeDiscFrontRightRef2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakeDiscFNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motodiscBrakeDiscFNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ebcBrakePadsFrontLRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ebcBrakePadsFrontRRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakePadsFrontLRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakePadsFrontRRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakePadsFNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motoPadBrakePadsFrontLRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motoPadBrakePadsFrontRRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motopadBrakePadsFNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsFCRebuildKit1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsFCPin",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsFMCyRebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsFSCRebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "newfrenShoeFront",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearMiddleAxleBrakeDiscNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearMiddleAxleBrakeDiscNeto2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearMiddleAxleBrakePadNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearMiddleAxleBrakePadNeto2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakePadsParkRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakePadsParkRef2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ebcBrakeDiscRearRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bremboBrakeDiscRearRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakeDiscRearRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "trwBrakeDiscRearRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakeDiscRear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsRCRebuildKit1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsRearCaliperBolt",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsRMCrRebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ebcBrakePadsRearRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearBrakePadsRearNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "newfrenShoeRear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsRearBrakePedalKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsCSCRebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "frontJTRefFront",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "esjotRefFront",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearRefFront",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mogemaRefFront",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supersproxRefFront",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "esjotRefRear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "jtRefRear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearRefRear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mogemaRefRear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supersproxRefRear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "esjotRefFrontConv",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "jtSprocketRef",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearRefFrontConv",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mogemarefFrontConv",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supersproxRefFrontConv",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "conversionChain",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearSprocketRearConv",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "esjotRefRearConv",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgearRefRearConv",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mogemaRefRearConv",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supersproxRefRearConv",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsFWBearingKit1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsFWBearingKit2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsRWBearingKit1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsRWBearingKit2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsRWBearingUpgrade",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemSparkPlug",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemSparkPlugQTY",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "ngkSparkPlugSKUs",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemAlternator",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemVoltageRegulator",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadAlternator",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadAlternator2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadCDIModule",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadChargingCoil",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadIgnitionCoil",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadStatorCoil",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadVoltageRegulator",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadPowerShiftCM",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadStarterDrive",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadStarterMotor",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "arrowheadStarterRelay",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemBattery",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ssbAGMBattery",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemAirFilter",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "knAirFilter",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motorexAirFilter",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motorexAirFilterPreoiled",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemOilFilter1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "knOilFilter1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemOilFilter2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "knOilFilter2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motionProOilFilterMagnet",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemSteeringBearing",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemSteeringSeal",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsSBSealKit1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsSBSealKit2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsSBSealKitLower",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsSBSealKitLower2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsCBSealKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemForkAssemblyLeft",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemForkAssemblyRight",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemForkSeals",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsForkSeals",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "xprForkSeals",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsForkBushingKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motionProMicroForkBleeder",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motionProCRProThottleKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemCableSpeedo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motionProCableSpeedo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "motionProCableThrottleTube",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "crossproRadiatorGuard",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemClutchFibres",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemClutchFibresSteels",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "newfrenClutchKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "newfrenClutchSpringKits",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsCMCRebuiltKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "wisecoForgedClutchBasket",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "wisecoBottemEndRebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "wrenchRERebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemCarbAssembly",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsCarbRepairKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsCRMidBodyGasket1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsCRMidBodyGasket2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsFuelTapRepairKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsFuelTapRepairKit2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fuelStarFuelValveKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fuelStarFuelValveKit2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fuelStarHoseClampKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rgEngineCoverLHS",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rgTailTidy",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsLBSealKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsLRSBearingKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsURSBearingKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsULSBearingKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "allBallsSBSealKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "pivotWorksSTBearingKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "pivotWorksSRebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mpForkSealDriver",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mpValveSealInstallTool",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "winderosaGasketKitTopEnd",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "winderosaGasketKitOilSeals",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oemExhaustGasket",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "winderosaGasketExhaust",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "winderosaWaterPumpRebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsConnectingRodKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsCounterBalRebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsBERebuildKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsBERebuildKitSt",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsCylinderHead",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsMainBearingSealKit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsTransmissionBearings",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsWristPinBearings",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsSOHCCamshaftStage1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsSOHCCamshaftStage2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsSOHCCamshaftStage3",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsDOHCCamshaftStage1Intake",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsDOHCCamshaftStage1Exhaust",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsDOHCCamshaftStage2Intake",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hotRodsDOHCCamshaftStage2Exhaust",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "bike",
+            "relationshipName": "bikeFrontSprocket",
+            "otherEntityName": "bikeFrontSprocket",
+            "otherEntityField": "sku",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "bike",
+            "relationshipName": "bikeRearSprocket",
+            "otherEntityName": "bikeRearSprocket",
+            "otherEntityField": "sku",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "bike",
+            "relationshipName": "rearSprocketConv",
+            "otherEntityName": "rearSprocketConv",
+            "otherEntityField": "sku",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "bike",
+            "relationshipName": "frontSprocketConv",
+            "otherEntityName": "frontSprocketConv",
+            "otherEntityField": "sku",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "bike",
+            "relationshipName": "chain",
+            "otherEntityName": "chain",
+            "otherEntityField": "sku",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "bike",
+            "relationshipName": "bikeBrakePad",
+            "otherEntityName": "bikeBrakePad",
+            "otherEntityField": "sku",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "bike",
+            "relationshipName": "bikeBrakeDisc",
+            "otherEntityName": "bikeBrakeDisc",
+            "otherEntityField": "sku",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20181113204515",
+    "entityTableName": "bike",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "enableEntityAudit": true
+}

@@ -1,0 +1,260 @@
+{
+    "name": "Chain",
+    "fields": [
+        {
+            "fieldName": "sku",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "active",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "au",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "de",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "metalGearvisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bikematevisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgiVisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "productGroup1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "productGroup2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "unit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "qty",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "brand",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "biketypes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "gS1EAN",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "ourNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "customerNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "weightkg",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "packLength",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packHeight",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packWidth",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "maxccDirt",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "packCubic",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "maxccStreet",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "chainSize",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "chainType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "chainLinks",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "chainTensileStrengthN",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "chainColour",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "compRK",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eListing",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eforMake",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "euploadedNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "echeck",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "euploadedeBay",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eBayactive",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotobucket",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotoMain",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotoClear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotoSide",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesStatus",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rRP",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "eBay",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "trade1",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "trade2",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "trade3",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "distributorNZAUD",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "distributorUSD",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "distributorEUR",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "totalStock",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "minStock",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "maxStock",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "supplier",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supplierCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supplierCurrency",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supplierCost",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "bike",
+            "otherEntityName": "bike",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "chain"
+        }
+    ],
+    "changelogDate": "20181113204512",
+    "entityTableName": "chain",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "enableEntityAudit": true
+}

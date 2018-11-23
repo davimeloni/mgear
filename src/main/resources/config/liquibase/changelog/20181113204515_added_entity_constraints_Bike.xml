@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity Bike.
+    -->
+    <changeSet id="20181113204515-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="bikes_id"
+                                 baseTableName="bike_bike_front_sprocket"
+                                 constraintName="fk_bike_bike_front_sprocket_bikes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike"/>
+        <addForeignKeyConstraint baseColumnNames="bike_front_sprockets_id"
+                                 baseTableName="bike_bike_front_sprocket"
+                                 constraintName="fk_bike_bike_front_sprocket_bike_front_sprockets_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike_front_sprocket"/>
+        
+        <addForeignKeyConstraint baseColumnNames="bikes_id"
+                                 baseTableName="bike_bike_rear_sprocket"
+                                 constraintName="fk_bike_bike_rear_sprocket_bikes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike"/>
+        <addForeignKeyConstraint baseColumnNames="bike_rear_sprockets_id"
+                                 baseTableName="bike_bike_rear_sprocket"
+                                 constraintName="fk_bike_bike_rear_sprocket_bike_rear_sprockets_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike_rear_sprocket"/>
+        
+        <addForeignKeyConstraint baseColumnNames="bikes_id"
+                                 baseTableName="bike_rear_sprocket_conv"
+                                 constraintName="fk_bike_rear_sprocket_conv_bikes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike"/>
+        <addForeignKeyConstraint baseColumnNames="rear_sprocket_convs_id"
+                                 baseTableName="bike_rear_sprocket_conv"
+                                 constraintName="fk_bike_rear_sprocket_conv_rear_sprocket_convs_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rear_sprocket_conv"/>
+        
+        <addForeignKeyConstraint baseColumnNames="bikes_id"
+                                 baseTableName="bike_front_sprocket_conv"
+                                 constraintName="fk_bike_front_sprocket_conv_bikes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike"/>
+        <addForeignKeyConstraint baseColumnNames="front_sprocket_convs_id"
+                                 baseTableName="bike_front_sprocket_conv"
+                                 constraintName="fk_bike_front_sprocket_conv_front_sprocket_convs_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="front_sprocket_conv"/>
+        
+        <addForeignKeyConstraint baseColumnNames="bikes_id"
+                                 baseTableName="bike_chain"
+                                 constraintName="fk_bike_chain_bikes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike"/>
+        <addForeignKeyConstraint baseColumnNames="chains_id"
+                                 baseTableName="bike_chain"
+                                 constraintName="fk_bike_chain_chains_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="chain"/>
+        
+        <addForeignKeyConstraint baseColumnNames="bikes_id"
+                                 baseTableName="bike_bike_brake_pad"
+                                 constraintName="fk_bike_bike_brake_pad_bikes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike"/>
+        <addForeignKeyConstraint baseColumnNames="bike_brake_pads_id"
+                                 baseTableName="bike_bike_brake_pad"
+                                 constraintName="fk_bike_bike_brake_pad_bike_brake_pads_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike_brake_pad"/>
+        
+        <addForeignKeyConstraint baseColumnNames="bikes_id"
+                                 baseTableName="bike_bike_brake_disc"
+                                 constraintName="fk_bike_bike_brake_disc_bikes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike"/>
+        <addForeignKeyConstraint baseColumnNames="bike_brake_discs_id"
+                                 baseTableName="bike_bike_brake_disc"
+                                 constraintName="fk_bike_bike_brake_disc_bike_brake_discs_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="bike_brake_disc"/>
+        
+    </changeSet>
+</databaseChangeLog>

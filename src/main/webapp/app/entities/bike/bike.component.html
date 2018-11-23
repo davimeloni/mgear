@@ -1,0 +1,2651 @@
+<div>
+    <h2 id="page-heading">
+        <span>Bikes</span>
+    </h2>
+
+    <p-accordion>
+            <p-accordionTab header="Columns" [selected]="false">
+                <div class="row">
+                    <div class="col-2">
+                        <p-listbox [options]="displayColumns2" filter="true" [listStyle]="{'min-width':'20em','max-height':'600px'}"
+                            [style]="{'width':'20em'}">
+                            <p-header [style]="{'width':'20em'}">
+                                <span>Filter Columns</span>
+                            </p-header>
+                            <ng-template let-c pTemplate="item">
+                                <p-toggleButton onLabel="{{c.label}}" offLabel="{{c.label}}" onIcon="pi pi-check" offIcon="pi pi-times"
+                                    [(ngModel)]="c.display"></p-toggleButton>
+                            </ng-template>
+                        </p-listbox>
+                    </div>
+                    <div class="col-10">
+                        <div class="row" style="padding-left: 5px;">
+                                <button type="button" class="btn btn-outline-success" (click)="selectAllColumns()" style="float:left; margin-right: 10px;">
+                                        <i class="pi pi-eye"></i>All</button>
+                                <button type="button" class="btn btn-outline-danger" (click)="unselectAllColumns()" style="float:left; margin-right: 10px;">
+                                        <i class="pi pi-eye-slash"></i>All</button>
+                        </div>
+                        <div class="row">
+                            <div *ngFor="let c of displayColumns2; index as i;">
+                                <div class="col-wrapper" *ngIf="(c.field !== 'modelNotes' && c.field !== 'modelNotes2') && c.field !== 'modelNotes3' && c.field !== 'modelNotes4'" 
+                                style="white-space: nowrap;" >
+                                    <p-toggleButton onLabel="{{c.label}}" offLabel="{{c.label}}" onIcon="pi pi-check" offIcon="pi pi-times"
+                                        [(ngModel)]="c.display"></p-toggleButton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-accordionTab>
+        </p-accordion>
+    
+        <p-dialog header="Delete Selected" [(visible)]="displayDialog" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+            [minY]="70" [baseZIndex]="10000">
+            <span>{{dialogContent}}</span>
+            <p-footer>
+                <button type="button" pButton icon="pi pi-check" (click)="deleteItems()" label="Yes"></button>
+                <button type="button" pButton icon="pi pi-close" (click)="displayDialog=false" label="No" class="ui-button-secondary"></button>
+            </p-footer>
+        </p-dialog>
+    
+        <p-dialog header="Saving Data..." [(visible)]="displayDialog2" [modal]="true" [responsive]="true" [minWidth]="200"
+            [wdith]="400" [minY]="70" [baseZIndex]="10000">
+            <p>Please wait while we save the data on the database. It might take a couple of minutes depending on file's size</p><br>
+            <p>After the import is complete, click on refresh button to update the table with the new data.</p><br>
+            <p>You can also check its status by clicking on Last CSV Report.</p>
+        </p-dialog>
+    
+        <p-dialog header="Last CSV Report" [(visible)]="dialogLastCSV" [modal]="true" [responsive]="true" [minWidth]="200"
+            [width]="700" [minY]="70" [baseZIndex]="10000">
+            <div class="table-responsive" *ngIf="lastCSVReport">
+                <table class="table table-striped">
+                    <thead>
+                        <th>ID</th>
+                        <th>Performed</th>
+                        <th>Status</th>
+                        <th>Error Message</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of lastCSVReport;trackBy: trackId">
+                        <td style="width:1%;white-space:nowrap;"><a [routerLink]="['/bike', item.id, 'view' ]">{{item.id}}</a></td>
+                        <td>{{item.performed}}</td>
+                        <td>{{item.status}}</td>
+                        <td>{{item.errorMessage}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </p-dialog>
+    
+        <hr />
+        <p-toast [style]="{marginTop: '80px'}"></p-toast>
+    
+        <p-table class="entity-table2" #dt [columns]="displayColumns2" [value]="bikes" [paginator]="true" [rows]="10" [(selection)]="selectedBikes"
+            sortField="id" dataKey="id" [rowsPerPageOptions]="[10,15,20,25]" sortOrder="1" expandableRows="true"
+            [responsive]="true" [autoLayout]="true" >
+    
+            <ng-template pTemplate="caption" style="margin: 5px;">
+                <div class="ui-helper-clearfix">
+                    <button type="button" class="btn btn-outline-primary" (click)="dt.exportCSV()" style="float:left; margin-right: 10px;">
+                        <i class="pi pi-download"></i>Export All</button>
+                    <button type="button" class="btn btn-outline-primary" (click)="dt.exportCSV({selectionOnly:true})"
+                        style="float:left;">
+                        <i class="pi pi-download"></i>Export Selected Only</button>
+                    <input type='file' (change)='convertFile(input)' id='fileInput' #input>
+                    <button type="button" class="btn btn-outline-primary" (click)="forkJoinFunction()">
+                        <i class="pi pi-upload"></i>Upload CSV</button>
+                    <button type="button" class="btn btn-outline-primary" (click)="popupCSV()">
+                        <i class="pi pi-list"></i>Last CSV Report</button>
+    
+                    <button type="button" class="btn btn-outline-info" style="float:right; margin-left: 10px; border-color: transparent;" (click)="reloadAll()">
+                            <i class="pi pi-refresh"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" style="float:right;" [routerLink]="['/bike/new']">
+                        <fa-icon [icon]="'plus'"></fa-icon>
+                        <span>
+                            Create new Bike
+                        </span>
+                    </button>
+                </div>
+                <div style="text-align: right; margin-top: 5px;">
+                    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        style="width:auto">
+                </div>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col>
+                    <col *ngFor="let col of columns">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns let-rowData>
+                <tr>
+                    <th>
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        <button type="button" (click)="confirmDeleteSelected()" class="btn btn-outline-danger">
+                            <i class="pi pi-trash"></i>
+                        </button>
+                    </th>
+                    <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field" [hidden]="!col.display">
+                        <input type="checkbox" [(ngModel)]="col.display" value="col.display">
+                        {{col.label}}
+                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+                            ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                    </th>
+                </tr>
+            <tr>
+                <th ></th>
+                <th  *ngFor="let col of columns" [ngSwitch]="col.field" [hidden]="!col.display">
+                    <input *ngSwitchCase="'sku'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                    <p-dropdown *ngSwitchCase="'modeltype1'" [options]="modelType1Filter" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+            <tr>
+                <td >
+                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                    <button type="submit" [routerLink]="['/', { outlets: { popup: 'bike/'+ rowData.id + '/delete'} }]"
+                        replaceUrl="true" queryParamsHandling="merge" class="btn btn-outline-danger btn-sm">
+                        <i class="pi pi-trash"></i>
+                    </button>
+                    <button type="submit" [routerLink]="['/bike', rowData.id, 'view' ]" class="btn btn-outline-info btn-sm">
+                        <i class="pi pi-eye"></i>
+                    </button>
+                    <button type="submit" (click)="autoFillChain(rowData)" class="btn btn-outline-primary btn-sm">
+                        AC
+                    </button>
+                    <a [pRowToggler]="rowData">
+                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                    </a>
+                </td>
+                <td  [hidden]="!displayColumns2[0].display">
+                    <a [routerLink]="['/bike', rowData.id, 'view' ]">{{rowData.id}}</a>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[1].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.visibilityAU"
+                            (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.visibilityAU}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[2].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.visibilityEU"
+                            (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.visibilityEU}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[3].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.inactive"
+                            (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.inactive}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[4].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemconfirmed"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemconfirmed}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[5].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oesource"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oesource}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[6].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.epid"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.epid}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[7].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                                <select [(ngModel)]="rowData.modeltype1" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of modelType1Options" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.modeltype1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[8].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.modeltype2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.modeltype2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[9].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.manufacturer"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.manufacturer}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[10].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.strokes" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of strokeOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.strokes}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[11].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.capacity"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.capacity}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[12].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.modelName"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.modelName}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[13].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.modelYearCode"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.modelYearCode}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[14].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.modelTypeCode"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.modelTypeCode}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[15].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.year"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.year}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[16].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.finalDriveType" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of finalDriveTypeOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.finalDriveType}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[17].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.categoryPath"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.categoryPath}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <!--
+                <td pEditableColumn  [hidden]="!displayColumns2[18].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.modelNotes"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.modelNotes}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[19].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.modelNotes2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.modelNotes2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[20].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.modelNotes3"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.modelNotes3}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[21].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.modelNotes4"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.modelNotes4}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                -->
+                <td pEditableColumn  [hidden]="!displayColumns2[22].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.modelInfoHTML"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.modelInfoHTML}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[23].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakeSystemType"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakeSystemType}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[24].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakeDiscLeft"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakeDiscLeft}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[25].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakeDiscRight"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakeDiscRight}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[26].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakeDiscBolts"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakeDiscBolts}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[27].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemFrontBDQTYPD"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBDQTYPD}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[28].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakeDiscABSRing"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakeDiscABSRing}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[29].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakeCaliper1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakeCaliper1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[30].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakeCaliper2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakeCaliper2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[31].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakeCaliperPin"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakeCaliperPin}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[32].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakePadsFrontL"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakePadsFrontL}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[33].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontBrakePadsFrontR"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontBrakePadsFrontR}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[34].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontShoe"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontShoe}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[35].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemMidldleAxleBrakeDisc"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemMidldleAxleBrakeDisc}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[36].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemMiddleAxleBrakePads"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemMiddleAxleBrakePads}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[37].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.oemRearBrakeSystemType" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of oemRearBrakeSystemTypeOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearBrakeSystemType}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[38].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oeamRearBrakeDisc"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oeamRearBrakeDisc}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[39].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oeamRearBrakeDiscBolts"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oeamRearBrakeDiscBolts}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[40].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oeamRearBrakeDiscBQTYPD"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oeamRearBrakeDiscBQTYPD}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[41].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearBrakeCaliper"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearBrakeCaliper}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[42].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearBrakeCaliperPin"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearBrakeCaliperPin}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[43].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearBrakePads1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearBrakePads1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[44].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearBrakePads2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearBrakePads2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[45].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemShoeRear"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemShoeRear}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[46].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemShoeRear2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemShoeRear2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[47].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemSlaveCylinder"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemSlaveCylinder}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[48].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemChainNo"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemChainNo}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[49].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemChainSize"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemChainSize}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[50].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemChainLinks"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemChainLinks}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[51].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontSprocket"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontSprocket}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[52].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemFrontGearing"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontGearing}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[53].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemFrontGearingMin"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontGearingMin}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[54].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemFrontGearingMax"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontGearingMax}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[55].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearSprocket"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearSprocket}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[56].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemRearGearing"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearGearing}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[57].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemRearGearingMin"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearGearingMin}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[58].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemRearGearingMax"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearGearingMax}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[59].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.finalDriveNotes"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.finalDriveNotes}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[60].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.chainConvSize"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.chainConvSize}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[61].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.chainConvLinks"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.chainConvLinks}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[62].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontWheel"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontWheel}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[63].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.oemFrontWheelType" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of oemFrontWheelTypeOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontWheelType}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[64].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemFrontWheelFront"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontWheelFront}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[65].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontWheelTyreSize"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontWheelTyreSize}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[66].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontHub"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontHub}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[67].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontWheelbearing1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontWheelbearing1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[68].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontWheelbearing2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontWheelbearing2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[69].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemFrontWheelSeal"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemFrontWheelSeal}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[70].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearWheel"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearWheel}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[71].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemRearWheelSize"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearWheelSize}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[72].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearWheelTyre"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearWheelTyre}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[73].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearWheelBearing1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearWheelBearing1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[74].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearWheelBearing2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearWheelBearing2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[75].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemRearWheelSeal"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemRearWheelSeal}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[76].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.frontPadsDiffCaliper"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.frontPadsDiffCaliper}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[77].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.qtyBH"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.qtyBH}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[78].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.handbrakeParking"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.handbrakeParking}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[79].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.addNotesToBike"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.addNotesToBike}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[80].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.dateAndID"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.dateAndID}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[81].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.source"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.source}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[82].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.tuvRequired" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of booleanOptions" [value]="opt.value">{{opt.label}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <span *ngIf="rowData.tuvRequired === true">Yes</span>
+                            <span *ngIf="rowData.tuvRequired !== true">No</span>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[83].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.tuvTypeCode"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.tuvTypeCode}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[84].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.abekba"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.abekba}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[85].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.tuvFrontDisc"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.tuvFrontDisc}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[86].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.tuvRearDisc"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.tuvRearDisc}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[87].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bremboBrakeDiscFrontRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bremboBrakeDiscFrontRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[88].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ebcBrakeDiscFrontRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ebcBrakeDiscFrontRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[89].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.TRWBrakeDiscFrontRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.TRWBrakeDiscFrontRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[90].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakeDiscFrontLeftRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakeDiscFrontLeftRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[91].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakeDiscFrontRightRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakeDiscFrontRightRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[92].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakeDiscFrontCheck"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakeDiscFrontCheck}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[93].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakeDiscFrontLeftRef2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakeDiscFrontLeftRef2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[94].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakeDiscFrontRightRef2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakeDiscFrontRightRef2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[95].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakeDiscFNeto"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakeDiscFNeto}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[96].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motodiscBrakeDiscFNeto"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motodiscBrakeDiscFNeto}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[97].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ebcBrakePadsFrontLRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ebcBrakePadsFrontLRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[98].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ebcBrakePadsFrontRRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ebcBrakePadsFrontRRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[99].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakePadsFrontLRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakePadsFrontLRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[100].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakePadsFrontRRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakePadsFrontRRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[101].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakePadsFNeto"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakePadsFNeto}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[102].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motoPadBrakePadsFrontLRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motoPadBrakePadsFrontLRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[103].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motoPadBrakePadsFrontRRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motoPadBrakePadsFrontRRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[104].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motopadBrakePadsFNeto"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motopadBrakePadsFNeto}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[105].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsFCRebuildKit1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsFCRebuildKit1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[106].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsFCPin"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsFCPin}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[107].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsFMCyRebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsFMCyRebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[108].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsFSCRebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsFSCRebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[109].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.newfrenShoeFront"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.newfrenShoeFront}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[110].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearMiddleAxleBrakeDiscNeto"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearMiddleAxleBrakeDiscNeto}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[111].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearMiddleAxleBrakeDiscNeto2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearMiddleAxleBrakeDiscNeto2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[112].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearMiddleAxleBrakePadNeto"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearMiddleAxleBrakePadNeto}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[113].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearMiddleAxleBrakePadNeto2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearMiddleAxleBrakePadNeto2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[114].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakePadsParkRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakePadsParkRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[115].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakePadsParkRef2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakePadsParkRef2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[116].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ebcBrakeDiscRearRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ebcBrakeDiscRearRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[117].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bremboBrakeDiscRearRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bremboBrakeDiscRearRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[118].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakeDiscRearRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakeDiscRearRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[119].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.TRWBrakeDiscRearRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.TRWBrakeDiscRearRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[120].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakeDiscRear"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakeDiscRear}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[121].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsRCRebuildKit1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsRCRebuildKit1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[122].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsRearCaliperBolt"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsRearCaliperBolt}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[123].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsRMCrRebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsRMCrRebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[124].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ebcBrakePadsRearRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ebcBrakePadsRearRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[125].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearBrakePadsRearNeto"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearBrakePadsRearNeto}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[126].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.newfrenShoeRear"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.newfrenShoeRear}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[127].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsRearBrakePedalKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsRearBrakePedalKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[128].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsCSCRebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsCSCRebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <!-- chain skus -->
+                <td pEditableColumn  [hidden]="!displayColumns2[129].display">
+                    <span *ngFor="let chain of rowData.chains; let last = last">
+                        <a class="form-control-static" [routerLink]="['../chain', chain?.id, 'view' ]">{{chain.sku}}&nbsp;
+                        </a><i class="pi pi-times" (click)="removeChain(chain, rowData)"></i>{{last
+                        ? '' : ', '}}
+                        
+                    </span>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[130].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.frontJTRefFront"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.frontJTRefFront}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[131].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.esjotRefFront"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.esjotRefFront}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[132].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearRefFront"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearRefFront}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[133].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mogemaRefFront"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mogemaRefFront}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[134].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.supersproxRefFront"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.supersproxRefFront}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[135].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bikeFrontSprockets"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bikeFrontSprockets}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[136].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.esjotRefRear"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.esjotRefRear}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[137].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.jtRefRear"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.jtRefRear}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[138].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearRefRear"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearRefRear}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[139].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mogemaRefRear"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mogemaRefRear}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[140].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.supersproxRefRear"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.supersproxRefRear}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[141].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bikeRearSprockets"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bikeRearSprockets}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[142].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.esjotRefFrontConv"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.esjotRefFrontConv}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[143].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.jtSprocketRef"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.jtSprocketRef}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[144].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearRefFrontConv"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearRefFrontConv}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[145].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mogemarefFrontConv"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mogemarefFrontConv}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[146].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.supersproxRefFrontConv"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.supersproxRefFrontConv}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[147].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.conversionChain"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.conversionChain}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[148].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearSprocketRearConv"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearSprocketRearConv}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[149].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.frontSprocketConvs"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.frontSprocketConvs}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[150].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.esjotRefRearConv"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.esjotRefRearConv}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[151].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mgearRefRearConv"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgearRefRearConv}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[152].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mogemaRefRearConv"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mogemaRefRearConv}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[153].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.supersproxRefRearConv"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.supersproxRefRearConv}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[154].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.rearSprocketConvs"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.rearSprocketConvs}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[155].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsFWBearingKit1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsFWBearingKit1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[156].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsFWBearingKit2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsFWBearingKit2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[157].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsRWBearingKit1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsRWBearingKit1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[158].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsRWBearingKit2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsRWBearingKit2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[159].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsRWBearingUpgrade"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsRWBearingUpgrade}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[160].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemSparkPlug"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemSparkPlug}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[161].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="number" [(ngModel)]="rowData.oemSparkPlugQTY"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemSparkPlugQTY}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[162].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ngkSparkPlugSKUs"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ngkSparkPlugSKUs}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[163].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemAlternator"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemAlternator}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[164].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemVoltageRegulator"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemVoltageRegulator}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[165].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadAlternator"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadAlternator}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[166].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadAlternator2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadAlternator2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[167].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadCDIModule"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadCDIModule}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[168].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadChargingCoil"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadChargingCoil}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[169].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadIgnitionCoil"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadIgnitionCoil}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[170].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadStatorCoil"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadStatorCoil}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[171].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadVoltageRegulator"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadVoltageRegulator}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[172].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadPowerShiftCM"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadPowerShiftCM}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[173].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadStarterDrive"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadStarterDrive}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[174].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadStarterMotor"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadStarterMotor}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[175].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.arrowheadStarterRelay"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.arrowheadStarterRelay}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[176].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemBattery"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemBattery}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[177].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ssbAGMBattery"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ssbAGMBattery}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[178].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemAirFilter"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemAirFilter}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[179].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.knAirFilter"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.knAirFilter}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[180].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motorexAirFilter"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motorexAirFilter}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[181].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motorexAirFilterPreoiled"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motorexAirFilterPreoiled}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[182].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemOilFilter1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemOilFilter1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[183].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.knOilFilter1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.knOilFilter1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[184].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemOilFilter2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemOilFilter2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[185].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.knOilFilter2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.knOilFilter2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[186].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motionProOilFilterMagnet"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motionProOilFilterMagnet}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[187].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemSteeringBearing"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemSteeringBearing}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[188].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemSteeringSeal"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemSteeringSeal}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[189].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsSBSealKit1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsSBSealKit1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[190].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsSBSealKit2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsSBSealKit2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[191].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsSBSealKitLower"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsSBSealKitLower}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[192].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsSBSealKitLower2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsSBSealKitLower2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[193].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsCBSealKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsCBSealKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[194].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemForkAssemblyLeft"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemForkAssemblyLeft}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[195].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemForkAssemblyRight"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemForkAssemblyRight}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[196].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemForkSeals"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemForkSeals}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[197].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsForkSeals"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsForkSeals}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[198].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.xprForkSeals"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.xprForkSeals}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[199].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsForkBushingKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsForkBushingKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[200].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motionProMicroForkBleeder"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motionProMicroForkBleeder}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[201].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motionProCRProThottleKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motionProCRProThottleKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[202].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemCableSpeedo"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemCableSpeedo}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[203].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motionProCableSpeedo"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motionProCableSpeedo}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[204].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.motionProCableThrottleTube"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.motionProCableThrottleTube}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[205].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.crossproRadiatorGuard"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.crossproRadiatorGuard}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[206].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemClutchFibres"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemClutchFibres}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[207].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemClutchFibresSteels"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemClutchFibresSteels}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[208].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.newfrenClutchKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.newfrenClutchKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[209].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.newfrenClutchSpringKits"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.newfrenClutchSpringKits}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[210].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsCMCRebuiltKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsCMCRebuiltKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[211].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.wisecoForgedClutchBasket"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.wisecoForgedClutchBasket}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[212].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.wisecoBottemEndRebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.wisecoBottemEndRebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[213].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.wrenchRERebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.wrenchRERebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[214].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemCarbAssembly"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemCarbAssembly}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[215].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsCarbRepairKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsCarbRepairKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[216].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsCRMidBodyGasket1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsCRMidBodyGasket1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[217].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsCRMidBodyGasket2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsCRMidBodyGasket2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[218].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsFuelTapRepairKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsFuelTapRepairKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[219].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsFuelTapRepairKit2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsFuelTapRepairKit2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[220].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.fuelStarFuelValveKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.fuelStarFuelValveKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[221].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.fuelStarFuelValveKit2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.fuelStarFuelValveKit2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[222].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.fuelStarHoseClampKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.fuelStarHoseClampKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[223].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.rgEngineCoverLHS"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.rgEngineCoverLHS}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[224].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.rgTailTidy"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.rgTailTidy}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[225].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsLBSealKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsLBSealKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[226].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsLRSBearingKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsLRSBearingKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[227].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsURSBearingKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsURSBearingKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[228].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsULSBearingKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsULSBearingKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[229].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.allBallsSBSealKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.allBallsSBSealKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[230].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.pivotWorksSTBearingKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.pivotWorksSTBearingKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[231].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.pivotWorksSRebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.pivotWorksSRebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[232].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mpForkSealDriver"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mpForkSealDriver}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[233].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.mpValveSealInstallTool"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.mpValveSealInstallTool}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[234].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.winderosaGasketKitTopEnd"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.winderosaGasketKitTopEnd}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[235].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.winderosaGasketKitOilSeals"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.winderosaGasketKitOilSeals}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[236].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.oemExhaustGasket"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.oemExhaustGasket}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[237].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.winderosaGasketExhaust"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.winderosaGasketExhaust}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[238].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.winderosaWaterPumpRebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.winderosaWaterPumpRebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[239].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsConnectingRodKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsConnectingRodKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[240].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsCounterBalRebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsCounterBalRebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[241].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsBERebuildKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsBERebuildKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[242].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsBERebuildKitSt"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsBERebuildKitSt}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[243].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsCylinderHead"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsCylinderHead}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[244].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsMainBearingSealKit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsMainBearingSealKit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[245].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsTransmissionBearings"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsTransmissionBearings}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[246].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsWristPinBearings"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsWristPinBearings}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[247].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsSOHCCamshaftStage1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsSOHCCamshaftStage1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[248].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsSOHCCamshaftStage2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsSOHCCamshaftStage2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[249].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsSOHCCamshaftStage3"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsSOHCCamshaftStage3}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[250].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsDOHCCamshaftStage1Intake"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsDOHCCamshaftStage1Intake}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[251].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsDOHCCamshaftStage1Exhaust"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsDOHCCamshaftStage1Exhaust}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[252].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsDOHCCamshaftStage2Intake"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsDOHCCamshaftStage2Intake}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[253].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.hotRodsDOHCCamshaftStage2Exhaust"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.hotRodsDOHCCamshaftStage2Exhaust}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[254].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bikeFrontSprockets"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bikeFrontSprockets}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[255].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bikeRearSprockets"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bikeRearSprockets}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[256].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.rearSprocketConvs"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.rearSprocketConvs}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[257].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.frontSprocketConvs"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.frontSprocketConvs}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[258].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.chains"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.chains}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[259].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bikeBrakePads"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bikeBrakePads}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn  [hidden]="!displayColumns2[260].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bikeBrakeDiscs"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bikeBrakeDiscs}}</ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+            <tr>
+                <td [attr.colspan]="columns.length + 2">
+                    <div class="row">
+                        <div style="display: inline-block;">
+                            <span style="padding:20px;">Model Notes</span>
+                            <div class="ui-g ui-fluid" style="font-size:16px;padding:20px;width:400px;">
+                                <textarea pInputTextarea [(ngModel)]="rowData.modelNotes" autoResize="autoResize" rows="5"
+                                    cols="30" (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></textarea>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;">
+                            <span style="padding:20px;">Model Notes2</span>
+                            <div class="ui-g ui-fluid" style="font-size:16px;padding:20px;width:400px;">
+                                <textarea pInputTextarea [(ngModel)]="rowData.modelNotes2" autoResize="autoResize" rows="5"
+                                    cols="30" (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></textarea>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;">
+                            <span style="padding:20px;">Model Notes3</span>
+                            <div class="ui-g ui-fluid" style="font-size:16px;padding:20px;width:400px;">
+                                <textarea pInputTextarea [(ngModel)]="rowData.modelNotes3" autoResize="autoResize" rows="5"
+                                    cols="30" (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></textarea>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;">
+                            <span style="padding:20px;">Model Notes4</span>
+                            <div class="ui-g ui-fluid" style="font-size:16px;padding:20px;width:400px;">
+                                <textarea pInputTextarea [(ngModel)]="rowData.modelNotes4" autoResize="autoResize" rows="5"
+                                    cols="30" (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+                <div class="row" style="padding-left: 10px;">
+                    <p>Selected Bikes:</p>
+                    <div *ngFor="let sel of selectedBikes">
+                        <span>&nbsp;{{sel.id}},</span>
+                    </div>
+                </div>
+            </ng-template>
+    </p-table>
+    <!--
+    <div class="table-responsive" *ngIf="bikes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Visibility AU</span></th>
+            <th><span>Visibility EU</span></th>
+            <th><span>Inactive</span></th>
+            <th><span>Oemconfirmed</span></th>
+            <th><span>Oesource</span></th>
+            <th><span>Epid</span></th>
+            <th><span>Modeltype 1</span></th>
+            <th><span>Modeltype 2</span></th>
+            <th><span>Manufacturer</span></th>
+            <th><span>Strokes</span></th>
+            <th><span>Capacity</span></th>
+            <th><span>Model Name</span></th>
+            <th><span>Model Year Code</span></th>
+            <th><span>Model Type Code</span></th>
+            <th><span>Year</span></th>
+            <th><span>Final Drive Type</span></th>
+            <th><span>Category Path</span></th>
+            <th><span>Model Notes</span></th>
+            <th><span>Model Notes 2</span></th>
+            <th><span>Model Notes 3</span></th>
+            <th><span>Model Notes 4</span></th>
+            <th><span>Model Info HTML</span></th>
+            <th><span>Oem Front Brake System Type</span></th>
+            <th><span>Oem Front Brake Disc Left</span></th>
+            <th><span>Oem Front Brake Disc Right</span></th>
+            <th><span>Oem Front Brake Disc Bolts</span></th>
+            <th><span>Oem Front BDQTYPD</span></th>
+            <th><span>Oem Front Brake Disc ABS Ring</span></th>
+            <th><span>Oem Front Brake Caliper 1</span></th>
+            <th><span>Oem Front Brake Caliper 2</span></th>
+            <th><span>Oem Front Brake Caliper Pin</span></th>
+            <th><span>Oem Front Brake Pads Front L</span></th>
+            <th><span>Oem Front Brake Pads Front R</span></th>
+            <th><span>Oem Front Shoe</span></th>
+            <th><span>Oem Midldle Axle Brake Disc</span></th>
+            <th><span>Oem Middle Axle Brake Pads</span></th>
+            <th><span>Oem Rear Brake System Type</span></th>
+            <th><span>Oeam Rear Brake Disc</span></th>
+            <th><span>Oeam Rear Brake Disc Bolts</span></th>
+            <th><span>Oeam Rear Brake Disc BQTYPD</span></th>
+            <th><span>Oem Rear Brake Caliper</span></th>
+            <th><span>Oem Rear Brake Caliper Pin</span></th>
+            <th><span>Oem Rear Brake Pads 1</span></th>
+            <th><span>Oem Rear Brake Pads 2</span></th>
+            <th><span>Oem Shoe Rear</span></th>
+            <th><span>Oem Shoe Rear 2</span></th>
+            <th><span>Oem Slave Cylinder</span></th>
+            <th><span>Oem Chain No</span></th>
+            <th><span>Oem Chain Size</span></th>
+            <th><span>Oem Chain Links</span></th>
+            <th><span>Oem Front Sprocket</span></th>
+            <th><span>Oem Front Gearing</span></th>
+            <th><span>Oem Front Gearing Min</span></th>
+            <th><span>Oem Front Gearing Max</span></th>
+            <th><span>Oem Rear Sprocket</span></th>
+            <th><span>Oem Rear Gearing</span></th>
+            <th><span>Oem Rear Gearing Min</span></th>
+            <th><span>Oem Rear Gearing Max</span></th>
+            <th><span>Final Drive Notes</span></th>
+            <th><span>Chain Conv Size</span></th>
+            <th><span>Chain Conv Links</span></th>
+            <th><span>Oem Front Wheel</span></th>
+            <th><span>Oem Front Wheel Type</span></th>
+            <th><span>Oem Front Wheel Front</span></th>
+            <th><span>Oem Front Wheel Tyre Size</span></th>
+            <th><span>Oem Front Hub</span></th>
+            <th><span>Oem Front Wheelbearing 1</span></th>
+            <th><span>Oem Front Wheelbearing 2</span></th>
+            <th><span>Oem Front Wheel Seal</span></th>
+            <th><span>Oem Rear Wheel</span></th>
+            <th><span>Oem Rear Wheel Size</span></th>
+            <th><span>Oem Rear Wheel Tyre</span></th>
+            <th><span>Oem Rear Wheel Bearing 1</span></th>
+            <th><span>Oem Rear Wheel Bearing 2</span></th>
+            <th><span>Oem Rear Wheel Seal</span></th>
+            <th><span>Front Pads Diff Caliper</span></th>
+            <th><span>Qty BH</span></th>
+            <th><span>Handbrake Parking</span></th>
+            <th><span>Add Notes To Bike</span></th>
+            <th><span>Date And ID</span></th>
+            <th><span>Source</span></th>
+            <th><span>Tuv Required</span></th>
+            <th><span>Tuv Type Code</span></th>
+            <th><span>Abekba</span></th>
+            <th><span>Tuv Front Disc</span></th>
+            <th><span>Tuv Rear Disc</span></th>
+            <th><span>Brembo Brake Disc Front Ref</span></th>
+            <th><span>Ebc Brake Disc Front Ref</span></th>
+            <th><span>Trw Brake Disc Front Ref</span></th>
+            <th><span>Mgear Brake Disc Front Left Ref</span></th>
+            <th><span>Mgear Brake Disc Front Right Ref</span></th>
+            <th><span>Mgear Brake Disc Front Check</span></th>
+            <th><span>Mgear Brake Disc Front Left Ref 2</span></th>
+            <th><span>Mgear Brake Disc Front Right Ref 2</span></th>
+            <th><span>Mgear Brake Disc F Neto</span></th>
+            <th><span>Motodisc Brake Disc F Neto</span></th>
+            <th><span>Ebc Brake Pads Front L Ref</span></th>
+            <th><span>Ebc Brake Pads Front R Ref</span></th>
+            <th><span>Mgear Brake Pads Front L Ref</span></th>
+            <th><span>Mgear Brake Pads Front R Ref</span></th>
+            <th><span>Mgear Brake Pads F Neto</span></th>
+            <th><span>Moto Pad Brake Pads Front L Ref</span></th>
+            <th><span>Moto Pad Brake Pads Front R Ref</span></th>
+            <th><span>Motopad Brake Pads F Neto</span></th>
+            <th><span>All Balls FC Rebuild Kit 1</span></th>
+            <th><span>All Balls FC Pin</span></th>
+            <th><span>All Balls FM Cy Rebuild Kit</span></th>
+            <th><span>All Balls FSC Rebuild Kit</span></th>
+            <th><span>Newfren Shoe Front</span></th>
+            <th><span>Mgear Middle Axle Brake Disc Neto</span></th>
+            <th><span>Mgear Middle Axle Brake Disc Neto 2</span></th>
+            <th><span>Mgear Middle Axle Brake Pad Neto</span></th>
+            <th><span>Mgear Middle Axle Brake Pad Neto 2</span></th>
+            <th><span>Mgear Brake Pads Park Ref</span></th>
+            <th><span>Mgear Brake Pads Park Ref 2</span></th>
+            <th><span>Ebc Brake Disc Rear Ref</span></th>
+            <th><span>Brembo Brake Disc Rear Ref</span></th>
+            <th><span>Mgear Brake Disc Rear Ref</span></th>
+            <th><span>Trw Brake Disc Rear Ref</span></th>
+            <th><span>Mgear Brake Disc Rear</span></th>
+            <th><span>All Balls RC Rebuild Kit 1</span></th>
+            <th><span>All Balls Rear Caliper Bolt</span></th>
+            <th><span>All Balls RM Cr Rebuild Kit</span></th>
+            <th><span>Ebc Brake Pads Rear Ref</span></th>
+            <th><span>Mgear Brake Pads Rear Neto</span></th>
+            <th><span>Newfren Shoe Rear</span></th>
+            <th><span>All Balls Rear Brake Pedal Kit</span></th>
+            <th><span>All Balls CSC Rebuild Kit</span></th>
+            <th><span>Front JT Ref Front</span></th>
+            <th><span>Esjot Ref Front</span></th>
+            <th><span>Mgear Ref Front</span></th>
+            <th><span>Mogema Ref Front</span></th>
+            <th><span>Supersprox Ref Front</span></th>
+            <th><span>Esjot Ref Rear</span></th>
+            <th><span>Jt Ref Rear</span></th>
+            <th><span>Mgear Ref Rear</span></th>
+            <th><span>Mogema Ref Rear</span></th>
+            <th><span>Supersprox Ref Rear</span></th>
+            <th><span>Esjot Ref Front Conv</span></th>
+            <th><span>Jt Sprocket Ref</span></th>
+            <th><span>Mgear Ref Front Conv</span></th>
+            <th><span>Mogemaref Front Conv</span></th>
+            <th><span>Supersprox Ref Front Conv</span></th>
+            <th><span>Conversion Chain</span></th>
+            <th><span>Mgear Sprocket Rear Conv</span></th>
+            <th><span>Esjot Ref Rear Conv</span></th>
+            <th><span>Mgear Ref Rear Conv</span></th>
+            <th><span>Mogema Ref Rear Conv</span></th>
+            <th><span>Supersprox Ref Rear Conv</span></th>
+            <th><span>All Balls FW Bearing Kit 1</span></th>
+            <th><span>All Balls FW Bearing Kit 2</span></th>
+            <th><span>All Balls RW Bearing Kit 1</span></th>
+            <th><span>All Balls RW Bearing Kit 2</span></th>
+            <th><span>All Balls RW Bearing Upgrade</span></th>
+            <th><span>Oem Spark Plug</span></th>
+            <th><span>Oem Spark Plug QTY</span></th>
+            <th><span>Ngk Spark Plug SK Us</span></th>
+            <th><span>Oem Alternator</span></th>
+            <th><span>Oem Voltage Regulator</span></th>
+            <th><span>Arrowhead Alternator</span></th>
+            <th><span>Arrowhead Alternator 2</span></th>
+            <th><span>Arrowhead CDI Module</span></th>
+            <th><span>Arrowhead Charging Coil</span></th>
+            <th><span>Arrowhead Ignition Coil</span></th>
+            <th><span>Arrowhead Stator Coil</span></th>
+            <th><span>Arrowhead Voltage Regulator</span></th>
+            <th><span>Arrowhead Power Shift CM</span></th>
+            <th><span>Arrowhead Starter Drive</span></th>
+            <th><span>Arrowhead Starter Motor</span></th>
+            <th><span>Arrowhead Starter Relay</span></th>
+            <th><span>Oem Battery</span></th>
+            <th><span>Ssb AGM Battery</span></th>
+            <th><span>Oem Air Filter</span></th>
+            <th><span>Kn Air Filter</span></th>
+            <th><span>Motorex Air Filter</span></th>
+            <th><span>Motorex Air Filter Preoiled</span></th>
+            <th><span>Oem Oil Filter 1</span></th>
+            <th><span>Kn Oil Filter 1</span></th>
+            <th><span>Oem Oil Filter 2</span></th>
+            <th><span>Kn Oil Filter 2</span></th>
+            <th><span>Motion Pro Oil Filter Magnet</span></th>
+            <th><span>Oem Steering Bearing</span></th>
+            <th><span>Oem Steering Seal</span></th>
+            <th><span>All Balls SB Seal Kit 1</span></th>
+            <th><span>All Balls SB Seal Kit 2</span></th>
+            <th><span>All Balls SB Seal Kit Lower</span></th>
+            <th><span>All Balls SB Seal Kit Lower 2</span></th>
+            <th><span>All Balls CB Seal Kit</span></th>
+            <th><span>Oem Fork Assembly Left</span></th>
+            <th><span>Oem Fork Assembly Right</span></th>
+            <th><span>Oem Fork Seals</span></th>
+            <th><span>All Balls Fork Seals</span></th>
+            <th><span>Xpr Fork Seals</span></th>
+            <th><span>All Balls Fork Bushing Kit</span></th>
+            <th><span>Motion Pro Micro Fork Bleeder</span></th>
+            <th><span>Motion Pro CR Pro Thottle Kit</span></th>
+            <th><span>Oem Cable Speedo</span></th>
+            <th><span>Motion Pro Cable Speedo</span></th>
+            <th><span>Motion Pro Cable Throttle Tube</span></th>
+            <th><span>Crosspro Radiator Guard</span></th>
+            <th><span>Oem Clutch Fibres</span></th>
+            <th><span>Oem Clutch Fibres Steels</span></th>
+            <th><span>Newfren Clutch Kit</span></th>
+            <th><span>Newfren Clutch Spring Kits</span></th>
+            <th><span>All Balls CMC Rebuilt Kit</span></th>
+            <th><span>Wiseco Forged Clutch Basket</span></th>
+            <th><span>Wiseco Bottem End Rebuild Kit</span></th>
+            <th><span>Wrench RE Rebuild Kit</span></th>
+            <th><span>Oem Carb Assembly</span></th>
+            <th><span>All Balls Carb Repair Kit</span></th>
+            <th><span>All Balls CR Mid Body Gasket 1</span></th>
+            <th><span>All Balls CR Mid Body Gasket 2</span></th>
+            <th><span>All Balls Fuel Tap Repair Kit</span></th>
+            <th><span>All Balls Fuel Tap Repair Kit 2</span></th>
+            <th><span>Fuel Star Fuel Valve Kit</span></th>
+            <th><span>Fuel Star Fuel Valve Kit 2</span></th>
+            <th><span>Fuel Star Hose Clamp Kit</span></th>
+            <th><span>Rg Engine Cover LHS</span></th>
+            <th><span>Rg Tail Tidy</span></th>
+            <th><span>All Balls LB Seal Kit</span></th>
+            <th><span>All Balls LRS Bearing Kit</span></th>
+            <th><span>All Balls URS Bearing Kit</span></th>
+            <th><span>All Balls ULS Bearing Kit</span></th>
+            <th><span>All Balls SB Seal Kit</span></th>
+            <th><span>Pivot Works ST Bearing Kit</span></th>
+            <th><span>Pivot Works S Rebuild Kit</span></th>
+            <th><span>Mp Fork Seal Driver</span></th>
+            <th><span>Mp Valve Seal Install Tool</span></th>
+            <th><span>Winderosa Gasket Kit Top End</span></th>
+            <th><span>Winderosa Gasket Kit Oil Seals</span></th>
+            <th><span>Oem Exhaust Gasket</span></th>
+            <th><span>Winderosa Gasket Exhaust</span></th>
+            <th><span>Winderosa Water Pump Rebuild Kit</span></th>
+            <th><span>Hot Rods Connecting Rod Kit</span></th>
+            <th><span>Hot Rods Counter Bal Rebuild Kit</span></th>
+            <th><span>Hot Rods BE Rebuild Kit</span></th>
+            <th><span>Hot Rods BE Rebuild Kit St</span></th>
+            <th><span>Hot Rods Cylinder Head</span></th>
+            <th><span>Hot Rods Main Bearing Seal Kit</span></th>
+            <th><span>Hot Rods Transmission Bearings</span></th>
+            <th><span>Hot Rods Wrist Pin Bearings</span></th>
+            <th><span>Hot Rods SOHC Camshaft Stage 1</span></th>
+            <th><span>Hot Rods SOHC Camshaft Stage 2</span></th>
+            <th><span>Hot Rods SOHC Camshaft Stage 3</span></th>
+            <th><span>Hot Rods DOHC Camshaft Stage 1 Intake</span></th>
+            <th><span>Hot Rods DOHC Camshaft Stage 1 Exhaust</span></th>
+            <th><span>Hot Rods DOHC Camshaft Stage 2 Intake</span></th>
+            <th><span>Hot Rods DOHC Camshaft Stage 2 Exhaust</span></th>
+            <th><span>Bike Front Sprocket</span></th>
+            <th><span>Bike Rear Sprocket</span></th>
+            <th><span>Rear Sprocket Conv</span></th>
+            <th><span>Front Sprocket Conv</span></th>
+            <th><span>Chain</span></th>
+            <th><span>Bike Brake Pad</span></th>
+            <th><span>Bike Brake Disc</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let bike of bikes ;trackBy: trackId">
+                <td><a [routerLink]="['/bike', bike.id, 'view' ]">{{bike.id}}</a></td>
+                <td>{{bike.visibilityAU}}</td>
+                <td>{{bike.visibilityEU}}</td>
+                <td>{{bike.inactive}}</td>
+                <td>{{bike.oemconfirmed}}</td>
+                <td>{{bike.oesource}}</td>
+                <td>{{bike.epid}}</td>
+                <td>{{bike.modeltype1}}</td>
+                <td>{{bike.modeltype2}}</td>
+                <td>{{bike.manufacturer}}</td>
+                <td>{{bike.strokes}}</td>
+                <td>{{bike.capacity}}</td>
+                <td>{{bike.modelName}}</td>
+                <td>{{bike.modelYearCode}}</td>
+                <td>{{bike.modelTypeCode}}</td>
+                <td>{{bike.year}}</td>
+                <td>{{bike.finalDriveType}}</td>
+                <td>{{bike.categoryPath}}</td>
+                <td>{{bike.modelNotes}}</td>
+                <td>{{bike.modelNotes2}}</td>
+                <td>{{bike.modelNotes3}}</td>
+                <td>{{bike.modelNotes4}}</td>
+                <td>{{bike.modelInfoHTML}}</td>
+                <td>{{bike.oemFrontBrakeSystemType}}</td>
+                <td>{{bike.oemFrontBrakeDiscLeft}}</td>
+                <td>{{bike.oemFrontBrakeDiscRight}}</td>
+                <td>{{bike.oemFrontBrakeDiscBolts}}</td>
+                <td>{{bike.oemFrontBDQTYPD}}</td>
+                <td>{{bike.oemFrontBrakeDiscABSRing}}</td>
+                <td>{{bike.oemFrontBrakeCaliper1}}</td>
+                <td>{{bike.oemFrontBrakeCaliper2}}</td>
+                <td>{{bike.oemFrontBrakeCaliperPin}}</td>
+                <td>{{bike.oemFrontBrakePadsFrontL}}</td>
+                <td>{{bike.oemFrontBrakePadsFrontR}}</td>
+                <td>{{bike.oemFrontShoe}}</td>
+                <td>{{bike.oemMidldleAxleBrakeDisc}}</td>
+                <td>{{bike.oemMiddleAxleBrakePads}}</td>
+                <td>{{bike.oemRearBrakeSystemType}}</td>
+                <td>{{bike.oeamRearBrakeDisc}}</td>
+                <td>{{bike.oeamRearBrakeDiscBolts}}</td>
+                <td>{{bike.oeamRearBrakeDiscBQTYPD}}</td>
+                <td>{{bike.oemRearBrakeCaliper}}</td>
+                <td>{{bike.oemRearBrakeCaliperPin}}</td>
+                <td>{{bike.oemRearBrakePads1}}</td>
+                <td>{{bike.oemRearBrakePads2}}</td>
+                <td>{{bike.oemShoeRear}}</td>
+                <td>{{bike.oemShoeRear2}}</td>
+                <td>{{bike.oemSlaveCylinder}}</td>
+                <td>{{bike.oemChainNo}}</td>
+                <td>{{bike.oemChainSize}}</td>
+                <td>{{bike.oemChainLinks}}</td>
+                <td>{{bike.oemFrontSprocket}}</td>
+                <td>{{bike.oemFrontGearing}}</td>
+                <td>{{bike.oemFrontGearingMin}}</td>
+                <td>{{bike.oemFrontGearingMax}}</td>
+                <td>{{bike.oemRearSprocket}}</td>
+                <td>{{bike.oemRearGearing}}</td>
+                <td>{{bike.oemRearGearingMin}}</td>
+                <td>{{bike.oemRearGearingMax}}</td>
+                <td>{{bike.finalDriveNotes}}</td>
+                <td>{{bike.chainConvSize}}</td>
+                <td>{{bike.chainConvLinks}}</td>
+                <td>{{bike.oemFrontWheel}}</td>
+                <td>{{bike.oemFrontWheelType}}</td>
+                <td>{{bike.oemFrontWheelFront}}</td>
+                <td>{{bike.oemFrontWheelTyreSize}}</td>
+                <td>{{bike.oemFrontHub}}</td>
+                <td>{{bike.oemFrontWheelbearing1}}</td>
+                <td>{{bike.oemFrontWheelbearing2}}</td>
+                <td>{{bike.oemFrontWheelSeal}}</td>
+                <td>{{bike.oemRearWheel}}</td>
+                <td>{{bike.oemRearWheelSize}}</td>
+                <td>{{bike.oemRearWheelTyre}}</td>
+                <td>{{bike.oemRearWheelBearing1}}</td>
+                <td>{{bike.oemRearWheelBearing2}}</td>
+                <td>{{bike.oemRearWheelSeal}}</td>
+                <td>{{bike.frontPadsDiffCaliper}}</td>
+                <td>{{bike.qtyBH}}</td>
+                <td>{{bike.handbrakeParking}}</td>
+                <td>{{bike.addNotesToBike}}</td>
+                <td>{{bike.dateAndID}}</td>
+                <td>{{bike.source}}</td>
+                <td>{{bike.tuvRequired}}</td>
+                <td>{{bike.tuvTypeCode}}</td>
+                <td>{{bike.abekba}}</td>
+                <td>{{bike.tuvFrontDisc}}</td>
+                <td>{{bike.tuvRearDisc}}</td>
+                <td>{{bike.bremboBrakeDiscFrontRef}}</td>
+                <td>{{bike.ebcBrakeDiscFrontRef}}</td>
+                <td>{{bike.trwBrakeDiscFrontRef}}</td>
+                <td>{{bike.mgearBrakeDiscFrontLeftRef}}</td>
+                <td>{{bike.mgearBrakeDiscFrontRightRef}}</td>
+                <td>{{bike.mgearBrakeDiscFrontCheck}}</td>
+                <td>{{bike.mgearBrakeDiscFrontLeftRef2}}</td>
+                <td>{{bike.mgearBrakeDiscFrontRightRef2}}</td>
+                <td>{{bike.mgearBrakeDiscFNeto}}</td>
+                <td>{{bike.motodiscBrakeDiscFNeto}}</td>
+                <td>{{bike.ebcBrakePadsFrontLRef}}</td>
+                <td>{{bike.ebcBrakePadsFrontRRef}}</td>
+                <td>{{bike.mgearBrakePadsFrontLRef}}</td>
+                <td>{{bike.mgearBrakePadsFrontRRef}}</td>
+                <td>{{bike.mgearBrakePadsFNeto}}</td>
+                <td>{{bike.motoPadBrakePadsFrontLRef}}</td>
+                <td>{{bike.motoPadBrakePadsFrontRRef}}</td>
+                <td>{{bike.motopadBrakePadsFNeto}}</td>
+                <td>{{bike.allBallsFCRebuildKit1}}</td>
+                <td>{{bike.allBallsFCPin}}</td>
+                <td>{{bike.allBallsFMCyRebuildKit}}</td>
+                <td>{{bike.allBallsFSCRebuildKit}}</td>
+                <td>{{bike.newfrenShoeFront}}</td>
+                <td>{{bike.mgearMiddleAxleBrakeDiscNeto}}</td>
+                <td>{{bike.mgearMiddleAxleBrakeDiscNeto2}}</td>
+                <td>{{bike.mgearMiddleAxleBrakePadNeto}}</td>
+                <td>{{bike.mgearMiddleAxleBrakePadNeto2}}</td>
+                <td>{{bike.mgearBrakePadsParkRef}}</td>
+                <td>{{bike.mgearBrakePadsParkRef2}}</td>
+                <td>{{bike.ebcBrakeDiscRearRef}}</td>
+                <td>{{bike.bremboBrakeDiscRearRef}}</td>
+                <td>{{bike.mgearBrakeDiscRearRef}}</td>
+                <td>{{bike.trwBrakeDiscRearRef}}</td>
+                <td>{{bike.mgearBrakeDiscRear}}</td>
+                <td>{{bike.allBallsRCRebuildKit1}}</td>
+                <td>{{bike.allBallsRearCaliperBolt}}</td>
+                <td>{{bike.allBallsRMCrRebuildKit}}</td>
+                <td>{{bike.ebcBrakePadsRearRef}}</td>
+                <td>{{bike.mgearBrakePadsRearNeto}}</td>
+                <td>{{bike.newfrenShoeRear}}</td>
+                <td>{{bike.allBallsRearBrakePedalKit}}</td>
+                <td>{{bike.allBallsCSCRebuildKit}}</td>
+                <td>{{bike.frontJTRefFront}}</td>
+                <td>{{bike.esjotRefFront}}</td>
+                <td>{{bike.mgearRefFront}}</td>
+                <td>{{bike.mogemaRefFront}}</td>
+                <td>{{bike.supersproxRefFront}}</td>
+                <td>{{bike.esjotRefRear}}</td>
+                <td>{{bike.jtRefRear}}</td>
+                <td>{{bike.mgearRefRear}}</td>
+                <td>{{bike.mogemaRefRear}}</td>
+                <td>{{bike.supersproxRefRear}}</td>
+                <td>{{bike.esjotRefFrontConv}}</td>
+                <td>{{bike.jtSprocketRef}}</td>
+                <td>{{bike.mgearRefFrontConv}}</td>
+                <td>{{bike.mogemarefFrontConv}}</td>
+                <td>{{bike.supersproxRefFrontConv}}</td>
+                <td>{{bike.conversionChain}}</td>
+                <td>{{bike.mgearSprocketRearConv}}</td>
+                <td>{{bike.esjotRefRearConv}}</td>
+                <td>{{bike.mgearRefRearConv}}</td>
+                <td>{{bike.mogemaRefRearConv}}</td>
+                <td>{{bike.supersproxRefRearConv}}</td>
+                <td>{{bike.allBallsFWBearingKit1}}</td>
+                <td>{{bike.allBallsFWBearingKit2}}</td>
+                <td>{{bike.allBallsRWBearingKit1}}</td>
+                <td>{{bike.allBallsRWBearingKit2}}</td>
+                <td>{{bike.allBallsRWBearingUpgrade}}</td>
+                <td>{{bike.oemSparkPlug}}</td>
+                <td>{{bike.oemSparkPlugQTY}}</td>
+                <td>{{bike.ngkSparkPlugSKUs}}</td>
+                <td>{{bike.oemAlternator}}</td>
+                <td>{{bike.oemVoltageRegulator}}</td>
+                <td>{{bike.arrowheadAlternator}}</td>
+                <td>{{bike.arrowheadAlternator2}}</td>
+                <td>{{bike.arrowheadCDIModule}}</td>
+                <td>{{bike.arrowheadChargingCoil}}</td>
+                <td>{{bike.arrowheadIgnitionCoil}}</td>
+                <td>{{bike.arrowheadStatorCoil}}</td>
+                <td>{{bike.arrowheadVoltageRegulator}}</td>
+                <td>{{bike.arrowheadPowerShiftCM}}</td>
+                <td>{{bike.arrowheadStarterDrive}}</td>
+                <td>{{bike.arrowheadStarterMotor}}</td>
+                <td>{{bike.arrowheadStarterRelay}}</td>
+                <td>{{bike.oemBattery}}</td>
+                <td>{{bike.ssbAGMBattery}}</td>
+                <td>{{bike.oemAirFilter}}</td>
+                <td>{{bike.knAirFilter}}</td>
+                <td>{{bike.motorexAirFilter}}</td>
+                <td>{{bike.motorexAirFilterPreoiled}}</td>
+                <td>{{bike.oemOilFilter1}}</td>
+                <td>{{bike.knOilFilter1}}</td>
+                <td>{{bike.oemOilFilter2}}</td>
+                <td>{{bike.knOilFilter2}}</td>
+                <td>{{bike.motionProOilFilterMagnet}}</td>
+                <td>{{bike.oemSteeringBearing}}</td>
+                <td>{{bike.oemSteeringSeal}}</td>
+                <td>{{bike.allBallsSBSealKit1}}</td>
+                <td>{{bike.allBallsSBSealKit2}}</td>
+                <td>{{bike.allBallsSBSealKitLower}}</td>
+                <td>{{bike.allBallsSBSealKitLower2}}</td>
+                <td>{{bike.allBallsCBSealKit}}</td>
+                <td>{{bike.oemForkAssemblyLeft}}</td>
+                <td>{{bike.oemForkAssemblyRight}}</td>
+                <td>{{bike.oemForkSeals}}</td>
+                <td>{{bike.allBallsForkSeals}}</td>
+                <td>{{bike.xprForkSeals}}</td>
+                <td>{{bike.allBallsForkBushingKit}}</td>
+                <td>{{bike.motionProMicroForkBleeder}}</td>
+                <td>{{bike.motionProCRProThottleKit}}</td>
+                <td>{{bike.oemCableSpeedo}}</td>
+                <td>{{bike.motionProCableSpeedo}}</td>
+                <td>{{bike.motionProCableThrottleTube}}</td>
+                <td>{{bike.crossproRadiatorGuard}}</td>
+                <td>{{bike.oemClutchFibres}}</td>
+                <td>{{bike.oemClutchFibresSteels}}</td>
+                <td>{{bike.newfrenClutchKit}}</td>
+                <td>{{bike.newfrenClutchSpringKits}}</td>
+                <td>{{bike.allBallsCMCRebuiltKit}}</td>
+                <td>{{bike.wisecoForgedClutchBasket}}</td>
+                <td>{{bike.wisecoBottemEndRebuildKit}}</td>
+                <td>{{bike.wrenchRERebuildKit}}</td>
+                <td>{{bike.oemCarbAssembly}}</td>
+                <td>{{bike.allBallsCarbRepairKit}}</td>
+                <td>{{bike.allBallsCRMidBodyGasket1}}</td>
+                <td>{{bike.allBallsCRMidBodyGasket2}}</td>
+                <td>{{bike.allBallsFuelTapRepairKit}}</td>
+                <td>{{bike.allBallsFuelTapRepairKit2}}</td>
+                <td>{{bike.fuelStarFuelValveKit}}</td>
+                <td>{{bike.fuelStarFuelValveKit2}}</td>
+                <td>{{bike.fuelStarHoseClampKit}}</td>
+                <td>{{bike.rgEngineCoverLHS}}</td>
+                <td>{{bike.rgTailTidy}}</td>
+                <td>{{bike.allBallsLBSealKit}}</td>
+                <td>{{bike.allBallsLRSBearingKit}}</td>
+                <td>{{bike.allBallsURSBearingKit}}</td>
+                <td>{{bike.allBallsULSBearingKit}}</td>
+                <td>{{bike.allBallsSBSealKit}}</td>
+                <td>{{bike.pivotWorksSTBearingKit}}</td>
+                <td>{{bike.pivotWorksSRebuildKit}}</td>
+                <td>{{bike.mpForkSealDriver}}</td>
+                <td>{{bike.mpValveSealInstallTool}}</td>
+                <td>{{bike.winderosaGasketKitTopEnd}}</td>
+                <td>{{bike.winderosaGasketKitOilSeals}}</td>
+                <td>{{bike.oemExhaustGasket}}</td>
+                <td>{{bike.winderosaGasketExhaust}}</td>
+                <td>{{bike.winderosaWaterPumpRebuildKit}}</td>
+                <td>{{bike.hotRodsConnectingRodKit}}</td>
+                <td>{{bike.hotRodsCounterBalRebuildKit}}</td>
+                <td>{{bike.hotRodsBERebuildKit}}</td>
+                <td>{{bike.hotRodsBERebuildKitSt}}</td>
+                <td>{{bike.hotRodsCylinderHead}}</td>
+                <td>{{bike.hotRodsMainBearingSealKit}}</td>
+                <td>{{bike.hotRodsTransmissionBearings}}</td>
+                <td>{{bike.hotRodsWristPinBearings}}</td>
+                <td>{{bike.hotRodsSOHCCamshaftStage1}}</td>
+                <td>{{bike.hotRodsSOHCCamshaftStage2}}</td>
+                <td>{{bike.hotRodsSOHCCamshaftStage3}}</td>
+                <td>{{bike.hotRodsDOHCCamshaftStage1Intake}}</td>
+                <td>{{bike.hotRodsDOHCCamshaftStage1Exhaust}}</td>
+                <td>{{bike.hotRodsDOHCCamshaftStage2Intake}}</td>
+                <td>{{bike.hotRodsDOHCCamshaftStage2Exhaust}}</td>
+                <td>
+                    <span *ngFor="let bikeFrontSprocket of bike.bikeFrontSprockets; let last = last">
+                            <a class="form-control-static" [routerLink]="['../bike-front-sprocket', bikeFrontSprocket?.id, 'view' ]">{{bikeFrontSprocket.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let bikeRearSprocket of bike.bikeRearSprockets; let last = last">
+                            <a class="form-control-static" [routerLink]="['../bike-rear-sprocket', bikeRearSprocket?.id, 'view' ]">{{bikeRearSprocket.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let rearSprocketConv of bike.rearSprocketConvs; let last = last">
+                            <a class="form-control-static" [routerLink]="['../rear-sprocket-conv', rearSprocketConv?.id, 'view' ]">{{rearSprocketConv.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let frontSprocketConv of bike.frontSprocketConvs; let last = last">
+                            <a class="form-control-static" [routerLink]="['../front-sprocket-conv', frontSprocketConv?.id, 'view' ]">{{frontSprocketConv.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let chain of bike.chains; let last = last">
+                            <a class="form-control-static" [routerLink]="['../chain', chain?.id, 'view' ]">{{chain.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let bikeBrakePad of bike.bikeBrakePads; let last = last">
+                            <a class="form-control-static" [routerLink]="['../bike-brake-pad', bikeBrakePad?.id, 'view' ]">{{bikeBrakePad.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let bikeBrakeDisc of bike.bikeBrakeDiscs; let last = last">
+                            <a class="form-control-static" [routerLink]="['../bike-brake-disc', bikeBrakeDisc?.id, 'view' ]">{{bikeBrakeDisc.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/bike', bike.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/bike', bike.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'bike/'+ bike.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    -->
+</div>

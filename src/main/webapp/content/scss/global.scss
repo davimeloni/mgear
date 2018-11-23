@@ -224,3 +224,34 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+.ui-listbox .ui-listbox-item.ui-state-highlight {
+    background-color: white !important;
+}
+
+.fieldset-auto-width {
+    display: inline-block;
+}
+
+body {
+    font-size: 0.7em;
+}
+
+.entity-table2 tr td {
+    width:1%;
+    white-space:nowrap;
+}
+
+.entity-table2 tr th {
+    width:1%;
+    white-space:nowrap;
+}
+
+
+.rowSelected {
+    background: lightblue;
+}
+
+.col-wrapper {
+    padding: 5px;
+}

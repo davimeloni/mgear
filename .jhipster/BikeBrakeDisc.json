@@ -1,0 +1,28 @@
+{
+    "name": "BikeBrakeDisc",
+    "fields": [
+        {
+            "fieldName": "sku",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "bike",
+            "otherEntityName": "bike",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "bikeBrakeDisc"
+        }
+    ],
+    "changelogDate": "20181113204521",
+    "entityTableName": "bike_brake_disc",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "enableEntityAudit": true
+}

@@ -1,0 +1,655 @@
+<div>
+    <h2 id="page-heading">
+        <span>Brake Pads</span>
+    </h2>
+
+    <p-accordion>
+            <p-accordionTab header="Columns" [selected]="false">
+                <div class="row" style="padding-left: 5px;">
+                        <button type="button" class="btn btn-outline-success" (click)="selectAllColumns()" style="float:left; margin-right: 10px;">
+                                <i class="pi pi-eye"></i>All</button>
+                        <button type="button" class="btn btn-outline-danger" (click)="unselectAllColumns()" style="float:left; margin-right: 10px;">
+                                <i class="pi pi-eye-slash"></i>All</button>
+                </div>
+                <div class="row">
+                    <div *ngFor="let c of displayColumns2; index as i;">
+                        <div class="col-wrapper" *ngIf="(c.field !== 'ourNotes' && c.field !== 'customerNotes')" style="white-space: nowrap;" >
+                            <p-toggleButton onLabel="{{c.label}}" offLabel="{{c.label}}" onIcon="pi pi-check" offIcon="pi pi-times"
+                                [(ngModel)]="c.display"></p-toggleButton>
+                        </div>
+                    </div>
+                </div>
+            </p-accordionTab>
+        </p-accordion>
+    
+        <p-dialog header="Delete Selected" [(visible)]="displayDialog" [modal]="true" [responsive]="true" [width]="350" [minWidth]="200"
+            [minY]="70" [baseZIndex]="10000">
+            <span>{{dialogContent}}</span>
+            <p-footer>
+                <button type="button" pButton icon="pi pi-check" (click)="deleteItems()" label="Yes"></button>
+                <button type="button" pButton icon="pi pi-close" (click)="displayDialog=false" label="No" class="ui-button-secondary"></button>
+            </p-footer>
+        </p-dialog>
+    
+        <p-dialog header="Saving Data..." [(visible)]="displayDialog2" [modal]="true" [responsive]="true" [minWidth]="200"
+            [wdith]="400" [minY]="70" [baseZIndex]="10000">
+            <p>Please wait while we save the data on the database. It might take a couple of minutes depending on file's size</p><br>
+            <p>After the import is complete, click on refresh button to update the table with the new data.</p><br>
+            <p>You can also check its status by clicking on Last CSV Report.</p>
+        </p-dialog>
+    
+        <p-dialog header="Last CSV Report" [(visible)]="dialogLastCSV" [modal]="true" [responsive]="true" [minWidth]="200"
+            [width]="700" [minY]="70" [baseZIndex]="10000">
+            <div class="table-responsive" *ngIf="lastCSVReport">
+                <table class="table table-striped">
+                    <thead>
+                        <th>SKU</th>
+                        <th>Performed</th>
+                        <th>Status</th>
+                        <th>Error Message</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of lastCSVReport;trackBy: trackId">
+                        <td style="width:1%;white-space:nowrap;"><a [routerLink]="['/brake-pad', item.id, 'view' ]">{{item.sku}}</a></td>
+                        <td>{{item.performed}}</td>
+                        <td>{{item.status}}</td>
+                        <td>{{item.errorMessage}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </p-dialog>
+    
+        <hr />
+        <p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+    <p-table class="entity-table2" #dt [columns]="displayColumns2" [value]="brakePads" [paginator]="true" [rows]="10" [(selection)]="selectedPads"
+        sortField="sku" dataKey="id" [rowsPerPageOptions]="[10,15,20,25]" sortOrder="1" expandableRows="true"
+        [responsive]="true" [autoLayout]="true">
+
+        <ng-template pTemplate="caption" style="margin: 5px;">
+            <div class="ui-helper-clearfix">
+                <button type="button" class="btn btn-outline-primary" (click)="dt.exportCSV()" style="float:left; margin-right: 10px;">
+                    <i class="pi pi-download"></i>Export All</button>
+                <button type="button" class="btn btn-outline-primary" (click)="dt.exportCSV({selectionOnly:true})"
+                    style="float:left;">
+                    <i class="pi pi-download"></i>Export Selected Only</button>
+                <input type='file' (change)='convertFile(input)' id='fileInput' #input>
+                <button type="button" class="btn btn-outline-primary" (click)="saveCSV()">
+                    <i class="pi pi-upload"></i>Upload CSV</button>
+                    <button type="button" class="btn btn-outline-primary" (click)="popupCSV()">
+                            <i class="pi pi-list"></i>Last CSV Report</button>
+        
+                <button type="button" class="btn btn-outline-info" style="float:right; margin-left: 10px; border-color: transparent;" (click)="reloadAll()">
+                        <i class="pi pi-refresh"></i>
+                </button>
+                <button type="button" class="btn btn-outline-primary" style="float:right;" [routerLink]="['/brake-pad/new']">
+                    <fa-icon [icon]="'plus'"></fa-icon>
+                    <span>
+                        Create new Bike Pad
+                    </span>
+                </button>
+            </div>
+            <div style="text-align: right; margin-top: 5px;">
+                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    style="width:auto">
+            </div>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col>
+                <col *ngFor="let col of columns">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns let-rowData>
+            <tr>
+                <th>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    <button type="button" (click)="confirmDeleteSelected()" class="btn btn-outline-danger">
+                        <i class="pi pi-trash"></i>
+                    </button>
+                </th>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field" [hidden]="!col.display">
+                    <input type="checkbox" [(ngModel)]="col.display" value="col.display">
+                    {{col.label}}
+                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                </th>
+            </tr>
+
+            <tr>
+                <th></th>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field" [hidden]="!col.display">
+                    <input *ngSwitchCase="'sku'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                </th>
+            </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
+            <tr (click)="onRowSelect($event)">
+                <td>
+                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                    <button type="submit" [routerLink]="['/', { outlets: { popup: 'brake-pad/'+ rowData.id + '/delete'} }]"
+                        replaceUrl="true" queryParamsHandling="merge" class="btn btn-outline-danger">
+                        <i class="pi pi-trash"></i>
+                    </button>
+                    <button type="submit" [routerLink]="['/brake-pad', rowData.id, 'view' ]" class="btn btn-outline-info">
+                        <i class="pi pi-eye"></i>
+                    </button>
+                    <a [pRowToggler]="rowData">
+                        <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                    </a>
+                </td>
+                <td [hidden]="!displayColumns2[0].display">
+                    <a [routerLink]="['/brake-pad', rowData.id, 'view' ]">{{rowData.id}}</a>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[1].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.sku" (change)="rowChanged()"
+                                (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.sku}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[2].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.active" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of ynOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.active}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[3].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.au" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of ynOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.au}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[4].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.de" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of ynOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.de}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[5].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.metalGearvisibility" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of ynOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.metalGearvisibility}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[6].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.bikematevisibility" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of ynOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.bikematevisibility}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[7].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <select [(ngModel)]="rowData.mgiVisibility" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                (keydown.enter)="saveRow(rowData)">
+                                <option *ngFor="let opt of ynOptions" [value]="opt">{{opt}}</option>
+                            </select>
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.mgiVisibility}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[6].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.activeNeto"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.activeNeto}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[7].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.status"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.status}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[8].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.productGroup1"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.productGroup1}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[9].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.productGroup2"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.productGroup2}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[10].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.fitment"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.fitment}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[11].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.description"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.description}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[12].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.unit"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.unit}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[13].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.qty" (change)="rowChanged()"
+                                (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.qty}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[14].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.brand"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.brand}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[15].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.biketypes"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.biketypes}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[16].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.models2012on"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.models2012on}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[17].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.gS1EAN"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.gS1EAN}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[18].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ourNotes"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ourNotes}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[19].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.weightkg"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.weightkg}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[20].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.packType"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.packType}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[21].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.packLength"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.packLength}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[22].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.packWidth"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.packWidth}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[23].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.packHeight"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.packHeight}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[24].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.packCubic"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.packCubic}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[25].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.caliper"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.caliper}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[26].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.alength"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.alength}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[27].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.awidth"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.awidth}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[28].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.athickness"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.athickness}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[29].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.blength"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.blength}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[30].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bwidth"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bwidth}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[31].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bthickness"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bthickness}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[32].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.customerNotes"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.customerNotes}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[33].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.eListing"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.eListing}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[34].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.eforMake"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.eforMake}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[35].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.euploadedNeto"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.euploadedNeto}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[36].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.eDate"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.eDate}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[37].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.echeck"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.echeck}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[38].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.euploadedeBay"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.euploadedeBay}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[39].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ebayactive"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ebayactive}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[40].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ePhotobucket"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ePhotobucket}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[41].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ePhotoMain"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ePhotoMain}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[42].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ePhotoClear"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ePhotoClear}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[43].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ePhotoSide"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ePhotoSide}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[44].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.saleStatus"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.saleStatus}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[45].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.rRP" (change)="rowChanged()"
+                                (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.rRP}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[46].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.eBay"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.eBay}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[47].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.eBC" (change)="rowChanged()"
+                                (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.eBC}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[48].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.sBS" (change)="rowChanged()"
+                                (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.sBS}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[49].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.goldfren"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.goldfren}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[50].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.braking"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.braking}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[51].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.brembo"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.brembo}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[52].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.ferodo"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.ferodo}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[53].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.goodridge"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.goodridge}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[54].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.premier"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.premier}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[55].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.carbon"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.carbon}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[56].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.galfer"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.galfer}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[57].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.vesrah"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.vesrah}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[58].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.lucas"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.lucas}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[59].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.newFren"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.newFren}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[60].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.dunlop"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.dunlop}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[61].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.lockheed"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.lockheed}}</ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn [hidden]="!displayColumns2[62].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input"><input pInputText type="text" [(ngModel)]="rowData.bendix"
+                                (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></ng-template>
+                        <ng-template pTemplate="output">{{rowData.bendix}}</ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+            <tr>
+                <td [attr.colspan]="columns.length + 1">
+                    <div class="ui-g ui-fluid row">
+                        <div style="display: inline-block;">
+                            <span style="padding:20px;">Our Notes</span>
+                            <div class="ui-g ui-fluid" style="font-size:16px;padding:20px;width:400px;">
+                                <textarea pInputTextarea [(ngModel)]="rowData.ourNotes" autoResize="autoResize" rows="5"
+                                    cols="30" (change)="rowChanged()" (blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)"></textarea>
+                            </div>
+                        </div>
+                        <div style="display: inline-block;">
+                            <span style="padding:20px;">Customer Notes</span>
+                            <div class="ui-g ui-fluid" style="font-size:16px;padding:20px;width:400px;">
+                                <textarea pInputTextarea [(ngModel)]="rowData.customerNotes" autoResize="autoResize"
+                                    rows="5" cols="30" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                                    (keydown.enter)="saveRow(rowData)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="row" style="padding-left: 10px;">
+                <p>Selected Brake Pads:</p><br>
+                <div *ngFor="let sel of selectedPads">
+                    <span>&nbsp;{{sel.sku}},</span>
+                </div>
+            </div>
+        </ng-template>
+    </p-table>
+
+</div>

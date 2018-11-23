@@ -1,0 +1,267 @@
+{
+    "name": "BrakePad",
+    "fields": [
+        {
+            "fieldName": "sku",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "au",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "de",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bikemateVisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgiVisiblity",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "activeNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "productGroup1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "productGroup2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fitment",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "unit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "qty",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "brand",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "biketypes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "models2012on",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "gS1EAN",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "ourNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "weightkg",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "packLength",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packWidth",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packHeight",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packCubic",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "caliper",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "alength",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "awidth",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "athickness",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "blength",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "bwidth",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "bthickness",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "customerNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eListing",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eforMake",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "euploadedNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "echeck",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "euploadedeBay",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ebayactive",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotobucket",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotoMain",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotoClear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotoSide",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "saleStatus",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rRP",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "eBay",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "eBC",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sBS",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "goldfren",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "braking",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "brembo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ferodo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "goodridge",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "premier",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "carbon",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "galfer",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vesrah",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lucas",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "newFren",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dunlop",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lockheed",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bendix",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181113204513",
+    "entityTableName": "brake_pad",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "enableEntityAudit": true
+}

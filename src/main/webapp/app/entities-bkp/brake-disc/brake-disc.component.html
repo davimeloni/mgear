@@ -1,0 +1,228 @@
+<div>
+    <h2 id="page-heading">
+        <span>Brake Discs</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-brake-disc" [routerLink]="['/brake-disc/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Brake Disc
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="brakeDiscs">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Sku</span></th>
+            <th><span>Active</span></th>
+            <th><span>Au</span></th>
+            <th><span>De</span></th>
+            <th><span>Metal Gearvisibility</span></th>
+            <th><span>Bikematevisibility</span></th>
+            <th><span>Mgi Visibility</span></th>
+            <th><span>Disc Status</span></th>
+            <th><span>Product Group 1</span></th>
+            <th><span>Product Group 2</span></th>
+            <th><span>Fitment</span></th>
+            <th><span>Description</span></th>
+            <th><span>Unit</span></th>
+            <th><span>Qty</span></th>
+            <th><span>Brand</span></th>
+            <th><span>Biketypes</span></th>
+            <th><span>Models 2012 On</span></th>
+            <th><span>G S 1 EAN No</span></th>
+            <th><span>Our Notes</span></th>
+            <th><span>Weight</span></th>
+            <th><span>Pack Type</span></th>
+            <th><span>Pack Length</span></th>
+            <th><span>Pack Height</span></th>
+            <th><span>Pack Width</span></th>
+            <th><span>Pack Cubic</span></th>
+            <th><span>O D</span></th>
+            <th><span>B HC</span></th>
+            <th><span>B H Qty</span></th>
+            <th><span>B H Size</span></th>
+            <th><span>B HOD</span></th>
+            <th><span>B H Step</span></th>
+            <th><span>B H Type</span></th>
+            <th><span>Thickness</span></th>
+            <th><span>Thickness Min</span></th>
+            <th><span>Offset</span></th>
+            <th><span>Brake Areawidth</span></th>
+            <th><span>T UVLHC</span></th>
+            <th><span>Customer Notes</span></th>
+            <th><span>E Listing</span></th>
+            <th><span>Efor Make</span></th>
+            <th><span>E Date</span></th>
+            <th><span>Euploaded Neto</span></th>
+            <th><span>Echeck</span></th>
+            <th><span>Euploadede Bay</span></th>
+            <th><span>Ebayactive</span></th>
+            <th><span>E Photobucket</span></th>
+            <th><span>E Photo 1</span></th>
+            <th><span>E Photo 2</span></th>
+            <th><span>E Photo 3</span></th>
+            <th><span>Sale Status</span></th>
+            <th><span>R RP</span></th>
+            <th><span>Trade 1</span></th>
+            <th><span>E BAY</span></th>
+            <th><span>Trade 2</span></th>
+            <th><span>Trade 3</span></th>
+            <th><span>Distributor NZAUD</span></th>
+            <th><span>Distributor EUR</span></th>
+            <th><span>Distributor USD</span></th>
+            <th><span>S Priority</span></th>
+            <th><span>Samplefrom</span></th>
+            <th><span>Requestedfrom</span></th>
+            <th><span>Date</span></th>
+            <th><span>Received</span></th>
+            <th><span>Camefrom</span></th>
+            <th><span>Paidfor</span></th>
+            <th><span>Sentto</span></th>
+            <th><span>Ship No</span></th>
+            <th><span>Datesent</span></th>
+            <th><span>Samplereturn</span></th>
+            <th><span>Make</span></th>
+            <th><span>Model</span></th>
+            <th><span>Year</span></th>
+            <th><span>Sample Fitment</span></th>
+            <th><span>O EM</span></th>
+            <th><span>Notesfor Production</span></th>
+            <th><span>Production Code</span></th>
+            <th><span>H A Papproved</span></th>
+            <th><span>S H Aapproved</span></th>
+            <th><span>Approvedby</span></th>
+            <th><span>Notesto Drawing</span></th>
+            <th><span>Filename</span></th>
+            <th><span>C OSTUSD</span></th>
+            <th><span>Centrecolour</span></th>
+            <th><span>Laser</span></th>
+            <th><span>Q TY 1</span></th>
+            <th><span>U SD</span></th>
+            <th><span>Complete Production</span></th>
+            <th><span>Our Noteto Production</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let brakeDisc of brakeDiscs ;trackBy: trackId">
+                <td><a [routerLink]="['/brake-disc', brakeDisc.id, 'view' ]">{{brakeDisc.id}}</a></td>
+                <td>{{brakeDisc.sku}}</td>
+                <td>{{brakeDisc.active}}</td>
+                <td>{{brakeDisc.au}}</td>
+                <td>{{brakeDisc.de}}</td>
+                <td>{{brakeDisc.metalGearvisibility}}</td>
+                <td>{{brakeDisc.bikematevisibility}}</td>
+                <td>{{brakeDisc.mgiVisibility}}</td>
+                <td>{{brakeDisc.discStatus}}</td>
+                <td>{{brakeDisc.productGroup1}}</td>
+                <td>{{brakeDisc.productGroup2}}</td>
+                <td>{{brakeDisc.fitment}}</td>
+                <td>{{brakeDisc.description}}</td>
+                <td>{{brakeDisc.unit}}</td>
+                <td>{{brakeDisc.qty}}</td>
+                <td>{{brakeDisc.brand}}</td>
+                <td>{{brakeDisc.biketypes}}</td>
+                <td>{{brakeDisc.models2012on}}</td>
+                <td>{{brakeDisc.gS1EANNo}}</td>
+                <td>{{brakeDisc.ourNotes}}</td>
+                <td>{{brakeDisc.weight}}</td>
+                <td>{{brakeDisc.packType}}</td>
+                <td>{{brakeDisc.packLength}}</td>
+                <td>{{brakeDisc.packHeight}}</td>
+                <td>{{brakeDisc.packWidth}}</td>
+                <td>{{brakeDisc.packCubic}}</td>
+                <td>{{brakeDisc.oD}}</td>
+                <td>{{brakeDisc.bHC}}</td>
+                <td>{{brakeDisc.bHQty}}</td>
+                <td>{{brakeDisc.bHSize}}</td>
+                <td>{{brakeDisc.bHOD}}</td>
+                <td>{{brakeDisc.bHStep}}</td>
+                <td>{{brakeDisc.bHType}}</td>
+                <td>{{brakeDisc.thickness}}</td>
+                <td>{{brakeDisc.thicknessMin}}</td>
+                <td>{{brakeDisc.offset}}</td>
+                <td>{{brakeDisc.brakeAreawidth}}</td>
+                <td>{{brakeDisc.tUVLHC}}</td>
+                <td>{{brakeDisc.customerNotes}}</td>
+                <td>{{brakeDisc.eListing}}</td>
+                <td>{{brakeDisc.eforMake}}</td>
+                <td>{{brakeDisc.eDate | date:'mediumDate'}}</td>
+                <td>{{brakeDisc.euploadedNeto}}</td>
+                <td>{{brakeDisc.echeck}}</td>
+                <td>{{brakeDisc.euploadedeBay}}</td>
+                <td>{{brakeDisc.ebayactive}}</td>
+                <td>{{brakeDisc.ePhotobucket}}</td>
+                <td>{{brakeDisc.ePhoto1}}</td>
+                <td>{{brakeDisc.ePhoto2}}</td>
+                <td>{{brakeDisc.ePhoto3}}</td>
+                <td>{{brakeDisc.saleStatus}}</td>
+                <td>{{brakeDisc.rRP}}</td>
+                <td>{{brakeDisc.trade1}}</td>
+                <td>{{brakeDisc.eBAY}}</td>
+                <td>{{brakeDisc.trade2}}</td>
+                <td>{{brakeDisc.trade3}}</td>
+                <td>{{brakeDisc.distributorNZAUD}}</td>
+                <td>{{brakeDisc.distributorEUR}}</td>
+                <td>{{brakeDisc.distributorUSD}}</td>
+                <td>{{brakeDisc.sPriority}}</td>
+                <td>{{brakeDisc.samplefrom}}</td>
+                <td>{{brakeDisc.requestedfrom}}</td>
+                <td>{{brakeDisc.date | date:'mediumDate'}}</td>
+                <td>{{brakeDisc.received}}</td>
+                <td>{{brakeDisc.camefrom}}</td>
+                <td>{{brakeDisc.paidfor}}</td>
+                <td>{{brakeDisc.sentto}}</td>
+                <td>{{brakeDisc.shipNo}}</td>
+                <td>{{brakeDisc.datesent | date:'mediumDate'}}</td>
+                <td>{{brakeDisc.samplereturn}}</td>
+                <td>{{brakeDisc.make}}</td>
+                <td>{{brakeDisc.model}}</td>
+                <td>{{brakeDisc.year}}</td>
+                <td>{{brakeDisc.sampleFitment}}</td>
+                <td>{{brakeDisc.oEM}}</td>
+                <td>{{brakeDisc.notesforProduction}}</td>
+                <td>{{brakeDisc.productionCode}}</td>
+                <td>{{brakeDisc.hAPapproved | date:'mediumDate'}}</td>
+                <td>{{brakeDisc.sHAapproved | date:'mediumDate'}}</td>
+                <td>{{brakeDisc.approvedby}}</td>
+                <td>{{brakeDisc.notestoDrawing}}</td>
+                <td>{{brakeDisc.filename}}</td>
+                <td>{{brakeDisc.cOSTUSD}}</td>
+                <td>{{brakeDisc.centrecolour}}</td>
+                <td>{{brakeDisc.laser}}</td>
+                <td>{{brakeDisc.qTY1}}</td>
+                <td>{{brakeDisc.uSD}}</td>
+                <td>{{brakeDisc.completeProduction}}</td>
+                <td>{{brakeDisc.ourNotetoProduction}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/brake-disc', brakeDisc.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/brake-disc', brakeDisc.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'brake-disc/'+ brakeDisc.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

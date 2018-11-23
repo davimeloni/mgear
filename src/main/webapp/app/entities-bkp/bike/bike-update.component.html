@@ -1,0 +1,1306 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-bike-heading">Create or edit a Bike</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!bike.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="bike.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_visibilityAU">Visibility AU</label>
+                    <input type="text" class="form-control" name="visibilityAU" id="field_visibilityAU"
+                        [(ngModel)]="bike.visibilityAU" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_visibilityEU">Visibility EU</label>
+                    <input type="text" class="form-control" name="visibilityEU" id="field_visibilityEU"
+                        [(ngModel)]="bike.visibilityEU" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_inactive">Inactive</label>
+                    <input type="text" class="form-control" name="inactive" id="field_inactive"
+                        [(ngModel)]="bike.inactive" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemconfirmed">Oemconfirmed</label>
+                    <input type="text" class="form-control" name="oemconfirmed" id="field_oemconfirmed"
+                        [(ngModel)]="bike.oemconfirmed" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oesource">Oesource</label>
+                    <input type="text" class="form-control" name="oesource" id="field_oesource"
+                        [(ngModel)]="bike.oesource" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_epid">Epid</label>
+                    <input type="number" class="form-control" name="epid" id="field_epid"
+                        [(ngModel)]="bike.epid" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modeltype1">Modeltype 1</label>
+                    <input type="text" class="form-control" name="modeltype1" id="field_modeltype1"
+                        [(ngModel)]="bike.modeltype1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modeltype2">Modeltype 2</label>
+                    <input type="text" class="form-control" name="modeltype2" id="field_modeltype2"
+                        [(ngModel)]="bike.modeltype2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_manufacturer">Manufacturer</label>
+                    <input type="text" class="form-control" name="manufacturer" id="field_manufacturer"
+                        [(ngModel)]="bike.manufacturer" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_strokes">Strokes</label>
+                    <input type="text" class="form-control" name="strokes" id="field_strokes"
+                        [(ngModel)]="bike.strokes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_capacity">Capacity</label>
+                    <input type="number" class="form-control" name="capacity" id="field_capacity"
+                        [(ngModel)]="bike.capacity" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modelName">Model Name</label>
+                    <input type="text" class="form-control" name="modelName" id="field_modelName"
+                        [(ngModel)]="bike.modelName" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modelYearCode">Model Year Code</label>
+                    <input type="text" class="form-control" name="modelYearCode" id="field_modelYearCode"
+                        [(ngModel)]="bike.modelYearCode" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modelTypeCode">Model Type Code</label>
+                    <input type="text" class="form-control" name="modelTypeCode" id="field_modelTypeCode"
+                        [(ngModel)]="bike.modelTypeCode" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_year">Year</label>
+                    <input type="number" class="form-control" name="year" id="field_year"
+                        [(ngModel)]="bike.year" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_finalDriveType">Final Drive Type</label>
+                    <input type="text" class="form-control" name="finalDriveType" id="field_finalDriveType"
+                        [(ngModel)]="bike.finalDriveType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_categoryPath">Category Path</label>
+                    <input type="text" class="form-control" name="categoryPath" id="field_categoryPath"
+                        [(ngModel)]="bike.categoryPath" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modelNotes">Model Notes</label>
+                    <input type="text" class="form-control" name="modelNotes" id="field_modelNotes"
+                        [(ngModel)]="bike.modelNotes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modelNotes2">Model Notes 2</label>
+                    <input type="text" class="form-control" name="modelNotes2" id="field_modelNotes2"
+                        [(ngModel)]="bike.modelNotes2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modelNotes3">Model Notes 3</label>
+                    <input type="text" class="form-control" name="modelNotes3" id="field_modelNotes3"
+                        [(ngModel)]="bike.modelNotes3" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modelNotes4">Model Notes 4</label>
+                    <input type="text" class="form-control" name="modelNotes4" id="field_modelNotes4"
+                        [(ngModel)]="bike.modelNotes4" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modelInfoHTML">Model Info HTML</label>
+                    <input type="text" class="form-control" name="modelInfoHTML" id="field_modelInfoHTML"
+                        [(ngModel)]="bike.modelInfoHTML" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakeSystemType">Oem Front Brake System Type</label>
+                    <input type="text" class="form-control" name="oemFrontBrakeSystemType" id="field_oemFrontBrakeSystemType"
+                        [(ngModel)]="bike.oemFrontBrakeSystemType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakeDiscLeft">Oem Front Brake Disc Left</label>
+                    <input type="text" class="form-control" name="oemFrontBrakeDiscLeft" id="field_oemFrontBrakeDiscLeft"
+                        [(ngModel)]="bike.oemFrontBrakeDiscLeft" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakeDiscRight">Oem Front Brake Disc Right</label>
+                    <input type="text" class="form-control" name="oemFrontBrakeDiscRight" id="field_oemFrontBrakeDiscRight"
+                        [(ngModel)]="bike.oemFrontBrakeDiscRight" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakeDiscBolts">Oem Front Brake Disc Bolts</label>
+                    <input type="text" class="form-control" name="oemFrontBrakeDiscBolts" id="field_oemFrontBrakeDiscBolts"
+                        [(ngModel)]="bike.oemFrontBrakeDiscBolts" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBDQTYPD">Oem Front BDQTYPD</label>
+                    <input type="number" class="form-control" name="oemFrontBDQTYPD" id="field_oemFrontBDQTYPD"
+                        [(ngModel)]="bike.oemFrontBDQTYPD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakeDiscABSRing">Oem Front Brake Disc ABS Ring</label>
+                    <input type="text" class="form-control" name="oemFrontBrakeDiscABSRing" id="field_oemFrontBrakeDiscABSRing"
+                        [(ngModel)]="bike.oemFrontBrakeDiscABSRing" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakeCaliper1">Oem Front Brake Caliper 1</label>
+                    <input type="text" class="form-control" name="oemFrontBrakeCaliper1" id="field_oemFrontBrakeCaliper1"
+                        [(ngModel)]="bike.oemFrontBrakeCaliper1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakeCaliper2">Oem Front Brake Caliper 2</label>
+                    <input type="text" class="form-control" name="oemFrontBrakeCaliper2" id="field_oemFrontBrakeCaliper2"
+                        [(ngModel)]="bike.oemFrontBrakeCaliper2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakeCaliperPin">Oem Front Brake Caliper Pin</label>
+                    <input type="text" class="form-control" name="oemFrontBrakeCaliperPin" id="field_oemFrontBrakeCaliperPin"
+                        [(ngModel)]="bike.oemFrontBrakeCaliperPin" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakePadsFrontL">Oem Front Brake Pads Front L</label>
+                    <input type="text" class="form-control" name="oemFrontBrakePadsFrontL" id="field_oemFrontBrakePadsFrontL"
+                        [(ngModel)]="bike.oemFrontBrakePadsFrontL" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontBrakePadsFrontR">Oem Front Brake Pads Front R</label>
+                    <input type="text" class="form-control" name="oemFrontBrakePadsFrontR" id="field_oemFrontBrakePadsFrontR"
+                        [(ngModel)]="bike.oemFrontBrakePadsFrontR" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontShoe">Oem Front Shoe</label>
+                    <input type="text" class="form-control" name="oemFrontShoe" id="field_oemFrontShoe"
+                        [(ngModel)]="bike.oemFrontShoe" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemMidldleAxleBrakeDisc">Oem Midldle Axle Brake Disc</label>
+                    <input type="text" class="form-control" name="oemMidldleAxleBrakeDisc" id="field_oemMidldleAxleBrakeDisc"
+                        [(ngModel)]="bike.oemMidldleAxleBrakeDisc" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemMiddleAxleBrakePads">Oem Middle Axle Brake Pads</label>
+                    <input type="text" class="form-control" name="oemMiddleAxleBrakePads" id="field_oemMiddleAxleBrakePads"
+                        [(ngModel)]="bike.oemMiddleAxleBrakePads" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearBrakeSystemType">Oem Rear Brake System Type</label>
+                    <input type="text" class="form-control" name="oemRearBrakeSystemType" id="field_oemRearBrakeSystemType"
+                        [(ngModel)]="bike.oemRearBrakeSystemType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oeamRearBrakeDisc">Oeam Rear Brake Disc</label>
+                    <input type="text" class="form-control" name="oeamRearBrakeDisc" id="field_oeamRearBrakeDisc"
+                        [(ngModel)]="bike.oeamRearBrakeDisc" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oeamRearBrakeDiscBolts">Oeam Rear Brake Disc Bolts</label>
+                    <input type="text" class="form-control" name="oeamRearBrakeDiscBolts" id="field_oeamRearBrakeDiscBolts"
+                        [(ngModel)]="bike.oeamRearBrakeDiscBolts" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oeamRearBrakeDiscBQTYPD">Oeam Rear Brake Disc BQTYPD</label>
+                    <input type="number" class="form-control" name="oeamRearBrakeDiscBQTYPD" id="field_oeamRearBrakeDiscBQTYPD"
+                        [(ngModel)]="bike.oeamRearBrakeDiscBQTYPD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearBrakeCaliper">Oem Rear Brake Caliper</label>
+                    <input type="text" class="form-control" name="oemRearBrakeCaliper" id="field_oemRearBrakeCaliper"
+                        [(ngModel)]="bike.oemRearBrakeCaliper" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearBrakeCaliperPin">Oem Rear Brake Caliper Pin</label>
+                    <input type="text" class="form-control" name="oemRearBrakeCaliperPin" id="field_oemRearBrakeCaliperPin"
+                        [(ngModel)]="bike.oemRearBrakeCaliperPin" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearBrakePads1">Oem Rear Brake Pads 1</label>
+                    <input type="text" class="form-control" name="oemRearBrakePads1" id="field_oemRearBrakePads1"
+                        [(ngModel)]="bike.oemRearBrakePads1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearBrakePads2">Oem Rear Brake Pads 2</label>
+                    <input type="text" class="form-control" name="oemRearBrakePads2" id="field_oemRearBrakePads2"
+                        [(ngModel)]="bike.oemRearBrakePads2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemShoeRear">Oem Shoe Rear</label>
+                    <input type="text" class="form-control" name="oemShoeRear" id="field_oemShoeRear"
+                        [(ngModel)]="bike.oemShoeRear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemShoeRear2">Oem Shoe Rear 2</label>
+                    <input type="text" class="form-control" name="oemShoeRear2" id="field_oemShoeRear2"
+                        [(ngModel)]="bike.oemShoeRear2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemSlaveCylinder">Oem Slave Cylinder</label>
+                    <input type="text" class="form-control" name="oemSlaveCylinder" id="field_oemSlaveCylinder"
+                        [(ngModel)]="bike.oemSlaveCylinder" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemChainNo">Oem Chain No</label>
+                    <input type="text" class="form-control" name="oemChainNo" id="field_oemChainNo"
+                        [(ngModel)]="bike.oemChainNo" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemChainSize">Oem Chain Size</label>
+                    <input type="number" class="form-control" name="oemChainSize" id="field_oemChainSize"
+                        [(ngModel)]="bike.oemChainSize" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemChainLinks">Oem Chain Links</label>
+                    <input type="number" class="form-control" name="oemChainLinks" id="field_oemChainLinks"
+                        [(ngModel)]="bike.oemChainLinks" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontSprocket">Oem Front Sprocket</label>
+                    <input type="text" class="form-control" name="oemFrontSprocket" id="field_oemFrontSprocket"
+                        [(ngModel)]="bike.oemFrontSprocket" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontGearing">Oem Front Gearing</label>
+                    <input type="number" class="form-control" name="oemFrontGearing" id="field_oemFrontGearing"
+                        [(ngModel)]="bike.oemFrontGearing" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontGearingMin">Oem Front Gearing Min</label>
+                    <input type="number" class="form-control" name="oemFrontGearingMin" id="field_oemFrontGearingMin"
+                        [(ngModel)]="bike.oemFrontGearingMin" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontGearingMax">Oem Front Gearing Max</label>
+                    <input type="number" class="form-control" name="oemFrontGearingMax" id="field_oemFrontGearingMax"
+                        [(ngModel)]="bike.oemFrontGearingMax" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearSprocket">Oem Rear Sprocket</label>
+                    <input type="text" class="form-control" name="oemRearSprocket" id="field_oemRearSprocket"
+                        [(ngModel)]="bike.oemRearSprocket" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearGearing">Oem Rear Gearing</label>
+                    <input type="number" class="form-control" name="oemRearGearing" id="field_oemRearGearing"
+                        [(ngModel)]="bike.oemRearGearing" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearGearingMin">Oem Rear Gearing Min</label>
+                    <input type="number" class="form-control" name="oemRearGearingMin" id="field_oemRearGearingMin"
+                        [(ngModel)]="bike.oemRearGearingMin" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearGearingMax">Oem Rear Gearing Max</label>
+                    <input type="number" class="form-control" name="oemRearGearingMax" id="field_oemRearGearingMax"
+                        [(ngModel)]="bike.oemRearGearingMax" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_finalDriveNotes">Final Drive Notes</label>
+                    <input type="text" class="form-control" name="finalDriveNotes" id="field_finalDriveNotes"
+                        [(ngModel)]="bike.finalDriveNotes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_chainConvSize">Chain Conv Size</label>
+                    <input type="number" class="form-control" name="chainConvSize" id="field_chainConvSize"
+                        [(ngModel)]="bike.chainConvSize" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_chainConvLinks">Chain Conv Links</label>
+                    <input type="number" class="form-control" name="chainConvLinks" id="field_chainConvLinks"
+                        [(ngModel)]="bike.chainConvLinks" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontWheel">Oem Front Wheel</label>
+                    <input type="text" class="form-control" name="oemFrontWheel" id="field_oemFrontWheel"
+                        [(ngModel)]="bike.oemFrontWheel" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontWheelType">Oem Front Wheel Type</label>
+                    <input type="text" class="form-control" name="oemFrontWheelType" id="field_oemFrontWheelType"
+                        [(ngModel)]="bike.oemFrontWheelType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontWheelFront">Oem Front Wheel Front</label>
+                    <input type="number" class="form-control" name="oemFrontWheelFront" id="field_oemFrontWheelFront"
+                        [(ngModel)]="bike.oemFrontWheelFront" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontWheelTyreSize">Oem Front Wheel Tyre Size</label>
+                    <input type="text" class="form-control" name="oemFrontWheelTyreSize" id="field_oemFrontWheelTyreSize"
+                        [(ngModel)]="bike.oemFrontWheelTyreSize" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontHub">Oem Front Hub</label>
+                    <input type="text" class="form-control" name="oemFrontHub" id="field_oemFrontHub"
+                        [(ngModel)]="bike.oemFrontHub" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontWheelbearing1">Oem Front Wheelbearing 1</label>
+                    <input type="text" class="form-control" name="oemFrontWheelbearing1" id="field_oemFrontWheelbearing1"
+                        [(ngModel)]="bike.oemFrontWheelbearing1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontWheelbearing2">Oem Front Wheelbearing 2</label>
+                    <input type="text" class="form-control" name="oemFrontWheelbearing2" id="field_oemFrontWheelbearing2"
+                        [(ngModel)]="bike.oemFrontWheelbearing2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemFrontWheelSeal">Oem Front Wheel Seal</label>
+                    <input type="text" class="form-control" name="oemFrontWheelSeal" id="field_oemFrontWheelSeal"
+                        [(ngModel)]="bike.oemFrontWheelSeal" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearWheel">Oem Rear Wheel</label>
+                    <input type="text" class="form-control" name="oemRearWheel" id="field_oemRearWheel"
+                        [(ngModel)]="bike.oemRearWheel" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearWheelSize">Oem Rear Wheel Size</label>
+                    <input type="number" class="form-control" name="oemRearWheelSize" id="field_oemRearWheelSize"
+                        [(ngModel)]="bike.oemRearWheelSize" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearWheelTyre">Oem Rear Wheel Tyre</label>
+                    <input type="text" class="form-control" name="oemRearWheelTyre" id="field_oemRearWheelTyre"
+                        [(ngModel)]="bike.oemRearWheelTyre" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearWheelBearing1">Oem Rear Wheel Bearing 1</label>
+                    <input type="text" class="form-control" name="oemRearWheelBearing1" id="field_oemRearWheelBearing1"
+                        [(ngModel)]="bike.oemRearWheelBearing1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearWheelBearing2">Oem Rear Wheel Bearing 2</label>
+                    <input type="text" class="form-control" name="oemRearWheelBearing2" id="field_oemRearWheelBearing2"
+                        [(ngModel)]="bike.oemRearWheelBearing2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemRearWheelSeal">Oem Rear Wheel Seal</label>
+                    <input type="text" class="form-control" name="oemRearWheelSeal" id="field_oemRearWheelSeal"
+                        [(ngModel)]="bike.oemRearWheelSeal" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_frontPadsDiffCaliper">Front Pads Diff Caliper</label>
+                    <input type="text" class="form-control" name="frontPadsDiffCaliper" id="field_frontPadsDiffCaliper"
+                        [(ngModel)]="bike.frontPadsDiffCaliper" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_qtyBH">Qty BH</label>
+                    <input type="number" class="form-control" name="qtyBH" id="field_qtyBH"
+                        [(ngModel)]="bike.qtyBH" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_handbrakeParking">Handbrake Parking</label>
+                    <input type="text" class="form-control" name="handbrakeParking" id="field_handbrakeParking"
+                        [(ngModel)]="bike.handbrakeParking" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_addNotesToBike">Add Notes To Bike</label>
+                    <input type="text" class="form-control" name="addNotesToBike" id="field_addNotesToBike"
+                        [(ngModel)]="bike.addNotesToBike" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateAndID">Date And ID</label>
+                    <input type="text" class="form-control" name="dateAndID" id="field_dateAndID"
+                        [(ngModel)]="bike.dateAndID" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_source">Source</label>
+                    <input type="text" class="form-control" name="source" id="field_source"
+                        [(ngModel)]="bike.source" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tuvRequired">Tuv Required</label>
+                    <input type="text" class="form-control" name="tuvRequired" id="field_tuvRequired"
+                        [(ngModel)]="bike.tuvRequired" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tuvTypeCode">Tuv Type Code</label>
+                    <input type="text" class="form-control" name="tuvTypeCode" id="field_tuvTypeCode"
+                        [(ngModel)]="bike.tuvTypeCode" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_abekba">Abekba</label>
+                    <input type="text" class="form-control" name="abekba" id="field_abekba"
+                        [(ngModel)]="bike.abekba" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tuvFrontDisc">Tuv Front Disc</label>
+                    <input type="text" class="form-control" name="tuvFrontDisc" id="field_tuvFrontDisc"
+                        [(ngModel)]="bike.tuvFrontDisc" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tuvRearDisc">Tuv Rear Disc</label>
+                    <input type="text" class="form-control" name="tuvRearDisc" id="field_tuvRearDisc"
+                        [(ngModel)]="bike.tuvRearDisc" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bremboBrakeDiscFrontRef">Brembo Brake Disc Front Ref</label>
+                    <input type="text" class="form-control" name="bremboBrakeDiscFrontRef" id="field_bremboBrakeDiscFrontRef"
+                        [(ngModel)]="bike.bremboBrakeDiscFrontRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ebcBrakeDiscFrontRef">Ebc Brake Disc Front Ref</label>
+                    <input type="text" class="form-control" name="ebcBrakeDiscFrontRef" id="field_ebcBrakeDiscFrontRef"
+                        [(ngModel)]="bike.ebcBrakeDiscFrontRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_trwBrakeDiscFrontRef">Trw Brake Disc Front Ref</label>
+                    <input type="text" class="form-control" name="trwBrakeDiscFrontRef" id="field_trwBrakeDiscFrontRef"
+                        [(ngModel)]="bike.trwBrakeDiscFrontRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakeDiscFrontLeftRef">Mgear Brake Disc Front Left Ref</label>
+                    <input type="text" class="form-control" name="mgearBrakeDiscFrontLeftRef" id="field_mgearBrakeDiscFrontLeftRef"
+                        [(ngModel)]="bike.mgearBrakeDiscFrontLeftRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakeDiscFrontRightRef">Mgear Brake Disc Front Right Ref</label>
+                    <input type="text" class="form-control" name="mgearBrakeDiscFrontRightRef" id="field_mgearBrakeDiscFrontRightRef"
+                        [(ngModel)]="bike.mgearBrakeDiscFrontRightRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakeDiscFrontCheck">Mgear Brake Disc Front Check</label>
+                    <input type="text" class="form-control" name="mgearBrakeDiscFrontCheck" id="field_mgearBrakeDiscFrontCheck"
+                        [(ngModel)]="bike.mgearBrakeDiscFrontCheck" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakeDiscFrontLeftRef2">Mgear Brake Disc Front Left Ref 2</label>
+                    <input type="text" class="form-control" name="mgearBrakeDiscFrontLeftRef2" id="field_mgearBrakeDiscFrontLeftRef2"
+                        [(ngModel)]="bike.mgearBrakeDiscFrontLeftRef2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakeDiscFrontRightRef2">Mgear Brake Disc Front Right Ref 2</label>
+                    <input type="text" class="form-control" name="mgearBrakeDiscFrontRightRef2" id="field_mgearBrakeDiscFrontRightRef2"
+                        [(ngModel)]="bike.mgearBrakeDiscFrontRightRef2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakeDiscFNeto">Mgear Brake Disc F Neto</label>
+                    <input type="text" class="form-control" name="mgearBrakeDiscFNeto" id="field_mgearBrakeDiscFNeto"
+                        [(ngModel)]="bike.mgearBrakeDiscFNeto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motodiscBrakeDiscFNeto">Motodisc Brake Disc F Neto</label>
+                    <input type="text" class="form-control" name="motodiscBrakeDiscFNeto" id="field_motodiscBrakeDiscFNeto"
+                        [(ngModel)]="bike.motodiscBrakeDiscFNeto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ebcBrakePadsFrontLRef">Ebc Brake Pads Front L Ref</label>
+                    <input type="text" class="form-control" name="ebcBrakePadsFrontLRef" id="field_ebcBrakePadsFrontLRef"
+                        [(ngModel)]="bike.ebcBrakePadsFrontLRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ebcBrakePadsFrontRRef">Ebc Brake Pads Front R Ref</label>
+                    <input type="text" class="form-control" name="ebcBrakePadsFrontRRef" id="field_ebcBrakePadsFrontRRef"
+                        [(ngModel)]="bike.ebcBrakePadsFrontRRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakePadsFrontLRef">Mgear Brake Pads Front L Ref</label>
+                    <input type="text" class="form-control" name="mgearBrakePadsFrontLRef" id="field_mgearBrakePadsFrontLRef"
+                        [(ngModel)]="bike.mgearBrakePadsFrontLRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakePadsFrontRRef">Mgear Brake Pads Front R Ref</label>
+                    <input type="text" class="form-control" name="mgearBrakePadsFrontRRef" id="field_mgearBrakePadsFrontRRef"
+                        [(ngModel)]="bike.mgearBrakePadsFrontRRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakePadsFNeto">Mgear Brake Pads F Neto</label>
+                    <input type="text" class="form-control" name="mgearBrakePadsFNeto" id="field_mgearBrakePadsFNeto"
+                        [(ngModel)]="bike.mgearBrakePadsFNeto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motoPadBrakePadsFrontLRef">Moto Pad Brake Pads Front L Ref</label>
+                    <input type="text" class="form-control" name="motoPadBrakePadsFrontLRef" id="field_motoPadBrakePadsFrontLRef"
+                        [(ngModel)]="bike.motoPadBrakePadsFrontLRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motoPadBrakePadsFrontRRef">Moto Pad Brake Pads Front R Ref</label>
+                    <input type="text" class="form-control" name="motoPadBrakePadsFrontRRef" id="field_motoPadBrakePadsFrontRRef"
+                        [(ngModel)]="bike.motoPadBrakePadsFrontRRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motopadBrakePadsFNeto">Motopad Brake Pads F Neto</label>
+                    <input type="text" class="form-control" name="motopadBrakePadsFNeto" id="field_motopadBrakePadsFNeto"
+                        [(ngModel)]="bike.motopadBrakePadsFNeto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsFCRebuildKit1">All Balls FC Rebuild Kit 1</label>
+                    <input type="text" class="form-control" name="allBallsFCRebuildKit1" id="field_allBallsFCRebuildKit1"
+                        [(ngModel)]="bike.allBallsFCRebuildKit1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsFCPin">All Balls FC Pin</label>
+                    <input type="text" class="form-control" name="allBallsFCPin" id="field_allBallsFCPin"
+                        [(ngModel)]="bike.allBallsFCPin" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsFMCyRebuildKit">All Balls FM Cy Rebuild Kit</label>
+                    <input type="text" class="form-control" name="allBallsFMCyRebuildKit" id="field_allBallsFMCyRebuildKit"
+                        [(ngModel)]="bike.allBallsFMCyRebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsFSCRebuildKit">All Balls FSC Rebuild Kit</label>
+                    <input type="text" class="form-control" name="allBallsFSCRebuildKit" id="field_allBallsFSCRebuildKit"
+                        [(ngModel)]="bike.allBallsFSCRebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_newfrenShoeFront">Newfren Shoe Front</label>
+                    <input type="text" class="form-control" name="newfrenShoeFront" id="field_newfrenShoeFront"
+                        [(ngModel)]="bike.newfrenShoeFront" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearMiddleAxleBrakeDiscNeto">Mgear Middle Axle Brake Disc Neto</label>
+                    <input type="text" class="form-control" name="mgearMiddleAxleBrakeDiscNeto" id="field_mgearMiddleAxleBrakeDiscNeto"
+                        [(ngModel)]="bike.mgearMiddleAxleBrakeDiscNeto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearMiddleAxleBrakeDiscNeto2">Mgear Middle Axle Brake Disc Neto 2</label>
+                    <input type="text" class="form-control" name="mgearMiddleAxleBrakeDiscNeto2" id="field_mgearMiddleAxleBrakeDiscNeto2"
+                        [(ngModel)]="bike.mgearMiddleAxleBrakeDiscNeto2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearMiddleAxleBrakePadNeto">Mgear Middle Axle Brake Pad Neto</label>
+                    <input type="text" class="form-control" name="mgearMiddleAxleBrakePadNeto" id="field_mgearMiddleAxleBrakePadNeto"
+                        [(ngModel)]="bike.mgearMiddleAxleBrakePadNeto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearMiddleAxleBrakePadNeto2">Mgear Middle Axle Brake Pad Neto 2</label>
+                    <input type="text" class="form-control" name="mgearMiddleAxleBrakePadNeto2" id="field_mgearMiddleAxleBrakePadNeto2"
+                        [(ngModel)]="bike.mgearMiddleAxleBrakePadNeto2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakePadsParkRef">Mgear Brake Pads Park Ref</label>
+                    <input type="text" class="form-control" name="mgearBrakePadsParkRef" id="field_mgearBrakePadsParkRef"
+                        [(ngModel)]="bike.mgearBrakePadsParkRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakePadsParkRef2">Mgear Brake Pads Park Ref 2</label>
+                    <input type="text" class="form-control" name="mgearBrakePadsParkRef2" id="field_mgearBrakePadsParkRef2"
+                        [(ngModel)]="bike.mgearBrakePadsParkRef2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ebcBrakeDiscRearRef">Ebc Brake Disc Rear Ref</label>
+                    <input type="text" class="form-control" name="ebcBrakeDiscRearRef" id="field_ebcBrakeDiscRearRef"
+                        [(ngModel)]="bike.ebcBrakeDiscRearRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bremboBrakeDiscRearRef">Brembo Brake Disc Rear Ref</label>
+                    <input type="text" class="form-control" name="bremboBrakeDiscRearRef" id="field_bremboBrakeDiscRearRef"
+                        [(ngModel)]="bike.bremboBrakeDiscRearRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakeDiscRearRef">Mgear Brake Disc Rear Ref</label>
+                    <input type="text" class="form-control" name="mgearBrakeDiscRearRef" id="field_mgearBrakeDiscRearRef"
+                        [(ngModel)]="bike.mgearBrakeDiscRearRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_trwBrakeDiscRearRef">Trw Brake Disc Rear Ref</label>
+                    <input type="text" class="form-control" name="trwBrakeDiscRearRef" id="field_trwBrakeDiscRearRef"
+                        [(ngModel)]="bike.trwBrakeDiscRearRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakeDiscRear">Mgear Brake Disc Rear</label>
+                    <input type="text" class="form-control" name="mgearBrakeDiscRear" id="field_mgearBrakeDiscRear"
+                        [(ngModel)]="bike.mgearBrakeDiscRear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsRCRebuildKit1">All Balls RC Rebuild Kit 1</label>
+                    <input type="text" class="form-control" name="allBallsRCRebuildKit1" id="field_allBallsRCRebuildKit1"
+                        [(ngModel)]="bike.allBallsRCRebuildKit1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsRearCaliperBolt">All Balls Rear Caliper Bolt</label>
+                    <input type="text" class="form-control" name="allBallsRearCaliperBolt" id="field_allBallsRearCaliperBolt"
+                        [(ngModel)]="bike.allBallsRearCaliperBolt" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsRMCrRebuildKit">All Balls RM Cr Rebuild Kit</label>
+                    <input type="text" class="form-control" name="allBallsRMCrRebuildKit" id="field_allBallsRMCrRebuildKit"
+                        [(ngModel)]="bike.allBallsRMCrRebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ebcBrakePadsRearRef">Ebc Brake Pads Rear Ref</label>
+                    <input type="text" class="form-control" name="ebcBrakePadsRearRef" id="field_ebcBrakePadsRearRef"
+                        [(ngModel)]="bike.ebcBrakePadsRearRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearBrakePadsRearNeto">Mgear Brake Pads Rear Neto</label>
+                    <input type="text" class="form-control" name="mgearBrakePadsRearNeto" id="field_mgearBrakePadsRearNeto"
+                        [(ngModel)]="bike.mgearBrakePadsRearNeto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_newfrenShoeRear">Newfren Shoe Rear</label>
+                    <input type="text" class="form-control" name="newfrenShoeRear" id="field_newfrenShoeRear"
+                        [(ngModel)]="bike.newfrenShoeRear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsRearBrakePedalKit">All Balls Rear Brake Pedal Kit</label>
+                    <input type="text" class="form-control" name="allBallsRearBrakePedalKit" id="field_allBallsRearBrakePedalKit"
+                        [(ngModel)]="bike.allBallsRearBrakePedalKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsCSCRebuildKit">All Balls CSC Rebuild Kit</label>
+                    <input type="text" class="form-control" name="allBallsCSCRebuildKit" id="field_allBallsCSCRebuildKit"
+                        [(ngModel)]="bike.allBallsCSCRebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_frontJTRefFront">Front JT Ref Front</label>
+                    <input type="text" class="form-control" name="frontJTRefFront" id="field_frontJTRefFront"
+                        [(ngModel)]="bike.frontJTRefFront" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_esjotRefFront">Esjot Ref Front</label>
+                    <input type="text" class="form-control" name="esjotRefFront" id="field_esjotRefFront"
+                        [(ngModel)]="bike.esjotRefFront" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearRefFront">Mgear Ref Front</label>
+                    <input type="text" class="form-control" name="mgearRefFront" id="field_mgearRefFront"
+                        [(ngModel)]="bike.mgearRefFront" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mogemaRefFront">Mogema Ref Front</label>
+                    <input type="text" class="form-control" name="mogemaRefFront" id="field_mogemaRefFront"
+                        [(ngModel)]="bike.mogemaRefFront" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_supersproxRefFront">Supersprox Ref Front</label>
+                    <input type="text" class="form-control" name="supersproxRefFront" id="field_supersproxRefFront"
+                        [(ngModel)]="bike.supersproxRefFront" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_esjotRefRear">Esjot Ref Rear</label>
+                    <input type="text" class="form-control" name="esjotRefRear" id="field_esjotRefRear"
+                        [(ngModel)]="bike.esjotRefRear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jtRefRear">Jt Ref Rear</label>
+                    <input type="text" class="form-control" name="jtRefRear" id="field_jtRefRear"
+                        [(ngModel)]="bike.jtRefRear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearRefRear">Mgear Ref Rear</label>
+                    <input type="text" class="form-control" name="mgearRefRear" id="field_mgearRefRear"
+                        [(ngModel)]="bike.mgearRefRear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mogemaRefRear">Mogema Ref Rear</label>
+                    <input type="text" class="form-control" name="mogemaRefRear" id="field_mogemaRefRear"
+                        [(ngModel)]="bike.mogemaRefRear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_supersproxRefRear">Supersprox Ref Rear</label>
+                    <input type="text" class="form-control" name="supersproxRefRear" id="field_supersproxRefRear"
+                        [(ngModel)]="bike.supersproxRefRear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_esjotRefFrontConv">Esjot Ref Front Conv</label>
+                    <input type="text" class="form-control" name="esjotRefFrontConv" id="field_esjotRefFrontConv"
+                        [(ngModel)]="bike.esjotRefFrontConv" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jtSprocketRef">Jt Sprocket Ref</label>
+                    <input type="text" class="form-control" name="jtSprocketRef" id="field_jtSprocketRef"
+                        [(ngModel)]="bike.jtSprocketRef" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearRefFrontConv">Mgear Ref Front Conv</label>
+                    <input type="text" class="form-control" name="mgearRefFrontConv" id="field_mgearRefFrontConv"
+                        [(ngModel)]="bike.mgearRefFrontConv" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mogemarefFrontConv">Mogemaref Front Conv</label>
+                    <input type="text" class="form-control" name="mogemarefFrontConv" id="field_mogemarefFrontConv"
+                        [(ngModel)]="bike.mogemarefFrontConv" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_supersproxRefFrontConv">Supersprox Ref Front Conv</label>
+                    <input type="text" class="form-control" name="supersproxRefFrontConv" id="field_supersproxRefFrontConv"
+                        [(ngModel)]="bike.supersproxRefFrontConv" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_conversionChain">Conversion Chain</label>
+                    <input type="text" class="form-control" name="conversionChain" id="field_conversionChain"
+                        [(ngModel)]="bike.conversionChain" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearSprocketRearConv">Mgear Sprocket Rear Conv</label>
+                    <input type="text" class="form-control" name="mgearSprocketRearConv" id="field_mgearSprocketRearConv"
+                        [(ngModel)]="bike.mgearSprocketRearConv" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_esjotRefRearConv">Esjot Ref Rear Conv</label>
+                    <input type="text" class="form-control" name="esjotRefRearConv" id="field_esjotRefRearConv"
+                        [(ngModel)]="bike.esjotRefRearConv" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgearRefRearConv">Mgear Ref Rear Conv</label>
+                    <input type="text" class="form-control" name="mgearRefRearConv" id="field_mgearRefRearConv"
+                        [(ngModel)]="bike.mgearRefRearConv" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mogemaRefRearConv">Mogema Ref Rear Conv</label>
+                    <input type="text" class="form-control" name="mogemaRefRearConv" id="field_mogemaRefRearConv"
+                        [(ngModel)]="bike.mogemaRefRearConv" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_supersproxRefRearConv">Supersprox Ref Rear Conv</label>
+                    <input type="text" class="form-control" name="supersproxRefRearConv" id="field_supersproxRefRearConv"
+                        [(ngModel)]="bike.supersproxRefRearConv" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsFWBearingKit1">All Balls FW Bearing Kit 1</label>
+                    <input type="text" class="form-control" name="allBallsFWBearingKit1" id="field_allBallsFWBearingKit1"
+                        [(ngModel)]="bike.allBallsFWBearingKit1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsFWBearingKit2">All Balls FW Bearing Kit 2</label>
+                    <input type="text" class="form-control" name="allBallsFWBearingKit2" id="field_allBallsFWBearingKit2"
+                        [(ngModel)]="bike.allBallsFWBearingKit2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsRWBearingKit1">All Balls RW Bearing Kit 1</label>
+                    <input type="text" class="form-control" name="allBallsRWBearingKit1" id="field_allBallsRWBearingKit1"
+                        [(ngModel)]="bike.allBallsRWBearingKit1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsRWBearingKit2">All Balls RW Bearing Kit 2</label>
+                    <input type="text" class="form-control" name="allBallsRWBearingKit2" id="field_allBallsRWBearingKit2"
+                        [(ngModel)]="bike.allBallsRWBearingKit2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsRWBearingUpgrade">All Balls RW Bearing Upgrade</label>
+                    <input type="text" class="form-control" name="allBallsRWBearingUpgrade" id="field_allBallsRWBearingUpgrade"
+                        [(ngModel)]="bike.allBallsRWBearingUpgrade" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemSparkPlug">Oem Spark Plug</label>
+                    <input type="text" class="form-control" name="oemSparkPlug" id="field_oemSparkPlug"
+                        [(ngModel)]="bike.oemSparkPlug" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemSparkPlugQTY">Oem Spark Plug QTY</label>
+                    <input type="number" class="form-control" name="oemSparkPlugQTY" id="field_oemSparkPlugQTY"
+                        [(ngModel)]="bike.oemSparkPlugQTY" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ngkSparkPlugSKUs">Ngk Spark Plug SK Us</label>
+                    <input type="text" class="form-control" name="ngkSparkPlugSKUs" id="field_ngkSparkPlugSKUs"
+                        [(ngModel)]="bike.ngkSparkPlugSKUs" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemAlternator">Oem Alternator</label>
+                    <input type="text" class="form-control" name="oemAlternator" id="field_oemAlternator"
+                        [(ngModel)]="bike.oemAlternator" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemVoltageRegulator">Oem Voltage Regulator</label>
+                    <input type="text" class="form-control" name="oemVoltageRegulator" id="field_oemVoltageRegulator"
+                        [(ngModel)]="bike.oemVoltageRegulator" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadAlternator">Arrowhead Alternator</label>
+                    <input type="text" class="form-control" name="arrowheadAlternator" id="field_arrowheadAlternator"
+                        [(ngModel)]="bike.arrowheadAlternator" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadAlternator2">Arrowhead Alternator 2</label>
+                    <input type="text" class="form-control" name="arrowheadAlternator2" id="field_arrowheadAlternator2"
+                        [(ngModel)]="bike.arrowheadAlternator2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadCDIModule">Arrowhead CDI Module</label>
+                    <input type="text" class="form-control" name="arrowheadCDIModule" id="field_arrowheadCDIModule"
+                        [(ngModel)]="bike.arrowheadCDIModule" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadChargingCoil">Arrowhead Charging Coil</label>
+                    <input type="text" class="form-control" name="arrowheadChargingCoil" id="field_arrowheadChargingCoil"
+                        [(ngModel)]="bike.arrowheadChargingCoil" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadIgnitionCoil">Arrowhead Ignition Coil</label>
+                    <input type="text" class="form-control" name="arrowheadIgnitionCoil" id="field_arrowheadIgnitionCoil"
+                        [(ngModel)]="bike.arrowheadIgnitionCoil" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadStatorCoil">Arrowhead Stator Coil</label>
+                    <input type="text" class="form-control" name="arrowheadStatorCoil" id="field_arrowheadStatorCoil"
+                        [(ngModel)]="bike.arrowheadStatorCoil" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadVoltageRegulator">Arrowhead Voltage Regulator</label>
+                    <input type="text" class="form-control" name="arrowheadVoltageRegulator" id="field_arrowheadVoltageRegulator"
+                        [(ngModel)]="bike.arrowheadVoltageRegulator" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadPowerShiftCM">Arrowhead Power Shift CM</label>
+                    <input type="text" class="form-control" name="arrowheadPowerShiftCM" id="field_arrowheadPowerShiftCM"
+                        [(ngModel)]="bike.arrowheadPowerShiftCM" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadStarterDrive">Arrowhead Starter Drive</label>
+                    <input type="text" class="form-control" name="arrowheadStarterDrive" id="field_arrowheadStarterDrive"
+                        [(ngModel)]="bike.arrowheadStarterDrive" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadStarterMotor">Arrowhead Starter Motor</label>
+                    <input type="text" class="form-control" name="arrowheadStarterMotor" id="field_arrowheadStarterMotor"
+                        [(ngModel)]="bike.arrowheadStarterMotor" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_arrowheadStarterRelay">Arrowhead Starter Relay</label>
+                    <input type="text" class="form-control" name="arrowheadStarterRelay" id="field_arrowheadStarterRelay"
+                        [(ngModel)]="bike.arrowheadStarterRelay" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemBattery">Oem Battery</label>
+                    <input type="text" class="form-control" name="oemBattery" id="field_oemBattery"
+                        [(ngModel)]="bike.oemBattery" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ssbAGMBattery">Ssb AGM Battery</label>
+                    <input type="text" class="form-control" name="ssbAGMBattery" id="field_ssbAGMBattery"
+                        [(ngModel)]="bike.ssbAGMBattery" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemAirFilter">Oem Air Filter</label>
+                    <input type="text" class="form-control" name="oemAirFilter" id="field_oemAirFilter"
+                        [(ngModel)]="bike.oemAirFilter" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_knAirFilter">Kn Air Filter</label>
+                    <input type="text" class="form-control" name="knAirFilter" id="field_knAirFilter"
+                        [(ngModel)]="bike.knAirFilter" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motorexAirFilter">Motorex Air Filter</label>
+                    <input type="text" class="form-control" name="motorexAirFilter" id="field_motorexAirFilter"
+                        [(ngModel)]="bike.motorexAirFilter" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motorexAirFilterPreoiled">Motorex Air Filter Preoiled</label>
+                    <input type="text" class="form-control" name="motorexAirFilterPreoiled" id="field_motorexAirFilterPreoiled"
+                        [(ngModel)]="bike.motorexAirFilterPreoiled" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemOilFilter1">Oem Oil Filter 1</label>
+                    <input type="text" class="form-control" name="oemOilFilter1" id="field_oemOilFilter1"
+                        [(ngModel)]="bike.oemOilFilter1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_knOilFilter1">Kn Oil Filter 1</label>
+                    <input type="text" class="form-control" name="knOilFilter1" id="field_knOilFilter1"
+                        [(ngModel)]="bike.knOilFilter1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemOilFilter2">Oem Oil Filter 2</label>
+                    <input type="text" class="form-control" name="oemOilFilter2" id="field_oemOilFilter2"
+                        [(ngModel)]="bike.oemOilFilter2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_knOilFilter2">Kn Oil Filter 2</label>
+                    <input type="text" class="form-control" name="knOilFilter2" id="field_knOilFilter2"
+                        [(ngModel)]="bike.knOilFilter2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motionProOilFilterMagnet">Motion Pro Oil Filter Magnet</label>
+                    <input type="text" class="form-control" name="motionProOilFilterMagnet" id="field_motionProOilFilterMagnet"
+                        [(ngModel)]="bike.motionProOilFilterMagnet" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemSteeringBearing">Oem Steering Bearing</label>
+                    <input type="text" class="form-control" name="oemSteeringBearing" id="field_oemSteeringBearing"
+                        [(ngModel)]="bike.oemSteeringBearing" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemSteeringSeal">Oem Steering Seal</label>
+                    <input type="text" class="form-control" name="oemSteeringSeal" id="field_oemSteeringSeal"
+                        [(ngModel)]="bike.oemSteeringSeal" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsSBSealKit1">All Balls SB Seal Kit 1</label>
+                    <input type="text" class="form-control" name="allBallsSBSealKit1" id="field_allBallsSBSealKit1"
+                        [(ngModel)]="bike.allBallsSBSealKit1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsSBSealKit2">All Balls SB Seal Kit 2</label>
+                    <input type="text" class="form-control" name="allBallsSBSealKit2" id="field_allBallsSBSealKit2"
+                        [(ngModel)]="bike.allBallsSBSealKit2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsSBSealKitLower">All Balls SB Seal Kit Lower</label>
+                    <input type="text" class="form-control" name="allBallsSBSealKitLower" id="field_allBallsSBSealKitLower"
+                        [(ngModel)]="bike.allBallsSBSealKitLower" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsSBSealKitLower2">All Balls SB Seal Kit Lower 2</label>
+                    <input type="text" class="form-control" name="allBallsSBSealKitLower2" id="field_allBallsSBSealKitLower2"
+                        [(ngModel)]="bike.allBallsSBSealKitLower2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsCBSealKit">All Balls CB Seal Kit</label>
+                    <input type="text" class="form-control" name="allBallsCBSealKit" id="field_allBallsCBSealKit"
+                        [(ngModel)]="bike.allBallsCBSealKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemForkAssemblyLeft">Oem Fork Assembly Left</label>
+                    <input type="text" class="form-control" name="oemForkAssemblyLeft" id="field_oemForkAssemblyLeft"
+                        [(ngModel)]="bike.oemForkAssemblyLeft" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemForkAssemblyRight">Oem Fork Assembly Right</label>
+                    <input type="text" class="form-control" name="oemForkAssemblyRight" id="field_oemForkAssemblyRight"
+                        [(ngModel)]="bike.oemForkAssemblyRight" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemForkSeals">Oem Fork Seals</label>
+                    <input type="text" class="form-control" name="oemForkSeals" id="field_oemForkSeals"
+                        [(ngModel)]="bike.oemForkSeals" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsForkSeals">All Balls Fork Seals</label>
+                    <input type="text" class="form-control" name="allBallsForkSeals" id="field_allBallsForkSeals"
+                        [(ngModel)]="bike.allBallsForkSeals" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_xprForkSeals">Xpr Fork Seals</label>
+                    <input type="text" class="form-control" name="xprForkSeals" id="field_xprForkSeals"
+                        [(ngModel)]="bike.xprForkSeals" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsForkBushingKit">All Balls Fork Bushing Kit</label>
+                    <input type="text" class="form-control" name="allBallsForkBushingKit" id="field_allBallsForkBushingKit"
+                        [(ngModel)]="bike.allBallsForkBushingKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motionProMicroForkBleeder">Motion Pro Micro Fork Bleeder</label>
+                    <input type="text" class="form-control" name="motionProMicroForkBleeder" id="field_motionProMicroForkBleeder"
+                        [(ngModel)]="bike.motionProMicroForkBleeder" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motionProCRProThottleKit">Motion Pro CR Pro Thottle Kit</label>
+                    <input type="text" class="form-control" name="motionProCRProThottleKit" id="field_motionProCRProThottleKit"
+                        [(ngModel)]="bike.motionProCRProThottleKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemCableSpeedo">Oem Cable Speedo</label>
+                    <input type="text" class="form-control" name="oemCableSpeedo" id="field_oemCableSpeedo"
+                        [(ngModel)]="bike.oemCableSpeedo" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motionProCableSpeedo">Motion Pro Cable Speedo</label>
+                    <input type="text" class="form-control" name="motionProCableSpeedo" id="field_motionProCableSpeedo"
+                        [(ngModel)]="bike.motionProCableSpeedo" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_motionProCableThrottleTube">Motion Pro Cable Throttle Tube</label>
+                    <input type="text" class="form-control" name="motionProCableThrottleTube" id="field_motionProCableThrottleTube"
+                        [(ngModel)]="bike.motionProCableThrottleTube" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_crossproRadiatorGuard">Crosspro Radiator Guard</label>
+                    <input type="text" class="form-control" name="crossproRadiatorGuard" id="field_crossproRadiatorGuard"
+                        [(ngModel)]="bike.crossproRadiatorGuard" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemClutchFibres">Oem Clutch Fibres</label>
+                    <input type="text" class="form-control" name="oemClutchFibres" id="field_oemClutchFibres"
+                        [(ngModel)]="bike.oemClutchFibres" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemClutchFibresSteels">Oem Clutch Fibres Steels</label>
+                    <input type="text" class="form-control" name="oemClutchFibresSteels" id="field_oemClutchFibresSteels"
+                        [(ngModel)]="bike.oemClutchFibresSteels" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_newfrenClutchKit">Newfren Clutch Kit</label>
+                    <input type="text" class="form-control" name="newfrenClutchKit" id="field_newfrenClutchKit"
+                        [(ngModel)]="bike.newfrenClutchKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_newfrenClutchSpringKits">Newfren Clutch Spring Kits</label>
+                    <input type="text" class="form-control" name="newfrenClutchSpringKits" id="field_newfrenClutchSpringKits"
+                        [(ngModel)]="bike.newfrenClutchSpringKits" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsCMCRebuiltKit">All Balls CMC Rebuilt Kit</label>
+                    <input type="text" class="form-control" name="allBallsCMCRebuiltKit" id="field_allBallsCMCRebuiltKit"
+                        [(ngModel)]="bike.allBallsCMCRebuiltKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_wisecoForgedClutchBasket">Wiseco Forged Clutch Basket</label>
+                    <input type="text" class="form-control" name="wisecoForgedClutchBasket" id="field_wisecoForgedClutchBasket"
+                        [(ngModel)]="bike.wisecoForgedClutchBasket" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_wisecoBottemEndRebuildKit">Wiseco Bottem End Rebuild Kit</label>
+                    <input type="text" class="form-control" name="wisecoBottemEndRebuildKit" id="field_wisecoBottemEndRebuildKit"
+                        [(ngModel)]="bike.wisecoBottemEndRebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_wrenchRERebuildKit">Wrench RE Rebuild Kit</label>
+                    <input type="text" class="form-control" name="wrenchRERebuildKit" id="field_wrenchRERebuildKit"
+                        [(ngModel)]="bike.wrenchRERebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemCarbAssembly">Oem Carb Assembly</label>
+                    <input type="text" class="form-control" name="oemCarbAssembly" id="field_oemCarbAssembly"
+                        [(ngModel)]="bike.oemCarbAssembly" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsCarbRepairKit">All Balls Carb Repair Kit</label>
+                    <input type="text" class="form-control" name="allBallsCarbRepairKit" id="field_allBallsCarbRepairKit"
+                        [(ngModel)]="bike.allBallsCarbRepairKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsCRMidBodyGasket1">All Balls CR Mid Body Gasket 1</label>
+                    <input type="text" class="form-control" name="allBallsCRMidBodyGasket1" id="field_allBallsCRMidBodyGasket1"
+                        [(ngModel)]="bike.allBallsCRMidBodyGasket1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsCRMidBodyGasket2">All Balls CR Mid Body Gasket 2</label>
+                    <input type="text" class="form-control" name="allBallsCRMidBodyGasket2" id="field_allBallsCRMidBodyGasket2"
+                        [(ngModel)]="bike.allBallsCRMidBodyGasket2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsFuelTapRepairKit">All Balls Fuel Tap Repair Kit</label>
+                    <input type="text" class="form-control" name="allBallsFuelTapRepairKit" id="field_allBallsFuelTapRepairKit"
+                        [(ngModel)]="bike.allBallsFuelTapRepairKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsFuelTapRepairKit2">All Balls Fuel Tap Repair Kit 2</label>
+                    <input type="text" class="form-control" name="allBallsFuelTapRepairKit2" id="field_allBallsFuelTapRepairKit2"
+                        [(ngModel)]="bike.allBallsFuelTapRepairKit2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_fuelStarFuelValveKit">Fuel Star Fuel Valve Kit</label>
+                    <input type="text" class="form-control" name="fuelStarFuelValveKit" id="field_fuelStarFuelValveKit"
+                        [(ngModel)]="bike.fuelStarFuelValveKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_fuelStarFuelValveKit2">Fuel Star Fuel Valve Kit 2</label>
+                    <input type="text" class="form-control" name="fuelStarFuelValveKit2" id="field_fuelStarFuelValveKit2"
+                        [(ngModel)]="bike.fuelStarFuelValveKit2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_fuelStarHoseClampKit">Fuel Star Hose Clamp Kit</label>
+                    <input type="text" class="form-control" name="fuelStarHoseClampKit" id="field_fuelStarHoseClampKit"
+                        [(ngModel)]="bike.fuelStarHoseClampKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_rgEngineCoverLHS">Rg Engine Cover LHS</label>
+                    <input type="text" class="form-control" name="rgEngineCoverLHS" id="field_rgEngineCoverLHS"
+                        [(ngModel)]="bike.rgEngineCoverLHS" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_rgTailTidy">Rg Tail Tidy</label>
+                    <input type="text" class="form-control" name="rgTailTidy" id="field_rgTailTidy"
+                        [(ngModel)]="bike.rgTailTidy" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsLBSealKit">All Balls LB Seal Kit</label>
+                    <input type="text" class="form-control" name="allBallsLBSealKit" id="field_allBallsLBSealKit"
+                        [(ngModel)]="bike.allBallsLBSealKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsLRSBearingKit">All Balls LRS Bearing Kit</label>
+                    <input type="text" class="form-control" name="allBallsLRSBearingKit" id="field_allBallsLRSBearingKit"
+                        [(ngModel)]="bike.allBallsLRSBearingKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsURSBearingKit">All Balls URS Bearing Kit</label>
+                    <input type="text" class="form-control" name="allBallsURSBearingKit" id="field_allBallsURSBearingKit"
+                        [(ngModel)]="bike.allBallsURSBearingKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsULSBearingKit">All Balls ULS Bearing Kit</label>
+                    <input type="text" class="form-control" name="allBallsULSBearingKit" id="field_allBallsULSBearingKit"
+                        [(ngModel)]="bike.allBallsULSBearingKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_allBallsSBSealKit">All Balls SB Seal Kit</label>
+                    <input type="text" class="form-control" name="allBallsSBSealKit" id="field_allBallsSBSealKit"
+                        [(ngModel)]="bike.allBallsSBSealKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_pivotWorksSTBearingKit">Pivot Works ST Bearing Kit</label>
+                    <input type="text" class="form-control" name="pivotWorksSTBearingKit" id="field_pivotWorksSTBearingKit"
+                        [(ngModel)]="bike.pivotWorksSTBearingKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_pivotWorksSRebuildKit">Pivot Works S Rebuild Kit</label>
+                    <input type="text" class="form-control" name="pivotWorksSRebuildKit" id="field_pivotWorksSRebuildKit"
+                        [(ngModel)]="bike.pivotWorksSRebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mpForkSealDriver">Mp Fork Seal Driver</label>
+                    <input type="text" class="form-control" name="mpForkSealDriver" id="field_mpForkSealDriver"
+                        [(ngModel)]="bike.mpForkSealDriver" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mpValveSealInstallTool">Mp Valve Seal Install Tool</label>
+                    <input type="text" class="form-control" name="mpValveSealInstallTool" id="field_mpValveSealInstallTool"
+                        [(ngModel)]="bike.mpValveSealInstallTool" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_winderosaGasketKitTopEnd">Winderosa Gasket Kit Top End</label>
+                    <input type="text" class="form-control" name="winderosaGasketKitTopEnd" id="field_winderosaGasketKitTopEnd"
+                        [(ngModel)]="bike.winderosaGasketKitTopEnd" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_winderosaGasketKitOilSeals">Winderosa Gasket Kit Oil Seals</label>
+                    <input type="text" class="form-control" name="winderosaGasketKitOilSeals" id="field_winderosaGasketKitOilSeals"
+                        [(ngModel)]="bike.winderosaGasketKitOilSeals" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oemExhaustGasket">Oem Exhaust Gasket</label>
+                    <input type="text" class="form-control" name="oemExhaustGasket" id="field_oemExhaustGasket"
+                        [(ngModel)]="bike.oemExhaustGasket" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_winderosaGasketExhaust">Winderosa Gasket Exhaust</label>
+                    <input type="text" class="form-control" name="winderosaGasketExhaust" id="field_winderosaGasketExhaust"
+                        [(ngModel)]="bike.winderosaGasketExhaust" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_winderosaWaterPumpRebuildKit">Winderosa Water Pump Rebuild Kit</label>
+                    <input type="text" class="form-control" name="winderosaWaterPumpRebuildKit" id="field_winderosaWaterPumpRebuildKit"
+                        [(ngModel)]="bike.winderosaWaterPumpRebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsConnectingRodKit">Hot Rods Connecting Rod Kit</label>
+                    <input type="text" class="form-control" name="hotRodsConnectingRodKit" id="field_hotRodsConnectingRodKit"
+                        [(ngModel)]="bike.hotRodsConnectingRodKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsCounterBalRebuildKit">Hot Rods Counter Bal Rebuild Kit</label>
+                    <input type="text" class="form-control" name="hotRodsCounterBalRebuildKit" id="field_hotRodsCounterBalRebuildKit"
+                        [(ngModel)]="bike.hotRodsCounterBalRebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsBERebuildKit">Hot Rods BE Rebuild Kit</label>
+                    <input type="text" class="form-control" name="hotRodsBERebuildKit" id="field_hotRodsBERebuildKit"
+                        [(ngModel)]="bike.hotRodsBERebuildKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsBERebuildKitSt">Hot Rods BE Rebuild Kit St</label>
+                    <input type="text" class="form-control" name="hotRodsBERebuildKitSt" id="field_hotRodsBERebuildKitSt"
+                        [(ngModel)]="bike.hotRodsBERebuildKitSt" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsCylinderHead">Hot Rods Cylinder Head</label>
+                    <input type="text" class="form-control" name="hotRodsCylinderHead" id="field_hotRodsCylinderHead"
+                        [(ngModel)]="bike.hotRodsCylinderHead" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsMainBearingSealKit">Hot Rods Main Bearing Seal Kit</label>
+                    <input type="text" class="form-control" name="hotRodsMainBearingSealKit" id="field_hotRodsMainBearingSealKit"
+                        [(ngModel)]="bike.hotRodsMainBearingSealKit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsTransmissionBearings">Hot Rods Transmission Bearings</label>
+                    <input type="text" class="form-control" name="hotRodsTransmissionBearings" id="field_hotRodsTransmissionBearings"
+                        [(ngModel)]="bike.hotRodsTransmissionBearings" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsWristPinBearings">Hot Rods Wrist Pin Bearings</label>
+                    <input type="text" class="form-control" name="hotRodsWristPinBearings" id="field_hotRodsWristPinBearings"
+                        [(ngModel)]="bike.hotRodsWristPinBearings" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsSOHCCamshaftStage1">Hot Rods SOHC Camshaft Stage 1</label>
+                    <input type="text" class="form-control" name="hotRodsSOHCCamshaftStage1" id="field_hotRodsSOHCCamshaftStage1"
+                        [(ngModel)]="bike.hotRodsSOHCCamshaftStage1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsSOHCCamshaftStage2">Hot Rods SOHC Camshaft Stage 2</label>
+                    <input type="text" class="form-control" name="hotRodsSOHCCamshaftStage2" id="field_hotRodsSOHCCamshaftStage2"
+                        [(ngModel)]="bike.hotRodsSOHCCamshaftStage2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsSOHCCamshaftStage3">Hot Rods SOHC Camshaft Stage 3</label>
+                    <input type="text" class="form-control" name="hotRodsSOHCCamshaftStage3" id="field_hotRodsSOHCCamshaftStage3"
+                        [(ngModel)]="bike.hotRodsSOHCCamshaftStage3" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsDOHCCamshaftStage1Intake">Hot Rods DOHC Camshaft Stage 1 Intake</label>
+                    <input type="text" class="form-control" name="hotRodsDOHCCamshaftStage1Intake" id="field_hotRodsDOHCCamshaftStage1Intake"
+                        [(ngModel)]="bike.hotRodsDOHCCamshaftStage1Intake" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsDOHCCamshaftStage1Exhaust">Hot Rods DOHC Camshaft Stage 1 Exhaust</label>
+                    <input type="text" class="form-control" name="hotRodsDOHCCamshaftStage1Exhaust" id="field_hotRodsDOHCCamshaftStage1Exhaust"
+                        [(ngModel)]="bike.hotRodsDOHCCamshaftStage1Exhaust" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsDOHCCamshaftStage2Intake">Hot Rods DOHC Camshaft Stage 2 Intake</label>
+                    <input type="text" class="form-control" name="hotRodsDOHCCamshaftStage2Intake" id="field_hotRodsDOHCCamshaftStage2Intake"
+                        [(ngModel)]="bike.hotRodsDOHCCamshaftStage2Intake" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotRodsDOHCCamshaftStage2Exhaust">Hot Rods DOHC Camshaft Stage 2 Exhaust</label>
+                    <input type="text" class="form-control" name="hotRodsDOHCCamshaftStage2Exhaust" id="field_hotRodsDOHCCamshaftStage2Exhaust"
+                        [(ngModel)]="bike.hotRodsDOHCCamshaftStage2Exhaust" />
+                </div>
+
+                <div class="form-group">
+                    <label for="field_bikeFrontSprocket">Bike Front Sprocket</label>
+                    <select class="form-control" id="field_bikeFrontSprocket" multiple name="bikeFrontSprocket" [(ngModel)]="bike.bikeFrontSprockets">
+                        <option [ngValue]="getSelected(bike.bikeFrontSprockets, bikeFrontSprocketOption)" *ngFor="let bikeFrontSprocketOption of bikefrontsprockets; trackBy: trackBikeFrontSprocketById">{{bikeFrontSprocketOption.sku}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="field_bikeRearSprocket">Bike Rear Sprocket</label>
+                    <select class="form-control" id="field_bikeRearSprocket" multiple name="bikeRearSprocket" [(ngModel)]="bike.bikeRearSprockets">
+                        <option [ngValue]="getSelected(bike.bikeRearSprockets, bikeRearSprocketOption)" *ngFor="let bikeRearSprocketOption of bikerearsprockets; trackBy: trackBikeRearSprocketById">{{bikeRearSprocketOption.sku}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="field_rearSprocketConv">Rear Sprocket Conv</label>
+                    <select class="form-control" id="field_rearSprocketConv" multiple name="rearSprocketConv" [(ngModel)]="bike.rearSprocketConvs">
+                        <option [ngValue]="getSelected(bike.rearSprocketConvs, rearSprocketConvOption)" *ngFor="let rearSprocketConvOption of rearsprocketconvs; trackBy: trackRearSprocketConvById">{{rearSprocketConvOption.sku}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="field_frontSprocketConv">Front Sprocket Conv</label>
+                    <select class="form-control" id="field_frontSprocketConv" multiple name="frontSprocketConv" [(ngModel)]="bike.frontSprocketConvs">
+                        <option [ngValue]="getSelected(bike.frontSprocketConvs, frontSprocketConvOption)" *ngFor="let frontSprocketConvOption of frontsprocketconvs; trackBy: trackFrontSprocketConvById">{{frontSprocketConvOption.sku}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="field_chain">Chain</label>
+                    <select class="form-control" id="field_chain" multiple name="chain" [(ngModel)]="bike.chains">
+                        <option [ngValue]="getSelected(bike.chains, chainOption)" *ngFor="let chainOption of chains; trackBy: trackChainById">{{chainOption.sku}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="field_bikeBrakePad">Bike Brake Pad</label>
+                    <select class="form-control" id="field_bikeBrakePad" multiple name="bikeBrakePad" [(ngModel)]="bike.bikeBrakePads">
+                        <option [ngValue]="getSelected(bike.bikeBrakePads, bikeBrakePadOption)" *ngFor="let bikeBrakePadOption of bikebrakepads; trackBy: trackBikeBrakePadById">{{bikeBrakePadOption.sku}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="field_bikeBrakeDisc">Bike Brake Disc</label>
+                    <select class="form-control" id="field_bikeBrakeDisc" multiple name="bikeBrakeDisc" [(ngModel)]="bike.bikeBrakeDiscs">
+                        <option [ngValue]="getSelected(bike.bikeBrakeDiscs, bikeBrakeDiscOption)" *ngFor="let bikeBrakeDiscOption of bikebrakediscs; trackBy: trackBikeBrakeDiscById">{{bikeBrakeDiscOption.sku}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

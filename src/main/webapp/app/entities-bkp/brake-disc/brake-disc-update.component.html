@@ -1,0 +1,495 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-brake-disc-heading">Create or edit a Brake Disc</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!brakeDisc.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="brakeDisc.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sku">Sku</label>
+                    <input type="text" class="form-control" name="sku" id="field_sku"
+                        [(ngModel)]="brakeDisc.sku" required/>
+                    <div [hidden]="!(editForm.controls.sku?.dirty && editForm.controls.sku?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.sku?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_active">Active</label>
+                    <input type="text" class="form-control" name="active" id="field_active"
+                        [(ngModel)]="brakeDisc.active" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_au">Au</label>
+                    <input type="text" class="form-control" name="au" id="field_au"
+                        [(ngModel)]="brakeDisc.au" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_de">De</label>
+                    <input type="text" class="form-control" name="de" id="field_de"
+                        [(ngModel)]="brakeDisc.de" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_metalGearvisibility">Metal Gearvisibility</label>
+                    <input type="text" class="form-control" name="metalGearvisibility" id="field_metalGearvisibility"
+                        [(ngModel)]="brakeDisc.metalGearvisibility" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bikematevisibility">Bikematevisibility</label>
+                    <input type="text" class="form-control" name="bikematevisibility" id="field_bikematevisibility"
+                        [(ngModel)]="brakeDisc.bikematevisibility" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgiVisibility">Mgi Visibility</label>
+                    <input type="text" class="form-control" name="mgiVisibility" id="field_mgiVisibility"
+                        [(ngModel)]="brakeDisc.mgiVisibility" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_discStatus">Disc Status</label>
+                    <input type="text" class="form-control" name="discStatus" id="field_discStatus"
+                        [(ngModel)]="brakeDisc.discStatus" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_productGroup1">Product Group 1</label>
+                    <input type="text" class="form-control" name="productGroup1" id="field_productGroup1"
+                        [(ngModel)]="brakeDisc.productGroup1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_productGroup2">Product Group 2</label>
+                    <input type="text" class="form-control" name="productGroup2" id="field_productGroup2"
+                        [(ngModel)]="brakeDisc.productGroup2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_fitment">Fitment</label>
+                    <input type="text" class="form-control" name="fitment" id="field_fitment"
+                        [(ngModel)]="brakeDisc.fitment" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="brakeDisc.description" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_unit">Unit</label>
+                    <input type="text" class="form-control" name="unit" id="field_unit"
+                        [(ngModel)]="brakeDisc.unit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_qty">Qty</label>
+                    <input type="number" class="form-control" name="qty" id="field_qty"
+                        [(ngModel)]="brakeDisc.qty" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_brand">Brand</label>
+                    <input type="text" class="form-control" name="brand" id="field_brand"
+                        [(ngModel)]="brakeDisc.brand" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_biketypes">Biketypes</label>
+                    <input type="text" class="form-control" name="biketypes" id="field_biketypes"
+                        [(ngModel)]="brakeDisc.biketypes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_models2012on">Models 2012 On</label>
+                    <input type="text" class="form-control" name="models2012on" id="field_models2012on"
+                        [(ngModel)]="brakeDisc.models2012on" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_gS1EANNo">G S 1 EAN No</label>
+                    <input type="number" class="form-control" name="gS1EANNo" id="field_gS1EANNo"
+                        [(ngModel)]="brakeDisc.gS1EANNo" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ourNotes">Our Notes</label>
+                    <input type="text" class="form-control" name="ourNotes" id="field_ourNotes"
+                        [(ngModel)]="brakeDisc.ourNotes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_weight">Weight</label>
+                    <input type="number" class="form-control" name="weight" id="field_weight"
+                        [(ngModel)]="brakeDisc.weight" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packType">Pack Type</label>
+                    <input type="text" class="form-control" name="packType" id="field_packType"
+                        [(ngModel)]="brakeDisc.packType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packLength">Pack Length</label>
+                    <input type="number" class="form-control" name="packLength" id="field_packLength"
+                        [(ngModel)]="brakeDisc.packLength" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packHeight">Pack Height</label>
+                    <input type="number" class="form-control" name="packHeight" id="field_packHeight"
+                        [(ngModel)]="brakeDisc.packHeight" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packWidth">Pack Width</label>
+                    <input type="number" class="form-control" name="packWidth" id="field_packWidth"
+                        [(ngModel)]="brakeDisc.packWidth" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packCubic">Pack Cubic</label>
+                    <input type="number" class="form-control" name="packCubic" id="field_packCubic"
+                        [(ngModel)]="brakeDisc.packCubic" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oD">O D</label>
+                    <input type="number" class="form-control" name="oD" id="field_oD"
+                        [(ngModel)]="brakeDisc.oD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bHC">B HC</label>
+                    <input type="text" class="form-control" name="bHC" id="field_bHC"
+                        [(ngModel)]="brakeDisc.bHC" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bHQty">B H Qty</label>
+                    <input type="number" class="form-control" name="bHQty" id="field_bHQty"
+                        [(ngModel)]="brakeDisc.bHQty" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bHSize">B H Size</label>
+                    <input type="number" class="form-control" name="bHSize" id="field_bHSize"
+                        [(ngModel)]="brakeDisc.bHSize" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bHOD">B HOD</label>
+                    <input type="number" class="form-control" name="bHOD" id="field_bHOD"
+                        [(ngModel)]="brakeDisc.bHOD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bHStep">B H Step</label>
+                    <input type="number" class="form-control" name="bHStep" id="field_bHStep"
+                        [(ngModel)]="brakeDisc.bHStep" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bHType">B H Type</label>
+                    <input type="text" class="form-control" name="bHType" id="field_bHType"
+                        [(ngModel)]="brakeDisc.bHType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_thickness">Thickness</label>
+                    <input type="number" class="form-control" name="thickness" id="field_thickness"
+                        [(ngModel)]="brakeDisc.thickness" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_thicknessMin">Thickness Min</label>
+                    <input type="number" class="form-control" name="thicknessMin" id="field_thicknessMin"
+                        [(ngModel)]="brakeDisc.thicknessMin" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_offset">Offset</label>
+                    <input type="number" class="form-control" name="offset" id="field_offset"
+                        [(ngModel)]="brakeDisc.offset" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_brakeAreawidth">Brake Areawidth</label>
+                    <input type="number" class="form-control" name="brakeAreawidth" id="field_brakeAreawidth"
+                        [(ngModel)]="brakeDisc.brakeAreawidth" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tUVLHC">T UVLHC</label>
+                    <input type="text" class="form-control" name="tUVLHC" id="field_tUVLHC"
+                        [(ngModel)]="brakeDisc.tUVLHC" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_customerNotes">Customer Notes</label>
+                    <input type="text" class="form-control" name="customerNotes" id="field_customerNotes"
+                        [(ngModel)]="brakeDisc.customerNotes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eListing">E Listing</label>
+                    <input type="text" class="form-control" name="eListing" id="field_eListing"
+                        [(ngModel)]="brakeDisc.eListing" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eforMake">Efor Make</label>
+                    <input type="text" class="form-control" name="eforMake" id="field_eforMake"
+                        [(ngModel)]="brakeDisc.eforMake" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eDate">E Date</label>
+                    <div class="input-group">
+                        <input id="field_eDate" type="text" class="form-control" name="eDate" ngbDatepicker  #eDateDp="ngbDatepicker" [(ngModel)]="brakeDisc.eDate"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="eDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_euploadedNeto">Euploaded Neto</label>
+                    <input type="text" class="form-control" name="euploadedNeto" id="field_euploadedNeto"
+                        [(ngModel)]="brakeDisc.euploadedNeto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_echeck">Echeck</label>
+                    <input type="text" class="form-control" name="echeck" id="field_echeck"
+                        [(ngModel)]="brakeDisc.echeck" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_euploadedeBay">Euploadede Bay</label>
+                    <input type="text" class="form-control" name="euploadedeBay" id="field_euploadedeBay"
+                        [(ngModel)]="brakeDisc.euploadedeBay" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ebayactive">Ebayactive</label>
+                    <input type="text" class="form-control" name="ebayactive" id="field_ebayactive"
+                        [(ngModel)]="brakeDisc.ebayactive" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ePhotobucket">E Photobucket</label>
+                    <input type="text" class="form-control" name="ePhotobucket" id="field_ePhotobucket"
+                        [(ngModel)]="brakeDisc.ePhotobucket" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ePhoto1">E Photo 1</label>
+                    <input type="text" class="form-control" name="ePhoto1" id="field_ePhoto1"
+                        [(ngModel)]="brakeDisc.ePhoto1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ePhoto2">E Photo 2</label>
+                    <input type="text" class="form-control" name="ePhoto2" id="field_ePhoto2"
+                        [(ngModel)]="brakeDisc.ePhoto2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ePhoto3">E Photo 3</label>
+                    <input type="text" class="form-control" name="ePhoto3" id="field_ePhoto3"
+                        [(ngModel)]="brakeDisc.ePhoto3" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_saleStatus">Sale Status</label>
+                    <input type="text" class="form-control" name="saleStatus" id="field_saleStatus"
+                        [(ngModel)]="brakeDisc.saleStatus" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_rRP">R RP</label>
+                    <input type="number" class="form-control" name="rRP" id="field_rRP"
+                        [(ngModel)]="brakeDisc.rRP" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_trade1">Trade 1</label>
+                    <input type="number" class="form-control" name="trade1" id="field_trade1"
+                        [(ngModel)]="brakeDisc.trade1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eBAY">E BAY</label>
+                    <input type="number" class="form-control" name="eBAY" id="field_eBAY"
+                        [(ngModel)]="brakeDisc.eBAY" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_trade2">Trade 2</label>
+                    <input type="number" class="form-control" name="trade2" id="field_trade2"
+                        [(ngModel)]="brakeDisc.trade2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_trade3">Trade 3</label>
+                    <input type="number" class="form-control" name="trade3" id="field_trade3"
+                        [(ngModel)]="brakeDisc.trade3" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_distributorNZAUD">Distributor NZAUD</label>
+                    <input type="number" class="form-control" name="distributorNZAUD" id="field_distributorNZAUD"
+                        [(ngModel)]="brakeDisc.distributorNZAUD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_distributorEUR">Distributor EUR</label>
+                    <input type="number" class="form-control" name="distributorEUR" id="field_distributorEUR"
+                        [(ngModel)]="brakeDisc.distributorEUR" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_distributorUSD">Distributor USD</label>
+                    <input type="number" class="form-control" name="distributorUSD" id="field_distributorUSD"
+                        [(ngModel)]="brakeDisc.distributorUSD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sPriority">S Priority</label>
+                    <input type="text" class="form-control" name="sPriority" id="field_sPriority"
+                        [(ngModel)]="brakeDisc.sPriority" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_samplefrom">Samplefrom</label>
+                    <input type="text" class="form-control" name="samplefrom" id="field_samplefrom"
+                        [(ngModel)]="brakeDisc.samplefrom" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_requestedfrom">Requestedfrom</label>
+                    <input type="text" class="form-control" name="requestedfrom" id="field_requestedfrom"
+                        [(ngModel)]="brakeDisc.requestedfrom" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_date">Date</label>
+                    <div class="input-group">
+                        <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker  #dateDp="ngbDatepicker" [(ngModel)]="brakeDisc.date"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_received">Received</label>
+                    <input type="text" class="form-control" name="received" id="field_received"
+                        [(ngModel)]="brakeDisc.received" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_camefrom">Camefrom</label>
+                    <input type="text" class="form-control" name="camefrom" id="field_camefrom"
+                        [(ngModel)]="brakeDisc.camefrom" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_paidfor">Paidfor</label>
+                    <input type="text" class="form-control" name="paidfor" id="field_paidfor"
+                        [(ngModel)]="brakeDisc.paidfor" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sentto">Sentto</label>
+                    <input type="text" class="form-control" name="sentto" id="field_sentto"
+                        [(ngModel)]="brakeDisc.sentto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_shipNo">Ship No</label>
+                    <input type="number" class="form-control" name="shipNo" id="field_shipNo"
+                        [(ngModel)]="brakeDisc.shipNo" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_datesent">Datesent</label>
+                    <div class="input-group">
+                        <input id="field_datesent" type="text" class="form-control" name="datesent" ngbDatepicker  #datesentDp="ngbDatepicker" [(ngModel)]="brakeDisc.datesent"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="datesentDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_samplereturn">Samplereturn</label>
+                    <input type="text" class="form-control" name="samplereturn" id="field_samplereturn"
+                        [(ngModel)]="brakeDisc.samplereturn" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_make">Make</label>
+                    <input type="text" class="form-control" name="make" id="field_make"
+                        [(ngModel)]="brakeDisc.make" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_model">Model</label>
+                    <input type="text" class="form-control" name="model" id="field_model"
+                        [(ngModel)]="brakeDisc.model" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_year">Year</label>
+                    <input type="text" class="form-control" name="year" id="field_year"
+                        [(ngModel)]="brakeDisc.year" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sampleFitment">Sample Fitment</label>
+                    <input type="text" class="form-control" name="sampleFitment" id="field_sampleFitment"
+                        [(ngModel)]="brakeDisc.sampleFitment" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_oEM">O EM</label>
+                    <input type="text" class="form-control" name="oEM" id="field_oEM"
+                        [(ngModel)]="brakeDisc.oEM" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_notesforProduction">Notesfor Production</label>
+                    <input type="text" class="form-control" name="notesforProduction" id="field_notesforProduction"
+                        [(ngModel)]="brakeDisc.notesforProduction" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_productionCode">Production Code</label>
+                    <input type="text" class="form-control" name="productionCode" id="field_productionCode"
+                        [(ngModel)]="brakeDisc.productionCode" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hAPapproved">H A Papproved</label>
+                    <div class="input-group">
+                        <input id="field_hAPapproved" type="text" class="form-control" name="hAPapproved" ngbDatepicker  #hAPapprovedDp="ngbDatepicker" [(ngModel)]="brakeDisc.hAPapproved"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="hAPapprovedDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sHAapproved">S H Aapproved</label>
+                    <div class="input-group">
+                        <input id="field_sHAapproved" type="text" class="form-control" name="sHAapproved" ngbDatepicker  #sHAapprovedDp="ngbDatepicker" [(ngModel)]="brakeDisc.sHAapproved"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="sHAapprovedDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_approvedby">Approvedby</label>
+                    <input type="text" class="form-control" name="approvedby" id="field_approvedby"
+                        [(ngModel)]="brakeDisc.approvedby" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_notestoDrawing">Notesto Drawing</label>
+                    <input type="text" class="form-control" name="notestoDrawing" id="field_notestoDrawing"
+                        [(ngModel)]="brakeDisc.notestoDrawing" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_filename">Filename</label>
+                    <input type="text" class="form-control" name="filename" id="field_filename"
+                        [(ngModel)]="brakeDisc.filename" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_cOSTUSD">C OSTUSD</label>
+                    <input type="number" class="form-control" name="cOSTUSD" id="field_cOSTUSD"
+                        [(ngModel)]="brakeDisc.cOSTUSD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_centrecolour">Centrecolour</label>
+                    <input type="text" class="form-control" name="centrecolour" id="field_centrecolour"
+                        [(ngModel)]="brakeDisc.centrecolour" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_laser">Laser</label>
+                    <input type="text" class="form-control" name="laser" id="field_laser"
+                        [(ngModel)]="brakeDisc.laser" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_qTY1">Q TY 1</label>
+                    <input type="number" class="form-control" name="qTY1" id="field_qTY1"
+                        [(ngModel)]="brakeDisc.qTY1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_uSD">U SD</label>
+                    <input type="number" class="form-control" name="uSD" id="field_uSD"
+                        [(ngModel)]="brakeDisc.uSD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_completeProduction">Complete Production</label>
+                    <input type="text" class="form-control" name="completeProduction" id="field_completeProduction"
+                        [(ngModel)]="brakeDisc.completeProduction" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ourNotetoProduction">Our Noteto Production</label>
+                    <input type="text" class="form-control" name="ourNotetoProduction" id="field_ourNotetoProduction"
+                        [(ngModel)]="brakeDisc.ourNotetoProduction" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

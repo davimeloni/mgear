@@ -1,0 +1,332 @@
+{
+    "name": "Sprocket",
+    "fields": [
+        {
+            "fieldName": "sku",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "active",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "au",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "de",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "metalGearvisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bikematevisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgiVisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "productGroup1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "productGroup2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "countries",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fitment",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "unit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "qty",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "brand",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "biketypes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fitsMakes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "modelsupto",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "gS1EAN",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "ourNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "customerNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "weightkg",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "packLength",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packWidth",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packHeight",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packCubic",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "sprocketChainSize",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "sprocketTeeth",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "eSBHC",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eSID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "eSIDinnerTeeth",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eSBHQty",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "eSBHSize",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eSBHType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eSWidth",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "tolistonEbay",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eListing",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eforMake",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "euploadedNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "echeck",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "euploadedeBay",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eBayactive",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotobucket",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotoMain",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotoClear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotoSide",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "salesStatus",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rRP",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "eBay",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "trade1",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "trade2",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "trade3",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "distributorNZAUD",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "distributorUSD",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "distributorEUR",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bikemateAUD",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "compMetalGear",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "compMogema",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "compJT",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "jTBHC",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "jTID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "jTIDinnerTeeth",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "jTBHQty",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "jTBHSize",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "jTBHType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "jTWidth",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "jTNote",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "compEsjot",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "compSuperSprox",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "stock",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "minStock",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "maxStock",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "supplier",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supplierCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supplierCurrency",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "supplierCost",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181113204511",
+    "entityTableName": "sprocket",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "enableEntityAudit": true
+}

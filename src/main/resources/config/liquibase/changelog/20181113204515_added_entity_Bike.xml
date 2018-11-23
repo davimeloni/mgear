@@ -1,0 +1,1112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity Bike.
+    -->
+    <changeSet id="20181113204515-1" author="jhipster">
+        <createTable tableName="bike">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="visibility_au" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="visibility_eu" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="inactive" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oemconfirmed" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oesource" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="epid" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="modeltype_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="modeltype_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="manufacturer" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="strokes" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="capacity" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="model_name" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="model_year_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="model_type_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="jhi_year" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="final_drive_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="category_path" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="model_notes" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="model_notes_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="model_notes_3" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="model_notes_4" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="model_info_html" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_system_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_disc_left" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_disc_right" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_disc_bolts" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_bdqtypd" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_disc_abs_ring" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_caliper_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_caliper_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_caliper_pin" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_pads_front_l" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_brake_pads_front_r" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_shoe" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_midldle_axle_brake_disc" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_middle_axle_brake_pads" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_brake_system_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oeam_rear_brake_disc" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oeam_rear_brake_disc_bolts" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oeam_rear_brake_disc_bqtypd" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_brake_caliper" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_brake_caliper_pin" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_brake_pads_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_brake_pads_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_shoe_rear" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_shoe_rear_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_slave_cylinder" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_chain_no" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_chain_size" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_chain_links" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_sprocket" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_gearing" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_gearing_min" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_gearing_max" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_sprocket" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_gearing" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_gearing_min" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_gearing_max" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="final_drive_notes" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="chain_conv_size" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="chain_conv_links" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_wheel" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_wheel_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_wheel_front" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_wheel_tyre_size" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_hub" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_wheelbearing_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_wheelbearing_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_front_wheel_seal" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_wheel" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_wheel_size" type="decimal(10,2)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_wheel_tyre" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_wheel_bearing_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_wheel_bearing_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_rear_wheel_seal" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="front_pads_diff_caliper" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="qty_bh" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="handbrake_parking" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="add_notes_to_bike" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="date_and_id" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="source" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="tuv_required" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="tuv_type_code" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="abekba" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="tuv_front_disc" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="tuv_rear_disc" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="brembo_brake_disc_front_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ebc_brake_disc_front_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="trw_brake_disc_front_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_disc_front_left_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_disc_front_right_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_disc_front_check" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_disc_front_left_ref_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_disc_front_right_ref_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_disc_f_neto" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="motodisc_brake_disc_f_neto" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ebc_brake_pads_front_l_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ebc_brake_pads_front_r_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_pads_front_l_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_pads_front_r_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_pads_f_neto" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="moto_pad_brake_pads_front_l_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="moto_pad_brake_pads_front_r_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="motopad_brake_pads_f_neto" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fc_rebuild_kit_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fc_pin" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fm_cy_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fsc_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="newfren_shoe_front" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_middle_axle_brake_disc_neto" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_middle_axle_brake_disc_neto_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_middle_axle_brake_pad_neto" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_middle_axle_brake_pad_neto_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_pads_park_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_pads_park_ref_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ebc_brake_disc_rear_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="brembo_brake_disc_rear_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_disc_rear_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="trw_brake_disc_rear_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_disc_rear" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_rc_rebuild_kit_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_rear_caliper_bolt" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_rm_cr_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ebc_brake_pads_rear_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_brake_pads_rear_neto" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="newfren_shoe_rear" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_rear_brake_pedal_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_csc_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="front_jt_ref_front" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="esjot_ref_front" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_ref_front" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mogema_ref_front" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="supersprox_ref_front" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="esjot_ref_rear" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="jt_ref_rear" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_ref_rear" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mogema_ref_rear" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="supersprox_ref_rear" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="esjot_ref_front_conv" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="jt_sprocket_ref" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_ref_front_conv" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mogemaref_front_conv" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="supersprox_ref_front_conv" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="conversion_chain" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_sprocket_rear_conv" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="esjot_ref_rear_conv" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mgear_ref_rear_conv" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mogema_ref_rear_conv" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="supersprox_ref_rear_conv" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fw_bearing_kit_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fw_bearing_kit_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_rw_bearing_kit_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_rw_bearing_kit_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_rw_bearing_upgrade" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_spark_plug" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_spark_plug_qty" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ngk_spark_plug_sk_us" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_alternator" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_voltage_regulator" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_alternator" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_alternator_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_cdi_module" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_charging_coil" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_ignition_coil" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_stator_coil" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_voltage_regulator" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_power_shift_cm" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_starter_drive" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_starter_motor" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="arrowhead_starter_relay" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_battery" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="ssb_agm_battery" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_air_filter" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="kn_air_filter" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="motorex_air_filter" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="motorex_air_filter_preoiled" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_oil_filter_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="kn_oil_filter_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_oil_filter_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="kn_oil_filter_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="motion_pro_oil_filter_magnet" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_steering_bearing" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_steering_seal" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_sb_seal_kit_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_sb_seal_kit_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_sb_seal_kit_lower" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_sb_seal_kit_lower_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_cb_seal_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_fork_assembly_left" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_fork_assembly_right" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_fork_seals" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fork_seals" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="xpr_fork_seals" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fork_bushing_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="motion_pro_micro_fork_bleeder" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="motion_pro_cr_pro_thottle_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_cable_speedo" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="motion_pro_cable_speedo" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="motion_pro_cable_throttle_tube" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="crosspro_radiator_guard" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_clutch_fibres" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_clutch_fibres_steels" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="newfren_clutch_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="newfren_clutch_spring_kits" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_cmc_rebuilt_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="wiseco_forged_clutch_basket" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="wiseco_bottem_end_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="wrench_re_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_carb_assembly" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_carb_repair_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_cr_mid_body_gasket_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_cr_mid_body_gasket_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fuel_tap_repair_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_fuel_tap_repair_kit_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="fuel_star_fuel_valve_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="fuel_star_fuel_valve_kit_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="fuel_star_hose_clamp_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="rg_engine_cover_lhs" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="rg_tail_tidy" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_lb_seal_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_lrs_bearing_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_urs_bearing_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_uls_bearing_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="all_balls_sb_seal_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="pivot_works_st_bearing_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="pivot_works_s_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mp_fork_seal_driver" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="mp_valve_seal_install_tool" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="winderosa_gasket_kit_top_end" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="winderosa_gasket_kit_oil_seals" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="oem_exhaust_gasket" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="winderosa_gasket_exhaust" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="winderosa_water_pump_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_connecting_rod_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_counter_bal_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_be_rebuild_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_be_rebuild_kit_st" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_cylinder_head" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_main_bearing_seal_kit" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_transmission_bearings" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_wrist_pin_bearings" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_sohc_camshaft_stage_1" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_sohc_camshaft_stage_2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_sohc_camshaft_stage_3" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_dohc_camshaft_stage_1_intake" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_dohc_camshaft_stage_1_exhaust" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_dohc_camshaft_stage_2_intake" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="hot_rods_dohc_camshaft_stage_2_exhaust" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+        
+        <createTable tableName="bike_bike_front_sprocket">
+            <column name="bike_front_sprockets_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bikes_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="bikes_id, bike_front_sprockets_id" tableName="bike_bike_front_sprocket"/>
+        
+        <createTable tableName="bike_bike_rear_sprocket">
+            <column name="bike_rear_sprockets_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bikes_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="bikes_id, bike_rear_sprockets_id" tableName="bike_bike_rear_sprocket"/>
+        
+        <createTable tableName="bike_rear_sprocket_conv">
+            <column name="rear_sprocket_convs_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bikes_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="bikes_id, rear_sprocket_convs_id" tableName="bike_rear_sprocket_conv"/>
+        
+        <createTable tableName="bike_front_sprocket_conv">
+            <column name="front_sprocket_convs_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bikes_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="bikes_id, front_sprocket_convs_id" tableName="bike_front_sprocket_conv"/>
+        
+        <createTable tableName="bike_chain">
+            <column name="chains_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bikes_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="bikes_id, chains_id" tableName="bike_chain"/>
+        
+        <createTable tableName="bike_bike_brake_pad">
+            <column name="bike_brake_pads_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bikes_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="bikes_id, bike_brake_pads_id" tableName="bike_bike_brake_pad"/>
+        
+        <createTable tableName="bike_bike_brake_disc">
+            <column name="bike_brake_discs_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bikes_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="bikes_id, bike_brake_discs_id" tableName="bike_bike_brake_disc"/>
+        
+    </changeSet>
+    
+    <!-- Added the entity audit columns -->
+    <changeSet id="20181113204937-audit-1" author="jhipster-entity-audit">
+        <addColumn tableName="bike">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </addColumn>
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

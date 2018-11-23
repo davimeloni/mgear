@@ -1,0 +1,194 @@
+
+
+<p-table #dt [columns]="displayColumns2" [value]="bikes" [scrollable]="true" [paginator]="true" [rows]="10"
+        [(selection)]="selectedBikes" [resizableColumns]="true" sortField="sku" sortOrder="1" [reorderableColumns]="true">
+
+        <ng-template pTemplate="caption">
+            <div style="text-align: right">
+                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    style="width:auto">
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" style="width:200px">
+            </colgroup>
+        </ng-template>
+
+        <ng-template pTemplate="header" let-columns let-rowData>
+            <tr>
+                <th pResizableColumn>
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th *ngFor="let col of displayColumns2" [pSortableColumn]="col.field" [ngSwitch]="col.field" [hidden]="!col.display"
+                    pResizableColumn pReorderableColumn>
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+                        ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+                </th>
+            </tr>
+            <tr>
+                <th></th>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field" [hidden]="!col.display">
+                    <input *ngSwitchCase="'sku'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                    <button type="submit" [routerLink]="['/', { outlets: { popup: 'bike/'+ rowData.id + '/delete'} }]"
+                        replaceUrl="true" queryParamsHandling="merge" class="btn btn-danger btn-sm">
+                        <fa-icon [icon]="'times'"></fa-icon>
+                        <span class="d-none d-md-inline">Delete</span>
+                    </button>
+                    <button type="submit" (click)="autoFillChain(rowData)" class="btn btn-success btn-sm">
+                        <fa-icon [icon]="'times'"></fa-icon>
+                    </button>
+                </td>
+                <td pEditableColumn pResizableColumn [hidden]="!displayColumns2[0].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.id">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.id}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td pEditableColumn pResizableColumn [hidden]="!displayColumns2[0].display">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.id" (change)="rowChanged()"(blur)="saveRow(rowData)" (keydown.enter)="saveRow(rowData)">
+                        </ng-template>
+                        <ng-template pTemplate="output">{{rowData.id}}</ng-template>
+                    </p-cellEditor>
+                </td>
+
+
+                
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <td pEditableColumn pResizableColumn [hidden]="!displayColumns2[1].display">
+            <p-cellEditor>
+                <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="rowData.visibilityAU">
+                </ng-template>
+                <ng-template pTemplate="output">
+                    {{rowData.visibilityAU}}
+                </ng-template>
+            </p-cellEditor>
+        </td>
+        <td pEditableColumn pResizableColumn [hidden]="!displayColumns2[2].display">
+            <p-cellEditor>
+                <ng-template pTemplate="input">
+                    <select [(ngModel)]="rowData.visibilityEU" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                        (keydown.enter)="saveRow(rowData)">
+                        <option *ngFor="let opt of booleanOptions" [value]="opt.value">{{opt.label}}</option>
+                    </select>
+                </ng-template>
+                <ng-template pTemplate="output">
+                    {{rowData.visibilityEU}}
+                </ng-template>
+            </p-cellEditor>
+        </td>
+        <td pEditableColumn pResizableColumn [hidden]="!displayColumns2[3].display">
+            <p-cellEditor>
+                <ng-template pTemplate="input">
+                    <select [(ngModel)]="rowData.inactive" (change)="rowChanged()" (blur)="saveRow(rowData)"
+                        (keydown.enter)="saveRow(rowData)">
+                        <option *ngFor="let opt of booleanOptions" [value]="opt.value">{{opt.label}}</option>
+                    </select>
+                </ng-template>
+                <ng-template pTemplate="output">
+                    <span *ngIf="rowData.inactive === true">Yes</span>
+                    <span *ngIf="rowData.inactive !== true">No</span>
+                </ng-template>
+            </p-cellEditor>
+        </td>
+
+        <td pEditableColumn pResizableColumn >
+            <p-cellEditor>
+                <ng-template pTemplate="input">
+                    <input pInputText type="number" [(ngModel)]="rowData.capacity">
+                </ng-template>
+                <ng-template pTemplate="output">
+                    {{rowData.capacity}}
+                </ng-template>
+            </p-cellEditor>
+        </td>
+
+        <td pEditableColumn pResizableColumn >
+            <p-cellEditor>
+                <ng-template pTemplate="input">
+                    <input pInputText type="text" [(ngModel)]="rowData.finalDriveType">
+                </ng-template>
+                <ng-template pTemplate="output">
+                    {{rowData.finalDriveType}}
+                </ng-template>
+            </p-cellEditor>
+        </td>
+
+        <td pEditableColumn pResizableColumn >
+            <p-cellEditor>
+                <ng-template pTemplate="input">
+                    <input pInputText type="number" [(ngModel)]="rowData.oemChainSize">
+                </ng-template>
+                <ng-template pTemplate="output">
+                    {{rowData.oemChainSize}}
+                </ng-template>
+            </p-cellEditor>
+        </td>
+
+        <td pEditableColumn pResizableColumn >
+            <p-cellEditor>
+                <ng-template pTemplate="input">
+                    <input pInputText type="number" [(ngModel)]="rowData.oemChainLinks">
+                </ng-template>
+                <ng-template pTemplate="output">
+                    {{rowData.oemChainLinks}}
+                </ng-template>
+            </p-cellEditor>
+        </td>
+
+        <td pResizableColumn>
+            <span *ngFor="let chain of rowData.chains; let last = last">
+                <a class="form-control-static" [routerLink]="['../chain', chain?.id, 'view' ]">{{chain.sku}}</a>{{last
+                ? '' : ', '}}
+            </span>
+        </td>
+        <!-- Searchable dropdown for SKUs
+        <td pEditableColumn pResizableColumn >
+            <p-cellEditor>
+                <ng-template pTemplate="input">
+                    <p-listbox [options]="chains" [(ngModel)]="rowData.chains" 
+                    multiple="multiple" checkbox="checkbox" filter="filter" optionLabel="sku">
+                    </p-listbox>
+                </ng-template>
+                <ng-template pTemplate="output">
+                    <span *ngFor="let chain of rowData.chains; let last = last">
+                        <a class="form-control-static" [routerLink]="['../chain', chain?.id, 'view' ]">{{chain.sku}}</a>{{last ? '' : ', '}}
+                    </span>
+                </ng-template>
+            </p-cellEditor>
+        </td>
+        -->

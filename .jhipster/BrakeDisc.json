@@ -1,0 +1,371 @@
+{
+    "name": "BrakeDisc",
+    "fields": [
+        {
+            "fieldName": "sku",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "active",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "au",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "de",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "metalGearvisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bikematevisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mgiVisibility",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "discStatus",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "productGroup1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "productGroup2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fitment",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "unit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "qty",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "brand",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "biketypes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "models2012on",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "gS1EANNo",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "ourNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "weight",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "packLength",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packHeight",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packWidth",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "packCubic",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "oD",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "bHC",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bHQty",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "bHSize",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "bHOD",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "bHStep",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "bHType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "thickness",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "thicknessMin",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "offset",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "brakeAreawidth",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "tUVLHC",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "customerNotes",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eListing",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eforMake",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "eDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "euploadedNeto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "echeck",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "euploadedeBay",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ebayactive",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhotobucket",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhoto1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhoto2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ePhoto3",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "saleStatus",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rRP",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "trade1",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "eBAY",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "trade2",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "trade3",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "distributorNZAUD",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "distributorEUR",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "distributorUSD",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "sPriority",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "samplefrom",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "requestedfrom",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "received",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "camefrom",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paidfor",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sentto",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "shipNo",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "datesent",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "samplereturn",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "make",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "model",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "year",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sampleFitment",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "oEM",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "notesforProduction",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "productionCode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hAPapproved",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "sHAapproved",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "approvedby",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "notestoDrawing",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "filename",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cOSTUSD",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "centrecolour",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "laser",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "qTY1",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "uSD",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "completeProduction",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "ourNotetoProduction",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181113204514",
+    "entityTableName": "brake_disc",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*",
+    "enableEntityAudit": true
+}

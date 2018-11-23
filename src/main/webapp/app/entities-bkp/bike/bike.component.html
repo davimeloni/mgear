@@ -1,0 +1,590 @@
+<div>
+    <h2 id="page-heading">
+        <span>Bikes</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-bike" [routerLink]="['/bike/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Bike
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="bikes">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Visibility AU</span></th>
+            <th><span>Visibility EU</span></th>
+            <th><span>Inactive</span></th>
+            <th><span>Oemconfirmed</span></th>
+            <th><span>Oesource</span></th>
+            <th><span>Epid</span></th>
+            <th><span>Modeltype 1</span></th>
+            <th><span>Modeltype 2</span></th>
+            <th><span>Manufacturer</span></th>
+            <th><span>Strokes</span></th>
+            <th><span>Capacity</span></th>
+            <th><span>Model Name</span></th>
+            <th><span>Model Year Code</span></th>
+            <th><span>Model Type Code</span></th>
+            <th><span>Year</span></th>
+            <th><span>Final Drive Type</span></th>
+            <th><span>Category Path</span></th>
+            <th><span>Model Notes</span></th>
+            <th><span>Model Notes 2</span></th>
+            <th><span>Model Notes 3</span></th>
+            <th><span>Model Notes 4</span></th>
+            <th><span>Model Info HTML</span></th>
+            <th><span>Oem Front Brake System Type</span></th>
+            <th><span>Oem Front Brake Disc Left</span></th>
+            <th><span>Oem Front Brake Disc Right</span></th>
+            <th><span>Oem Front Brake Disc Bolts</span></th>
+            <th><span>Oem Front BDQTYPD</span></th>
+            <th><span>Oem Front Brake Disc ABS Ring</span></th>
+            <th><span>Oem Front Brake Caliper 1</span></th>
+            <th><span>Oem Front Brake Caliper 2</span></th>
+            <th><span>Oem Front Brake Caliper Pin</span></th>
+            <th><span>Oem Front Brake Pads Front L</span></th>
+            <th><span>Oem Front Brake Pads Front R</span></th>
+            <th><span>Oem Front Shoe</span></th>
+            <th><span>Oem Midldle Axle Brake Disc</span></th>
+            <th><span>Oem Middle Axle Brake Pads</span></th>
+            <th><span>Oem Rear Brake System Type</span></th>
+            <th><span>Oeam Rear Brake Disc</span></th>
+            <th><span>Oeam Rear Brake Disc Bolts</span></th>
+            <th><span>Oeam Rear Brake Disc BQTYPD</span></th>
+            <th><span>Oem Rear Brake Caliper</span></th>
+            <th><span>Oem Rear Brake Caliper Pin</span></th>
+            <th><span>Oem Rear Brake Pads 1</span></th>
+            <th><span>Oem Rear Brake Pads 2</span></th>
+            <th><span>Oem Shoe Rear</span></th>
+            <th><span>Oem Shoe Rear 2</span></th>
+            <th><span>Oem Slave Cylinder</span></th>
+            <th><span>Oem Chain No</span></th>
+            <th><span>Oem Chain Size</span></th>
+            <th><span>Oem Chain Links</span></th>
+            <th><span>Oem Front Sprocket</span></th>
+            <th><span>Oem Front Gearing</span></th>
+            <th><span>Oem Front Gearing Min</span></th>
+            <th><span>Oem Front Gearing Max</span></th>
+            <th><span>Oem Rear Sprocket</span></th>
+            <th><span>Oem Rear Gearing</span></th>
+            <th><span>Oem Rear Gearing Min</span></th>
+            <th><span>Oem Rear Gearing Max</span></th>
+            <th><span>Final Drive Notes</span></th>
+            <th><span>Chain Conv Size</span></th>
+            <th><span>Chain Conv Links</span></th>
+            <th><span>Oem Front Wheel</span></th>
+            <th><span>Oem Front Wheel Type</span></th>
+            <th><span>Oem Front Wheel Front</span></th>
+            <th><span>Oem Front Wheel Tyre Size</span></th>
+            <th><span>Oem Front Hub</span></th>
+            <th><span>Oem Front Wheelbearing 1</span></th>
+            <th><span>Oem Front Wheelbearing 2</span></th>
+            <th><span>Oem Front Wheel Seal</span></th>
+            <th><span>Oem Rear Wheel</span></th>
+            <th><span>Oem Rear Wheel Size</span></th>
+            <th><span>Oem Rear Wheel Tyre</span></th>
+            <th><span>Oem Rear Wheel Bearing 1</span></th>
+            <th><span>Oem Rear Wheel Bearing 2</span></th>
+            <th><span>Oem Rear Wheel Seal</span></th>
+            <th><span>Front Pads Diff Caliper</span></th>
+            <th><span>Qty BH</span></th>
+            <th><span>Handbrake Parking</span></th>
+            <th><span>Add Notes To Bike</span></th>
+            <th><span>Date And ID</span></th>
+            <th><span>Source</span></th>
+            <th><span>Tuv Required</span></th>
+            <th><span>Tuv Type Code</span></th>
+            <th><span>Abekba</span></th>
+            <th><span>Tuv Front Disc</span></th>
+            <th><span>Tuv Rear Disc</span></th>
+            <th><span>Brembo Brake Disc Front Ref</span></th>
+            <th><span>Ebc Brake Disc Front Ref</span></th>
+            <th><span>Trw Brake Disc Front Ref</span></th>
+            <th><span>Mgear Brake Disc Front Left Ref</span></th>
+            <th><span>Mgear Brake Disc Front Right Ref</span></th>
+            <th><span>Mgear Brake Disc Front Check</span></th>
+            <th><span>Mgear Brake Disc Front Left Ref 2</span></th>
+            <th><span>Mgear Brake Disc Front Right Ref 2</span></th>
+            <th><span>Mgear Brake Disc F Neto</span></th>
+            <th><span>Motodisc Brake Disc F Neto</span></th>
+            <th><span>Ebc Brake Pads Front L Ref</span></th>
+            <th><span>Ebc Brake Pads Front R Ref</span></th>
+            <th><span>Mgear Brake Pads Front L Ref</span></th>
+            <th><span>Mgear Brake Pads Front R Ref</span></th>
+            <th><span>Mgear Brake Pads F Neto</span></th>
+            <th><span>Moto Pad Brake Pads Front L Ref</span></th>
+            <th><span>Moto Pad Brake Pads Front R Ref</span></th>
+            <th><span>Motopad Brake Pads F Neto</span></th>
+            <th><span>All Balls FC Rebuild Kit 1</span></th>
+            <th><span>All Balls FC Pin</span></th>
+            <th><span>All Balls FM Cy Rebuild Kit</span></th>
+            <th><span>All Balls FSC Rebuild Kit</span></th>
+            <th><span>Newfren Shoe Front</span></th>
+            <th><span>Mgear Middle Axle Brake Disc Neto</span></th>
+            <th><span>Mgear Middle Axle Brake Disc Neto 2</span></th>
+            <th><span>Mgear Middle Axle Brake Pad Neto</span></th>
+            <th><span>Mgear Middle Axle Brake Pad Neto 2</span></th>
+            <th><span>Mgear Brake Pads Park Ref</span></th>
+            <th><span>Mgear Brake Pads Park Ref 2</span></th>
+            <th><span>Ebc Brake Disc Rear Ref</span></th>
+            <th><span>Brembo Brake Disc Rear Ref</span></th>
+            <th><span>Mgear Brake Disc Rear Ref</span></th>
+            <th><span>Trw Brake Disc Rear Ref</span></th>
+            <th><span>Mgear Brake Disc Rear</span></th>
+            <th><span>All Balls RC Rebuild Kit 1</span></th>
+            <th><span>All Balls Rear Caliper Bolt</span></th>
+            <th><span>All Balls RM Cr Rebuild Kit</span></th>
+            <th><span>Ebc Brake Pads Rear Ref</span></th>
+            <th><span>Mgear Brake Pads Rear Neto</span></th>
+            <th><span>Newfren Shoe Rear</span></th>
+            <th><span>All Balls Rear Brake Pedal Kit</span></th>
+            <th><span>All Balls CSC Rebuild Kit</span></th>
+            <th><span>Front JT Ref Front</span></th>
+            <th><span>Esjot Ref Front</span></th>
+            <th><span>Mgear Ref Front</span></th>
+            <th><span>Mogema Ref Front</span></th>
+            <th><span>Supersprox Ref Front</span></th>
+            <th><span>Esjot Ref Rear</span></th>
+            <th><span>Jt Ref Rear</span></th>
+            <th><span>Mgear Ref Rear</span></th>
+            <th><span>Mogema Ref Rear</span></th>
+            <th><span>Supersprox Ref Rear</span></th>
+            <th><span>Esjot Ref Front Conv</span></th>
+            <th><span>Jt Sprocket Ref</span></th>
+            <th><span>Mgear Ref Front Conv</span></th>
+            <th><span>Mogemaref Front Conv</span></th>
+            <th><span>Supersprox Ref Front Conv</span></th>
+            <th><span>Conversion Chain</span></th>
+            <th><span>Mgear Sprocket Rear Conv</span></th>
+            <th><span>Esjot Ref Rear Conv</span></th>
+            <th><span>Mgear Ref Rear Conv</span></th>
+            <th><span>Mogema Ref Rear Conv</span></th>
+            <th><span>Supersprox Ref Rear Conv</span></th>
+            <th><span>All Balls FW Bearing Kit 1</span></th>
+            <th><span>All Balls FW Bearing Kit 2</span></th>
+            <th><span>All Balls RW Bearing Kit 1</span></th>
+            <th><span>All Balls RW Bearing Kit 2</span></th>
+            <th><span>All Balls RW Bearing Upgrade</span></th>
+            <th><span>Oem Spark Plug</span></th>
+            <th><span>Oem Spark Plug QTY</span></th>
+            <th><span>Ngk Spark Plug SK Us</span></th>
+            <th><span>Oem Alternator</span></th>
+            <th><span>Oem Voltage Regulator</span></th>
+            <th><span>Arrowhead Alternator</span></th>
+            <th><span>Arrowhead Alternator 2</span></th>
+            <th><span>Arrowhead CDI Module</span></th>
+            <th><span>Arrowhead Charging Coil</span></th>
+            <th><span>Arrowhead Ignition Coil</span></th>
+            <th><span>Arrowhead Stator Coil</span></th>
+            <th><span>Arrowhead Voltage Regulator</span></th>
+            <th><span>Arrowhead Power Shift CM</span></th>
+            <th><span>Arrowhead Starter Drive</span></th>
+            <th><span>Arrowhead Starter Motor</span></th>
+            <th><span>Arrowhead Starter Relay</span></th>
+            <th><span>Oem Battery</span></th>
+            <th><span>Ssb AGM Battery</span></th>
+            <th><span>Oem Air Filter</span></th>
+            <th><span>Kn Air Filter</span></th>
+            <th><span>Motorex Air Filter</span></th>
+            <th><span>Motorex Air Filter Preoiled</span></th>
+            <th><span>Oem Oil Filter 1</span></th>
+            <th><span>Kn Oil Filter 1</span></th>
+            <th><span>Oem Oil Filter 2</span></th>
+            <th><span>Kn Oil Filter 2</span></th>
+            <th><span>Motion Pro Oil Filter Magnet</span></th>
+            <th><span>Oem Steering Bearing</span></th>
+            <th><span>Oem Steering Seal</span></th>
+            <th><span>All Balls SB Seal Kit 1</span></th>
+            <th><span>All Balls SB Seal Kit 2</span></th>
+            <th><span>All Balls SB Seal Kit Lower</span></th>
+            <th><span>All Balls SB Seal Kit Lower 2</span></th>
+            <th><span>All Balls CB Seal Kit</span></th>
+            <th><span>Oem Fork Assembly Left</span></th>
+            <th><span>Oem Fork Assembly Right</span></th>
+            <th><span>Oem Fork Seals</span></th>
+            <th><span>All Balls Fork Seals</span></th>
+            <th><span>Xpr Fork Seals</span></th>
+            <th><span>All Balls Fork Bushing Kit</span></th>
+            <th><span>Motion Pro Micro Fork Bleeder</span></th>
+            <th><span>Motion Pro CR Pro Thottle Kit</span></th>
+            <th><span>Oem Cable Speedo</span></th>
+            <th><span>Motion Pro Cable Speedo</span></th>
+            <th><span>Motion Pro Cable Throttle Tube</span></th>
+            <th><span>Crosspro Radiator Guard</span></th>
+            <th><span>Oem Clutch Fibres</span></th>
+            <th><span>Oem Clutch Fibres Steels</span></th>
+            <th><span>Newfren Clutch Kit</span></th>
+            <th><span>Newfren Clutch Spring Kits</span></th>
+            <th><span>All Balls CMC Rebuilt Kit</span></th>
+            <th><span>Wiseco Forged Clutch Basket</span></th>
+            <th><span>Wiseco Bottem End Rebuild Kit</span></th>
+            <th><span>Wrench RE Rebuild Kit</span></th>
+            <th><span>Oem Carb Assembly</span></th>
+            <th><span>All Balls Carb Repair Kit</span></th>
+            <th><span>All Balls CR Mid Body Gasket 1</span></th>
+            <th><span>All Balls CR Mid Body Gasket 2</span></th>
+            <th><span>All Balls Fuel Tap Repair Kit</span></th>
+            <th><span>All Balls Fuel Tap Repair Kit 2</span></th>
+            <th><span>Fuel Star Fuel Valve Kit</span></th>
+            <th><span>Fuel Star Fuel Valve Kit 2</span></th>
+            <th><span>Fuel Star Hose Clamp Kit</span></th>
+            <th><span>Rg Engine Cover LHS</span></th>
+            <th><span>Rg Tail Tidy</span></th>
+            <th><span>All Balls LB Seal Kit</span></th>
+            <th><span>All Balls LRS Bearing Kit</span></th>
+            <th><span>All Balls URS Bearing Kit</span></th>
+            <th><span>All Balls ULS Bearing Kit</span></th>
+            <th><span>All Balls SB Seal Kit</span></th>
+            <th><span>Pivot Works ST Bearing Kit</span></th>
+            <th><span>Pivot Works S Rebuild Kit</span></th>
+            <th><span>Mp Fork Seal Driver</span></th>
+            <th><span>Mp Valve Seal Install Tool</span></th>
+            <th><span>Winderosa Gasket Kit Top End</span></th>
+            <th><span>Winderosa Gasket Kit Oil Seals</span></th>
+            <th><span>Oem Exhaust Gasket</span></th>
+            <th><span>Winderosa Gasket Exhaust</span></th>
+            <th><span>Winderosa Water Pump Rebuild Kit</span></th>
+            <th><span>Hot Rods Connecting Rod Kit</span></th>
+            <th><span>Hot Rods Counter Bal Rebuild Kit</span></th>
+            <th><span>Hot Rods BE Rebuild Kit</span></th>
+            <th><span>Hot Rods BE Rebuild Kit St</span></th>
+            <th><span>Hot Rods Cylinder Head</span></th>
+            <th><span>Hot Rods Main Bearing Seal Kit</span></th>
+            <th><span>Hot Rods Transmission Bearings</span></th>
+            <th><span>Hot Rods Wrist Pin Bearings</span></th>
+            <th><span>Hot Rods SOHC Camshaft Stage 1</span></th>
+            <th><span>Hot Rods SOHC Camshaft Stage 2</span></th>
+            <th><span>Hot Rods SOHC Camshaft Stage 3</span></th>
+            <th><span>Hot Rods DOHC Camshaft Stage 1 Intake</span></th>
+            <th><span>Hot Rods DOHC Camshaft Stage 1 Exhaust</span></th>
+            <th><span>Hot Rods DOHC Camshaft Stage 2 Intake</span></th>
+            <th><span>Hot Rods DOHC Camshaft Stage 2 Exhaust</span></th>
+            <th><span>Bike Front Sprocket</span></th>
+            <th><span>Bike Rear Sprocket</span></th>
+            <th><span>Rear Sprocket Conv</span></th>
+            <th><span>Front Sprocket Conv</span></th>
+            <th><span>Chain</span></th>
+            <th><span>Bike Brake Pad</span></th>
+            <th><span>Bike Brake Disc</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let bike of bikes ;trackBy: trackId">
+                <td><a [routerLink]="['/bike', bike.id, 'view' ]">{{bike.id}}</a></td>
+                <td>{{bike.visibilityAU}}</td>
+                <td>{{bike.visibilityEU}}</td>
+                <td>{{bike.inactive}}</td>
+                <td>{{bike.oemconfirmed}}</td>
+                <td>{{bike.oesource}}</td>
+                <td>{{bike.epid}}</td>
+                <td>{{bike.modeltype1}}</td>
+                <td>{{bike.modeltype2}}</td>
+                <td>{{bike.manufacturer}}</td>
+                <td>{{bike.strokes}}</td>
+                <td>{{bike.capacity}}</td>
+                <td>{{bike.modelName}}</td>
+                <td>{{bike.modelYearCode}}</td>
+                <td>{{bike.modelTypeCode}}</td>
+                <td>{{bike.year}}</td>
+                <td>{{bike.finalDriveType}}</td>
+                <td>{{bike.categoryPath}}</td>
+                <td>{{bike.modelNotes}}</td>
+                <td>{{bike.modelNotes2}}</td>
+                <td>{{bike.modelNotes3}}</td>
+                <td>{{bike.modelNotes4}}</td>
+                <td>{{bike.modelInfoHTML}}</td>
+                <td>{{bike.oemFrontBrakeSystemType}}</td>
+                <td>{{bike.oemFrontBrakeDiscLeft}}</td>
+                <td>{{bike.oemFrontBrakeDiscRight}}</td>
+                <td>{{bike.oemFrontBrakeDiscBolts}}</td>
+                <td>{{bike.oemFrontBDQTYPD}}</td>
+                <td>{{bike.oemFrontBrakeDiscABSRing}}</td>
+                <td>{{bike.oemFrontBrakeCaliper1}}</td>
+                <td>{{bike.oemFrontBrakeCaliper2}}</td>
+                <td>{{bike.oemFrontBrakeCaliperPin}}</td>
+                <td>{{bike.oemFrontBrakePadsFrontL}}</td>
+                <td>{{bike.oemFrontBrakePadsFrontR}}</td>
+                <td>{{bike.oemFrontShoe}}</td>
+                <td>{{bike.oemMidldleAxleBrakeDisc}}</td>
+                <td>{{bike.oemMiddleAxleBrakePads}}</td>
+                <td>{{bike.oemRearBrakeSystemType}}</td>
+                <td>{{bike.oeamRearBrakeDisc}}</td>
+                <td>{{bike.oeamRearBrakeDiscBolts}}</td>
+                <td>{{bike.oeamRearBrakeDiscBQTYPD}}</td>
+                <td>{{bike.oemRearBrakeCaliper}}</td>
+                <td>{{bike.oemRearBrakeCaliperPin}}</td>
+                <td>{{bike.oemRearBrakePads1}}</td>
+                <td>{{bike.oemRearBrakePads2}}</td>
+                <td>{{bike.oemShoeRear}}</td>
+                <td>{{bike.oemShoeRear2}}</td>
+                <td>{{bike.oemSlaveCylinder}}</td>
+                <td>{{bike.oemChainNo}}</td>
+                <td>{{bike.oemChainSize}}</td>
+                <td>{{bike.oemChainLinks}}</td>
+                <td>{{bike.oemFrontSprocket}}</td>
+                <td>{{bike.oemFrontGearing}}</td>
+                <td>{{bike.oemFrontGearingMin}}</td>
+                <td>{{bike.oemFrontGearingMax}}</td>
+                <td>{{bike.oemRearSprocket}}</td>
+                <td>{{bike.oemRearGearing}}</td>
+                <td>{{bike.oemRearGearingMin}}</td>
+                <td>{{bike.oemRearGearingMax}}</td>
+                <td>{{bike.finalDriveNotes}}</td>
+                <td>{{bike.chainConvSize}}</td>
+                <td>{{bike.chainConvLinks}}</td>
+                <td>{{bike.oemFrontWheel}}</td>
+                <td>{{bike.oemFrontWheelType}}</td>
+                <td>{{bike.oemFrontWheelFront}}</td>
+                <td>{{bike.oemFrontWheelTyreSize}}</td>
+                <td>{{bike.oemFrontHub}}</td>
+                <td>{{bike.oemFrontWheelbearing1}}</td>
+                <td>{{bike.oemFrontWheelbearing2}}</td>
+                <td>{{bike.oemFrontWheelSeal}}</td>
+                <td>{{bike.oemRearWheel}}</td>
+                <td>{{bike.oemRearWheelSize}}</td>
+                <td>{{bike.oemRearWheelTyre}}</td>
+                <td>{{bike.oemRearWheelBearing1}}</td>
+                <td>{{bike.oemRearWheelBearing2}}</td>
+                <td>{{bike.oemRearWheelSeal}}</td>
+                <td>{{bike.frontPadsDiffCaliper}}</td>
+                <td>{{bike.qtyBH}}</td>
+                <td>{{bike.handbrakeParking}}</td>
+                <td>{{bike.addNotesToBike}}</td>
+                <td>{{bike.dateAndID}}</td>
+                <td>{{bike.source}}</td>
+                <td>{{bike.tuvRequired}}</td>
+                <td>{{bike.tuvTypeCode}}</td>
+                <td>{{bike.abekba}}</td>
+                <td>{{bike.tuvFrontDisc}}</td>
+                <td>{{bike.tuvRearDisc}}</td>
+                <td>{{bike.bremboBrakeDiscFrontRef}}</td>
+                <td>{{bike.ebcBrakeDiscFrontRef}}</td>
+                <td>{{bike.trwBrakeDiscFrontRef}}</td>
+                <td>{{bike.mgearBrakeDiscFrontLeftRef}}</td>
+                <td>{{bike.mgearBrakeDiscFrontRightRef}}</td>
+                <td>{{bike.mgearBrakeDiscFrontCheck}}</td>
+                <td>{{bike.mgearBrakeDiscFrontLeftRef2}}</td>
+                <td>{{bike.mgearBrakeDiscFrontRightRef2}}</td>
+                <td>{{bike.mgearBrakeDiscFNeto}}</td>
+                <td>{{bike.motodiscBrakeDiscFNeto}}</td>
+                <td>{{bike.ebcBrakePadsFrontLRef}}</td>
+                <td>{{bike.ebcBrakePadsFrontRRef}}</td>
+                <td>{{bike.mgearBrakePadsFrontLRef}}</td>
+                <td>{{bike.mgearBrakePadsFrontRRef}}</td>
+                <td>{{bike.mgearBrakePadsFNeto}}</td>
+                <td>{{bike.motoPadBrakePadsFrontLRef}}</td>
+                <td>{{bike.motoPadBrakePadsFrontRRef}}</td>
+                <td>{{bike.motopadBrakePadsFNeto}}</td>
+                <td>{{bike.allBallsFCRebuildKit1}}</td>
+                <td>{{bike.allBallsFCPin}}</td>
+                <td>{{bike.allBallsFMCyRebuildKit}}</td>
+                <td>{{bike.allBallsFSCRebuildKit}}</td>
+                <td>{{bike.newfrenShoeFront}}</td>
+                <td>{{bike.mgearMiddleAxleBrakeDiscNeto}}</td>
+                <td>{{bike.mgearMiddleAxleBrakeDiscNeto2}}</td>
+                <td>{{bike.mgearMiddleAxleBrakePadNeto}}</td>
+                <td>{{bike.mgearMiddleAxleBrakePadNeto2}}</td>
+                <td>{{bike.mgearBrakePadsParkRef}}</td>
+                <td>{{bike.mgearBrakePadsParkRef2}}</td>
+                <td>{{bike.ebcBrakeDiscRearRef}}</td>
+                <td>{{bike.bremboBrakeDiscRearRef}}</td>
+                <td>{{bike.mgearBrakeDiscRearRef}}</td>
+                <td>{{bike.trwBrakeDiscRearRef}}</td>
+                <td>{{bike.mgearBrakeDiscRear}}</td>
+                <td>{{bike.allBallsRCRebuildKit1}}</td>
+                <td>{{bike.allBallsRearCaliperBolt}}</td>
+                <td>{{bike.allBallsRMCrRebuildKit}}</td>
+                <td>{{bike.ebcBrakePadsRearRef}}</td>
+                <td>{{bike.mgearBrakePadsRearNeto}}</td>
+                <td>{{bike.newfrenShoeRear}}</td>
+                <td>{{bike.allBallsRearBrakePedalKit}}</td>
+                <td>{{bike.allBallsCSCRebuildKit}}</td>
+                <td>{{bike.frontJTRefFront}}</td>
+                <td>{{bike.esjotRefFront}}</td>
+                <td>{{bike.mgearRefFront}}</td>
+                <td>{{bike.mogemaRefFront}}</td>
+                <td>{{bike.supersproxRefFront}}</td>
+                <td>{{bike.esjotRefRear}}</td>
+                <td>{{bike.jtRefRear}}</td>
+                <td>{{bike.mgearRefRear}}</td>
+                <td>{{bike.mogemaRefRear}}</td>
+                <td>{{bike.supersproxRefRear}}</td>
+                <td>{{bike.esjotRefFrontConv}}</td>
+                <td>{{bike.jtSprocketRef}}</td>
+                <td>{{bike.mgearRefFrontConv}}</td>
+                <td>{{bike.mogemarefFrontConv}}</td>
+                <td>{{bike.supersproxRefFrontConv}}</td>
+                <td>{{bike.conversionChain}}</td>
+                <td>{{bike.mgearSprocketRearConv}}</td>
+                <td>{{bike.esjotRefRearConv}}</td>
+                <td>{{bike.mgearRefRearConv}}</td>
+                <td>{{bike.mogemaRefRearConv}}</td>
+                <td>{{bike.supersproxRefRearConv}}</td>
+                <td>{{bike.allBallsFWBearingKit1}}</td>
+                <td>{{bike.allBallsFWBearingKit2}}</td>
+                <td>{{bike.allBallsRWBearingKit1}}</td>
+                <td>{{bike.allBallsRWBearingKit2}}</td>
+                <td>{{bike.allBallsRWBearingUpgrade}}</td>
+                <td>{{bike.oemSparkPlug}}</td>
+                <td>{{bike.oemSparkPlugQTY}}</td>
+                <td>{{bike.ngkSparkPlugSKUs}}</td>
+                <td>{{bike.oemAlternator}}</td>
+                <td>{{bike.oemVoltageRegulator}}</td>
+                <td>{{bike.arrowheadAlternator}}</td>
+                <td>{{bike.arrowheadAlternator2}}</td>
+                <td>{{bike.arrowheadCDIModule}}</td>
+                <td>{{bike.arrowheadChargingCoil}}</td>
+                <td>{{bike.arrowheadIgnitionCoil}}</td>
+                <td>{{bike.arrowheadStatorCoil}}</td>
+                <td>{{bike.arrowheadVoltageRegulator}}</td>
+                <td>{{bike.arrowheadPowerShiftCM}}</td>
+                <td>{{bike.arrowheadStarterDrive}}</td>
+                <td>{{bike.arrowheadStarterMotor}}</td>
+                <td>{{bike.arrowheadStarterRelay}}</td>
+                <td>{{bike.oemBattery}}</td>
+                <td>{{bike.ssbAGMBattery}}</td>
+                <td>{{bike.oemAirFilter}}</td>
+                <td>{{bike.knAirFilter}}</td>
+                <td>{{bike.motorexAirFilter}}</td>
+                <td>{{bike.motorexAirFilterPreoiled}}</td>
+                <td>{{bike.oemOilFilter1}}</td>
+                <td>{{bike.knOilFilter1}}</td>
+                <td>{{bike.oemOilFilter2}}</td>
+                <td>{{bike.knOilFilter2}}</td>
+                <td>{{bike.motionProOilFilterMagnet}}</td>
+                <td>{{bike.oemSteeringBearing}}</td>
+                <td>{{bike.oemSteeringSeal}}</td>
+                <td>{{bike.allBallsSBSealKit1}}</td>
+                <td>{{bike.allBallsSBSealKit2}}</td>
+                <td>{{bike.allBallsSBSealKitLower}}</td>
+                <td>{{bike.allBallsSBSealKitLower2}}</td>
+                <td>{{bike.allBallsCBSealKit}}</td>
+                <td>{{bike.oemForkAssemblyLeft}}</td>
+                <td>{{bike.oemForkAssemblyRight}}</td>
+                <td>{{bike.oemForkSeals}}</td>
+                <td>{{bike.allBallsForkSeals}}</td>
+                <td>{{bike.xprForkSeals}}</td>
+                <td>{{bike.allBallsForkBushingKit}}</td>
+                <td>{{bike.motionProMicroForkBleeder}}</td>
+                <td>{{bike.motionProCRProThottleKit}}</td>
+                <td>{{bike.oemCableSpeedo}}</td>
+                <td>{{bike.motionProCableSpeedo}}</td>
+                <td>{{bike.motionProCableThrottleTube}}</td>
+                <td>{{bike.crossproRadiatorGuard}}</td>
+                <td>{{bike.oemClutchFibres}}</td>
+                <td>{{bike.oemClutchFibresSteels}}</td>
+                <td>{{bike.newfrenClutchKit}}</td>
+                <td>{{bike.newfrenClutchSpringKits}}</td>
+                <td>{{bike.allBallsCMCRebuiltKit}}</td>
+                <td>{{bike.wisecoForgedClutchBasket}}</td>
+                <td>{{bike.wisecoBottemEndRebuildKit}}</td>
+                <td>{{bike.wrenchRERebuildKit}}</td>
+                <td>{{bike.oemCarbAssembly}}</td>
+                <td>{{bike.allBallsCarbRepairKit}}</td>
+                <td>{{bike.allBallsCRMidBodyGasket1}}</td>
+                <td>{{bike.allBallsCRMidBodyGasket2}}</td>
+                <td>{{bike.allBallsFuelTapRepairKit}}</td>
+                <td>{{bike.allBallsFuelTapRepairKit2}}</td>
+                <td>{{bike.fuelStarFuelValveKit}}</td>
+                <td>{{bike.fuelStarFuelValveKit2}}</td>
+                <td>{{bike.fuelStarHoseClampKit}}</td>
+                <td>{{bike.rgEngineCoverLHS}}</td>
+                <td>{{bike.rgTailTidy}}</td>
+                <td>{{bike.allBallsLBSealKit}}</td>
+                <td>{{bike.allBallsLRSBearingKit}}</td>
+                <td>{{bike.allBallsURSBearingKit}}</td>
+                <td>{{bike.allBallsULSBearingKit}}</td>
+                <td>{{bike.allBallsSBSealKit}}</td>
+                <td>{{bike.pivotWorksSTBearingKit}}</td>
+                <td>{{bike.pivotWorksSRebuildKit}}</td>
+                <td>{{bike.mpForkSealDriver}}</td>
+                <td>{{bike.mpValveSealInstallTool}}</td>
+                <td>{{bike.winderosaGasketKitTopEnd}}</td>
+                <td>{{bike.winderosaGasketKitOilSeals}}</td>
+                <td>{{bike.oemExhaustGasket}}</td>
+                <td>{{bike.winderosaGasketExhaust}}</td>
+                <td>{{bike.winderosaWaterPumpRebuildKit}}</td>
+                <td>{{bike.hotRodsConnectingRodKit}}</td>
+                <td>{{bike.hotRodsCounterBalRebuildKit}}</td>
+                <td>{{bike.hotRodsBERebuildKit}}</td>
+                <td>{{bike.hotRodsBERebuildKitSt}}</td>
+                <td>{{bike.hotRodsCylinderHead}}</td>
+                <td>{{bike.hotRodsMainBearingSealKit}}</td>
+                <td>{{bike.hotRodsTransmissionBearings}}</td>
+                <td>{{bike.hotRodsWristPinBearings}}</td>
+                <td>{{bike.hotRodsSOHCCamshaftStage1}}</td>
+                <td>{{bike.hotRodsSOHCCamshaftStage2}}</td>
+                <td>{{bike.hotRodsSOHCCamshaftStage3}}</td>
+                <td>{{bike.hotRodsDOHCCamshaftStage1Intake}}</td>
+                <td>{{bike.hotRodsDOHCCamshaftStage1Exhaust}}</td>
+                <td>{{bike.hotRodsDOHCCamshaftStage2Intake}}</td>
+                <td>{{bike.hotRodsDOHCCamshaftStage2Exhaust}}</td>
+                <td>
+                    <span *ngFor="let bikeFrontSprocket of bike.bikeFrontSprockets; let last = last">
+                            <a class="form-control-static" [routerLink]="['../bike-front-sprocket', bikeFrontSprocket?.id, 'view' ]">{{bikeFrontSprocket.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let bikeRearSprocket of bike.bikeRearSprockets; let last = last">
+                            <a class="form-control-static" [routerLink]="['../bike-rear-sprocket', bikeRearSprocket?.id, 'view' ]">{{bikeRearSprocket.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let rearSprocketConv of bike.rearSprocketConvs; let last = last">
+                            <a class="form-control-static" [routerLink]="['../rear-sprocket-conv', rearSprocketConv?.id, 'view' ]">{{rearSprocketConv.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let frontSprocketConv of bike.frontSprocketConvs; let last = last">
+                            <a class="form-control-static" [routerLink]="['../front-sprocket-conv', frontSprocketConv?.id, 'view' ]">{{frontSprocketConv.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let chain of bike.chains; let last = last">
+                            <a class="form-control-static" [routerLink]="['../chain', chain?.id, 'view' ]">{{chain.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let bikeBrakePad of bike.bikeBrakePads; let last = last">
+                            <a class="form-control-static" [routerLink]="['../bike-brake-pad', bikeBrakePad?.id, 'view' ]">{{bikeBrakePad.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td>
+                    <span *ngFor="let bikeBrakeDisc of bike.bikeBrakeDiscs; let last = last">
+                            <a class="form-control-static" [routerLink]="['../bike-brake-disc', bikeBrakeDisc?.id, 'view' ]">{{bikeBrakeDisc.sku}}</a>{{last ? '' : ', '}}
+                        </span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/bike', bike.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/bike', bike.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'bike/'+ bike.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

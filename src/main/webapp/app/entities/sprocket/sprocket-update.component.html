@@ -1,0 +1,424 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-sprocket-heading">Create or edit a Sprocket</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!sprocket.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="sprocket.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sku">Sku</label>
+                    <input type="text" class="form-control" name="sku" id="field_sku"
+                        [(ngModel)]="sprocket.sku" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_active">Active</label>
+                    <input type="checkbox" class="form-control" name="active" id="field_active"
+                        [(ngModel)]="sprocket.active" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_au">Au</label>
+                    <input type="checkbox" class="form-control" name="au" id="field_au"
+                        [(ngModel)]="sprocket.au" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_de">De</label>
+                    <input type="checkbox" class="form-control" name="de" id="field_de"
+                        [(ngModel)]="sprocket.de" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_metalGearvisibility">Metal Gearvisibility</label>
+                    <input type="checkbox" class="form-control" name="metalGearvisibility" id="field_metalGearvisibility"
+                        [(ngModel)]="sprocket.metalGearvisibility" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bikematevisibility">Bikematevisibility</label>
+                    <input type="checkbox" class="form-control" name="bikematevisibility" id="field_bikematevisibility"
+                        [(ngModel)]="sprocket.bikematevisibility" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_mgiVisibility">Mgi Visibility</label>
+                    <input type="checkbox" class="form-control" name="mgiVisibility" id="field_mgiVisibility"
+                        [(ngModel)]="sprocket.mgiVisibility" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_status">Status</label>
+                    <input type="text" class="form-control" name="status" id="field_status"
+                        [(ngModel)]="sprocket.status" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_productGroup1">Product Group 1</label>
+                    <input type="text" class="form-control" name="productGroup1" id="field_productGroup1"
+                        [(ngModel)]="sprocket.productGroup1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_productGroup2">Product Group 2</label>
+                    <input type="text" class="form-control" name="productGroup2" id="field_productGroup2"
+                        [(ngModel)]="sprocket.productGroup2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_countries">Countries</label>
+                    <input type="text" class="form-control" name="countries" id="field_countries"
+                        [(ngModel)]="sprocket.countries" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_fitment">Fitment</label>
+                    <input type="text" class="form-control" name="fitment" id="field_fitment"
+                        [(ngModel)]="sprocket.fitment" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                        [(ngModel)]="sprocket.description" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_unit">Unit</label>
+                    <input type="text" class="form-control" name="unit" id="field_unit"
+                        [(ngModel)]="sprocket.unit" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_qty">Qty</label>
+                    <input type="number" class="form-control" name="qty" id="field_qty"
+                        [(ngModel)]="sprocket.qty" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_brand">Brand</label>
+                    <input type="text" class="form-control" name="brand" id="field_brand"
+                        [(ngModel)]="sprocket.brand" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_biketypes">Biketypes</label>
+                    <input type="text" class="form-control" name="biketypes" id="field_biketypes"
+                        [(ngModel)]="sprocket.biketypes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_fitsMakes">Fits Makes</label>
+                    <input type="text" class="form-control" name="fitsMakes" id="field_fitsMakes"
+                        [(ngModel)]="sprocket.fitsMakes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_modelsupto">Modelsupto</label>
+                    <input type="number" class="form-control" name="modelsupto" id="field_modelsupto"
+                        [(ngModel)]="sprocket.modelsupto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_gS1EAN">G S 1 EAN</label>
+                    <input type="number" class="form-control" name="gS1EAN" id="field_gS1EAN"
+                        [(ngModel)]="sprocket.gS1EAN" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ourNotes">Our Notes</label>
+                    <input type="text" class="form-control" name="ourNotes" id="field_ourNotes"
+                        [(ngModel)]="sprocket.ourNotes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_customerNotes">Customer Notes</label>
+                    <input type="text" class="form-control" name="customerNotes" id="field_customerNotes"
+                        [(ngModel)]="sprocket.customerNotes" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_weightkg">Weightkg</label>
+                    <input type="number" class="form-control" name="weightkg" id="field_weightkg"
+                        [(ngModel)]="sprocket.weightkg" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packType">Pack Type</label>
+                    <input type="text" class="form-control" name="packType" id="field_packType"
+                        [(ngModel)]="sprocket.packType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packLength">Pack Length</label>
+                    <input type="number" class="form-control" name="packLength" id="field_packLength"
+                        [(ngModel)]="sprocket.packLength" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packWidth">Pack Width</label>
+                    <input type="number" class="form-control" name="packWidth" id="field_packWidth"
+                        [(ngModel)]="sprocket.packWidth" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packHeight">Pack Height</label>
+                    <input type="number" class="form-control" name="packHeight" id="field_packHeight"
+                        [(ngModel)]="sprocket.packHeight" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_packCubic">Pack Cubic</label>
+                    <input type="number" class="form-control" name="packCubic" id="field_packCubic"
+                        [(ngModel)]="sprocket.packCubic" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sprocketChainSize">Sprocket Chain Size</label>
+                    <input type="number" class="form-control" name="sprocketChainSize" id="field_sprocketChainSize"
+                        [(ngModel)]="sprocket.sprocketChainSize" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_sprocketTeeth">Sprocket Teeth</label>
+                    <input type="number" class="form-control" name="sprocketTeeth" id="field_sprocketTeeth"
+                        [(ngModel)]="sprocket.sprocketTeeth" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eSBHC">E SBHC</label>
+                    <input type="text" class="form-control" name="eSBHC" id="field_eSBHC"
+                        [(ngModel)]="sprocket.eSBHC" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eSID">E SID</label>
+                    <input type="number" class="form-control" name="eSID" id="field_eSID"
+                        [(ngModel)]="sprocket.eSID" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eSIDinnerTeeth">E SI Dinner Teeth</label>
+                    <input type="text" class="form-control" name="eSIDinnerTeeth" id="field_eSIDinnerTeeth"
+                        [(ngModel)]="sprocket.eSIDinnerTeeth" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eSBHQty">E SBH Qty</label>
+                    <input type="number" class="form-control" name="eSBHQty" id="field_eSBHQty"
+                        [(ngModel)]="sprocket.eSBHQty" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eSBHSize">E SBH Size</label>
+                    <input type="text" class="form-control" name="eSBHSize" id="field_eSBHSize"
+                        [(ngModel)]="sprocket.eSBHSize" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eSBHType">E SBH Type</label>
+                    <input type="text" class="form-control" name="eSBHType" id="field_eSBHType"
+                        [(ngModel)]="sprocket.eSBHType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eSWidth">E S Width</label>
+                    <input type="number" class="form-control" name="eSWidth" id="field_eSWidth"
+                        [(ngModel)]="sprocket.eSWidth" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tolistonEbay">Toliston Ebay</label>
+                    <input type="text" class="form-control" name="tolistonEbay" id="field_tolistonEbay"
+                        [(ngModel)]="sprocket.tolistonEbay" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eListing">E Listing</label>
+                    <input type="text" class="form-control" name="eListing" id="field_eListing"
+                        [(ngModel)]="sprocket.eListing" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eforMake">Efor Make</label>
+                    <input type="text" class="form-control" name="eforMake" id="field_eforMake"
+                        [(ngModel)]="sprocket.eforMake" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_euploadedNeto">Euploaded Neto</label>
+                    <input type="text" class="form-control" name="euploadedNeto" id="field_euploadedNeto"
+                        [(ngModel)]="sprocket.euploadedNeto" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eDate">E Date</label>
+                    <div class="input-group">
+                        <input id="field_eDate" type="text" class="form-control" name="eDate" ngbDatepicker  #eDateDp="ngbDatepicker" [(ngModel)]="sprocket.eDate"
+                        />
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="eDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_echeck">Echeck</label>
+                    <input type="text" class="form-control" name="echeck" id="field_echeck"
+                        [(ngModel)]="sprocket.echeck" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_euploadedeBay">Euploadede Bay</label>
+                    <input type="text" class="form-control" name="euploadedeBay" id="field_euploadedeBay"
+                        [(ngModel)]="sprocket.euploadedeBay" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eBayactive">E Bayactive</label>
+                    <input type="text" class="form-control" name="eBayactive" id="field_eBayactive"
+                        [(ngModel)]="sprocket.eBayactive" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ePhotobucket">E Photobucket</label>
+                    <input type="text" class="form-control" name="ePhotobucket" id="field_ePhotobucket"
+                        [(ngModel)]="sprocket.ePhotobucket" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ePhotoMain">E Photo Main</label>
+                    <input type="text" class="form-control" name="ePhotoMain" id="field_ePhotoMain"
+                        [(ngModel)]="sprocket.ePhotoMain" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ePhotoClear">E Photo Clear</label>
+                    <input type="text" class="form-control" name="ePhotoClear" id="field_ePhotoClear"
+                        [(ngModel)]="sprocket.ePhotoClear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ePhotoSide">E Photo Side</label>
+                    <input type="text" class="form-control" name="ePhotoSide" id="field_ePhotoSide"
+                        [(ngModel)]="sprocket.ePhotoSide" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_salesStatus">Sales Status</label>
+                    <input type="text" class="form-control" name="salesStatus" id="field_salesStatus"
+                        [(ngModel)]="sprocket.salesStatus" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_rRP">R RP</label>
+                    <input type="number" class="form-control" name="rRP" id="field_rRP"
+                        [(ngModel)]="sprocket.rRP" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_eBay">E Bay</label>
+                    <input type="number" class="form-control" name="eBay" id="field_eBay"
+                        [(ngModel)]="sprocket.eBay" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_trade1">Trade 1</label>
+                    <input type="number" class="form-control" name="trade1" id="field_trade1"
+                        [(ngModel)]="sprocket.trade1" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_trade2">Trade 2</label>
+                    <input type="number" class="form-control" name="trade2" id="field_trade2"
+                        [(ngModel)]="sprocket.trade2" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_trade3">Trade 3</label>
+                    <input type="number" class="form-control" name="trade3" id="field_trade3"
+                        [(ngModel)]="sprocket.trade3" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_distributorNZAUD">Distributor NZAUD</label>
+                    <input type="text" class="form-control" name="distributorNZAUD" id="field_distributorNZAUD"
+                        [(ngModel)]="sprocket.distributorNZAUD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_distributorUSD">Distributor USD</label>
+                    <input type="text" class="form-control" name="distributorUSD" id="field_distributorUSD"
+                        [(ngModel)]="sprocket.distributorUSD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_distributorEUR">Distributor EUR</label>
+                    <input type="text" class="form-control" name="distributorEUR" id="field_distributorEUR"
+                        [(ngModel)]="sprocket.distributorEUR" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bikemateAUD">Bikemate AUD</label>
+                    <input type="text" class="form-control" name="bikemateAUD" id="field_bikemateAUD"
+                        [(ngModel)]="sprocket.bikemateAUD" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_compMetalGear">Comp Metal Gear</label>
+                    <input type="text" class="form-control" name="compMetalGear" id="field_compMetalGear"
+                        [(ngModel)]="sprocket.compMetalGear" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_compMogema">Comp Mogema</label>
+                    <input type="text" class="form-control" name="compMogema" id="field_compMogema"
+                        [(ngModel)]="sprocket.compMogema" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_compJT">Comp JT</label>
+                    <input type="text" class="form-control" name="compJT" id="field_compJT"
+                        [(ngModel)]="sprocket.compJT" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jTBHC">J TBHC</label>
+                    <input type="text" class="form-control" name="jTBHC" id="field_jTBHC"
+                        [(ngModel)]="sprocket.jTBHC" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jTID">J TID</label>
+                    <input type="number" class="form-control" name="jTID" id="field_jTID"
+                        [(ngModel)]="sprocket.jTID" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jTIDinnerTeeth">J TI Dinner Teeth</label>
+                    <input type="number" class="form-control" name="jTIDinnerTeeth" id="field_jTIDinnerTeeth"
+                        [(ngModel)]="sprocket.jTIDinnerTeeth" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jTBHQty">J TBH Qty</label>
+                    <input type="text" class="form-control" name="jTBHQty" id="field_jTBHQty"
+                        [(ngModel)]="sprocket.jTBHQty" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jTBHSize">J TBH Size</label>
+                    <input type="number" class="form-control" name="jTBHSize" id="field_jTBHSize"
+                        [(ngModel)]="sprocket.jTBHSize" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jTBHType">J TBH Type</label>
+                    <input type="text" class="form-control" name="jTBHType" id="field_jTBHType"
+                        [(ngModel)]="sprocket.jTBHType" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jTWidth">J T Width</label>
+                    <input type="number" class="form-control" name="jTWidth" id="field_jTWidth"
+                        [(ngModel)]="sprocket.jTWidth" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_jTNote">J T Note</label>
+                    <input type="text" class="form-control" name="jTNote" id="field_jTNote"
+                        [(ngModel)]="sprocket.jTNote" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_compEsjot">Comp Esjot</label>
+                    <input type="text" class="form-control" name="compEsjot" id="field_compEsjot"
+                        [(ngModel)]="sprocket.compEsjot" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_compSuperSprox">Comp Super Sprox</label>
+                    <input type="text" class="form-control" name="compSuperSprox" id="field_compSuperSprox"
+                        [(ngModel)]="sprocket.compSuperSprox" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_stock">Stock</label>
+                    <input type="number" class="form-control" name="stock" id="field_stock"
+                        [(ngModel)]="sprocket.stock" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_minStock">Min Stock</label>
+                    <input type="number" class="form-control" name="minStock" id="field_minStock"
+                        [(ngModel)]="sprocket.minStock" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_maxStock">Max Stock</label>
+                    <input type="number" class="form-control" name="maxStock" id="field_maxStock"
+                        [(ngModel)]="sprocket.maxStock" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_supplier">Supplier</label>
+                    <input type="text" class="form-control" name="supplier" id="field_supplier"
+                        [(ngModel)]="sprocket.supplier" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_supplierCode">Supplier Code</label>
+                    <input type="text" class="form-control" name="supplierCode" id="field_supplierCode"
+                        [(ngModel)]="sprocket.supplierCode" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_supplierCurrency">Supplier Currency</label>
+                    <input type="text" class="form-control" name="supplierCurrency" id="field_supplierCurrency"
+                        [(ngModel)]="sprocket.supplierCurrency" />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_supplierCost">Supplier Cost</label>
+                    <input type="number" class="form-control" name="supplierCost" id="field_supplierCost"
+                        [(ngModel)]="sprocket.supplierCost" />
+                </div>
+
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

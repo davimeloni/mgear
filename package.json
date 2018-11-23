@@ -8,6 +8,7 @@
     "node_modules"
   ],
   "dependencies": {
+    "@angular/animations": "^7.0.3",
     "@angular/common": "6.1.0",
     "@angular/compiler": "6.1.0",
     "@angular/core": "6.1.0",
@@ -22,17 +23,23 @@
     "bootstrap": "4.1.3",
     "core-js": "2.5.7",
     "moment": "2.22.2",
+    "ng-diff-match-patch": "2.0.6",
     "ng-jhipster": "0.5.4",
     "ngx-cookie": "2.0.1",
     "ngx-infinite-scroll": "0.5.1",
+    "ngx-loading": "^3.0.1",
+    "ngx-papaparse": "^3.0.0",
+    "ngx-web-worker": "0.0.4",
     "ngx-webstorage": "2.0.1",
+    "primeicons": "^1.0.0",
+    "primeng": "^6.1.6",
     "reflect-metadata": "0.1.12",
     "rxjs": "6.1.0",
     "rxjs-compat": "6.1.0",
-    "swagger-ui": "2.2.10",
     "sockjs-client": "1.1.4",
-    "webstomp-client": "1.2.0",
+    "swagger-ui": "2.2.10",
     "tslib": "1.9.3",
+    "webstomp-client": "1.2.0",
     "zone.js": "0.8.26"
   },
   "devDependencies": {

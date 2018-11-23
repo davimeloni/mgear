@@ -21,6 +21,28 @@ import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ErrorComponent } from './layouts';
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ButtonModule} from 'primeng/primeng';
+import {TableModule} from 'primeng/table';
+import { FormsModule } from '@angular/forms';
+import { MultiSelectModule } from 'primeng/multiselect';
+import {ListboxModule} from 'primeng/listbox';
+import {ToggleButtonModule} from 'primeng/togglebutton';
+import {AccordionModule} from 'primeng/accordion';
+import {DialogModule} from 'primeng/dialog';
+import {DropdownModule} from 'primeng/dropdown';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {FieldsetModule} from 'primeng/fieldset';
+import {ToastModule} from 'primeng/toast';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {BlockUIModule} from 'primeng/blockui';
+import {CalendarModule} from 'primeng/calendar';
+import {SliderModule} from 'primeng/slider';
+
+import { PapaParseModule } from 'ngx-papaparse';
+
+import { NgxLoadingModule } from 'ngx-loading';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -30,7 +52,26 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         MgearappCoreModule,
         MgearappHomeModule,
         MgearappAccountModule,
-        MgearappEntityModule
+        TableModule,
+        BrowserAnimationsModule,
+        ButtonModule,
+        FormsModule,
+        MultiSelectModule,
+        PapaParseModule,
+        ListboxModule,
+        ToggleButtonModule,
+        AccordionModule,
+        DialogModule,
+        DropdownModule,
+        InputTextareaModule,
+        FieldsetModule,
+        MgearappEntityModule,
+        ToastModule,
+        ProgressSpinnerModule,
+        BlockUIModule,
+        CalendarModule,
+        SliderModule,
+        NgxLoadingModule.forRoot({})
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],

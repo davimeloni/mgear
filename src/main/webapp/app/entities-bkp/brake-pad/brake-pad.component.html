@@ -1,0 +1,176 @@
+<div>
+    <h2 id="page-heading">
+        <span>Brake Pads</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-brake-pad" [routerLink]="['/brake-pad/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Brake Pad
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="brakePads">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Sku</span></th>
+            <th><span>Au</span></th>
+            <th><span>De</span></th>
+            <th><span>Bikemate Visibility</span></th>
+            <th><span>Mgi Visiblity</span></th>
+            <th><span>Active Neto</span></th>
+            <th><span>Status</span></th>
+            <th><span>Product Group 1</span></th>
+            <th><span>Product Group 2</span></th>
+            <th><span>Fitment</span></th>
+            <th><span>Description</span></th>
+            <th><span>Unit</span></th>
+            <th><span>Qty</span></th>
+            <th><span>Brand</span></th>
+            <th><span>Biketypes</span></th>
+            <th><span>Models 2012 On</span></th>
+            <th><span>G S 1 EAN</span></th>
+            <th><span>Our Notes</span></th>
+            <th><span>Weightkg</span></th>
+            <th><span>Pack Type</span></th>
+            <th><span>Pack Length</span></th>
+            <th><span>Pack Width</span></th>
+            <th><span>Pack Height</span></th>
+            <th><span>Pack Cubic</span></th>
+            <th><span>Caliper</span></th>
+            <th><span>Alength</span></th>
+            <th><span>Awidth</span></th>
+            <th><span>Athickness</span></th>
+            <th><span>Blength</span></th>
+            <th><span>Bwidth</span></th>
+            <th><span>Bthickness</span></th>
+            <th><span>Customer Notes</span></th>
+            <th><span>E Listing</span></th>
+            <th><span>Efor Make</span></th>
+            <th><span>Euploaded Neto</span></th>
+            <th><span>E Date</span></th>
+            <th><span>Echeck</span></th>
+            <th><span>Euploadede Bay</span></th>
+            <th><span>Ebayactive</span></th>
+            <th><span>E Photobucket</span></th>
+            <th><span>E Photo Main</span></th>
+            <th><span>E Photo Clear</span></th>
+            <th><span>E Photo Side</span></th>
+            <th><span>Sale Status</span></th>
+            <th><span>R RP</span></th>
+            <th><span>E Bay</span></th>
+            <th><span>E BC</span></th>
+            <th><span>S BS</span></th>
+            <th><span>Goldfren</span></th>
+            <th><span>Braking</span></th>
+            <th><span>Brembo</span></th>
+            <th><span>Ferodo</span></th>
+            <th><span>Goodridge</span></th>
+            <th><span>Premier</span></th>
+            <th><span>Carbon</span></th>
+            <th><span>Galfer</span></th>
+            <th><span>Vesrah</span></th>
+            <th><span>Lucas</span></th>
+            <th><span>New Fren</span></th>
+            <th><span>Dunlop</span></th>
+            <th><span>Lockheed</span></th>
+            <th><span>Bendix</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let brakePad of brakePads ;trackBy: trackId">
+                <td><a [routerLink]="['/brake-pad', brakePad.id, 'view' ]">{{brakePad.id}}</a></td>
+                <td>{{brakePad.sku}}</td>
+                <td>{{brakePad.au}}</td>
+                <td>{{brakePad.de}}</td>
+                <td>{{brakePad.bikemateVisibility}}</td>
+                <td>{{brakePad.mgiVisiblity}}</td>
+                <td>{{brakePad.activeNeto}}</td>
+                <td>{{brakePad.status}}</td>
+                <td>{{brakePad.productGroup1}}</td>
+                <td>{{brakePad.productGroup2}}</td>
+                <td>{{brakePad.fitment}}</td>
+                <td>{{brakePad.description}}</td>
+                <td>{{brakePad.unit}}</td>
+                <td>{{brakePad.qty}}</td>
+                <td>{{brakePad.brand}}</td>
+                <td>{{brakePad.biketypes}}</td>
+                <td>{{brakePad.models2012on}}</td>
+                <td>{{brakePad.gS1EAN}}</td>
+                <td>{{brakePad.ourNotes}}</td>
+                <td>{{brakePad.weightkg}}</td>
+                <td>{{brakePad.packType}}</td>
+                <td>{{brakePad.packLength}}</td>
+                <td>{{brakePad.packWidth}}</td>
+                <td>{{brakePad.packHeight}}</td>
+                <td>{{brakePad.packCubic}}</td>
+                <td>{{brakePad.caliper}}</td>
+                <td>{{brakePad.alength}}</td>
+                <td>{{brakePad.awidth}}</td>
+                <td>{{brakePad.athickness}}</td>
+                <td>{{brakePad.blength}}</td>
+                <td>{{brakePad.bwidth}}</td>
+                <td>{{brakePad.bthickness}}</td>
+                <td>{{brakePad.customerNotes}}</td>
+                <td>{{brakePad.eListing}}</td>
+                <td>{{brakePad.eforMake}}</td>
+                <td>{{brakePad.euploadedNeto}}</td>
+                <td>{{brakePad.eDate | date:'mediumDate'}}</td>
+                <td>{{brakePad.echeck}}</td>
+                <td>{{brakePad.euploadedeBay}}</td>
+                <td>{{brakePad.ebayactive}}</td>
+                <td>{{brakePad.ePhotobucket}}</td>
+                <td>{{brakePad.ePhotoMain}}</td>
+                <td>{{brakePad.ePhotoClear}}</td>
+                <td>{{brakePad.ePhotoSide}}</td>
+                <td>{{brakePad.saleStatus}}</td>
+                <td>{{brakePad.rRP}}</td>
+                <td>{{brakePad.eBay}}</td>
+                <td>{{brakePad.eBC}}</td>
+                <td>{{brakePad.sBS}}</td>
+                <td>{{brakePad.goldfren}}</td>
+                <td>{{brakePad.braking}}</td>
+                <td>{{brakePad.brembo}}</td>
+                <td>{{brakePad.ferodo}}</td>
+                <td>{{brakePad.goodridge}}</td>
+                <td>{{brakePad.premier}}</td>
+                <td>{{brakePad.carbon}}</td>
+                <td>{{brakePad.galfer}}</td>
+                <td>{{brakePad.vesrah}}</td>
+                <td>{{brakePad.lucas}}</td>
+                <td>{{brakePad.newFren}}</td>
+                <td>{{brakePad.dunlop}}</td>
+                <td>{{brakePad.lockheed}}</td>
+                <td>{{brakePad.bendix}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/brake-pad', brakePad.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/brake-pad', brakePad.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'brake-pad/'+ brakePad.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
